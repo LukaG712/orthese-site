@@ -30,6 +30,7 @@ import { cn } from "@/lib/cn";
 
 type PermissionMode = "standard" | "ask" | "auto";
 type ModelOptionId =
+  | "orthese-router"
   | "claude-sonnet-4.5"
   | "claude-opus-4.5"
   | "gpt-5.2"
@@ -51,6 +52,7 @@ interface ComposerRunResult {
   contextType: string;
   summary: string;
   modelLabel: string;
+  routedByAuto?: boolean;
   permissionLabel: string;
   cost: number;
 }
@@ -96,6 +98,13 @@ const MODEL_OPTIONS: {
   meta: string;
   cost: number;
 }[] = [
+  {
+    id: "orthese-router",
+    label: "Orthese Router (Auto)",
+    shortLabel: "Orthese Router",
+    meta: "Auto real-model · saves ~63% cr",
+    cost: 2,
+  },
   {
     id: "claude-sonnet-4.5",
     label: "Claude Sonnet 4.5",
@@ -173,6 +182,8 @@ function buildRunResult(
   perm: (typeof PERMISSION_MODES)[number]
 ): ComposerRunResult {
   const lower = prompt.toLowerCase();
+  const isAuto = model.id === "orthese-router";
+
   if (lower.includes("audit") || lower.includes("permission") || lower.includes("piece.json")) {
     return {
       prompt,
@@ -180,9 +191,10 @@ function buildRunResult(
       contextType: "orthese/audit-report",
       summary:
         "Verified piece.json: ai:generate, context:send, and context:receive stay inside standard WASM bounds with zero unprompted shell calls.",
-      modelLabel: model.label,
+      modelLabel: isAuto ? "Claude Opus 4.5" : model.label,
+      routedByAuto: isAuto,
       permissionLabel: perm.label,
-      cost: model.cost,
+      cost: isAuto ? 6 : model.cost,
     };
   }
   if (lower.includes("engineer") || lower.includes("diff") || lower.includes("refactor")) {
@@ -192,9 +204,10 @@ function buildRunResult(
       contextType: "orthese/git-diff",
       summary:
         "Received orthese/spec on bus://workspace.default, staged typed changes across 2 files, and verified zero TypeScript errors.",
-      modelLabel: model.label,
+      modelLabel: isAuto ? "Claude Sonnet 4.5" : model.label,
+      routedByAuto: isAuto,
       permissionLabel: perm.label,
-      cost: model.cost,
+      cost: isAuto ? 3 : model.cost,
     };
   }
   return {
@@ -203,9 +216,10 @@ function buildRunResult(
     contextType: "orthese/html-bundle",
     summary:
       "Drafted an obsidian #08090A layout bundle with hairline surfaces, tabular counters, and instant zero-install WASM preview.",
-    modelLabel: model.label,
+    modelLabel: isAuto ? "Claude Sonnet 4.5" : model.label,
+    routedByAuto: isAuto,
     permissionLabel: perm.label,
-    cost: model.cost,
+    cost: isAuto ? 3 : model.cost,
   };
 }
 
@@ -214,7 +228,7 @@ export function HeroComposerPanel() {
 
   const [prompt, setPrompt] = useState("");
   const [permission, setPermission] = useState<PermissionMode>("ask");
-  const [modelId, setModelId] = useState<ModelOptionId>("claude-sonnet-4.5");
+  const [modelId, setModelId] = useState<ModelOptionId>("orthese-router");
   const [attachments, setAttachments] = useState<AttachmentTile[]>([]);
   const [openMenu, setOpenMenu] = useState<"add" | "permission" | "model" | null>(null);
   const [isRecording, setIsRecording] = useState(false);
@@ -687,6 +701,15 @@ export function HeroComposerPanel() {
                         </button>
                       );
                     })}
+                    <div className="my-1 border-t border-white/[0.07]" />
+                    <Link
+                      href="/router"
+                      onClick={() => setOpenMenu(null)}
+                      className="flex items-center justify-between rounded-lg px-2.5 py-1.5 text-[11.5px] text-[#8a8f98] hover:bg-white/[0.04] hover:text-[#f7f8f8] transition-colors"
+                    >
+                      <span>How Orthese Router works</span>
+                      <ChevronRight className="h-3.5 w-3.5" />
+                    </Link>
                   </div>
                 )}
               </div>
@@ -772,13 +795,16 @@ export function HeroComposerPanel() {
           ) : lastResult ? (
             <div className="space-y-1.5">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <Sparkles className="h-3.5 w-3.5 text-[#818cf8]" />
                   <span className="font-mono text-[11.5px] text-[#f7f8f8]">
                     {lastResult.piece}
                   </span>
                   <span className="rounded border border-white/[0.08] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-[#a5b4fc]">
                     {lastResult.contextType}
+                  </span>
+                  <span className="rounded border border-emerald-400/20 bg-emerald-400/10 px-1.5 py-0.5 font-mono text-[10px] text-emerald-300">
+                    {lastResult.routedByAuto ? `Routed → ${lastResult.modelLabel}` : lastResult.modelLabel}
                   </span>
                 </div>
                 <button

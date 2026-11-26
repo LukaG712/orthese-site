@@ -36,6 +36,17 @@ export function Navbar() {
             Pieces
           </Link>
           <Link
+            href="/router"
+            className={cn(
+              "text-[13px] transition-colors",
+              pathname?.startsWith("/router")
+                ? "text-[#f7f8f8]"
+                : "text-[#8a8f98] hover:text-[#f7f8f8]"
+            )}
+          >
+            Router
+          </Link>
+          <Link
             href="/marketplace"
             className={cn(
               "text-[13px] transition-colors",
@@ -45,12 +56,6 @@ export function Navbar() {
             )}
           >
             Marketplace
-          </Link>
-          <Link
-            href="/#architecture"
-            className="text-[13px] text-[#8a8f98] hover:text-[#f7f8f8] transition-colors"
-          >
-            Architecture
           </Link>
           <Link
             href="/#pricing"

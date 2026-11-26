@@ -4,9 +4,9 @@ const FOOTER_COLUMNS = [
   {
     title: "Product",
     links: [
-      { label: "Live Canvas", href: "/#workspace-demo" },
+      { label: "Composer Panel", href: "/#workspace-demo" },
+      { label: "Orthese Router", href: "/router" },
       { label: "Shared Context Bus", href: "/#shared-context" },
-      { label: "Hybrid Routing", href: "/#hybrid-routing" },
       { label: "Base Harness", href: "/#base-harness" },
       { label: "Pricing", href: "/#pricing" },
     ],

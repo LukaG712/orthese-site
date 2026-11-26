@@ -279,8 +279,8 @@ export function FeatureChapters() {
         <ChapterHeader
           titleLine1="Hybrid AI"
           titleLine2="routing"
-          description="Start immediately with managed Cloudflare Edge credits—or flip to your local CLIProxyAPI sidecar on Desktop to reuse existing CLI OAuth subscriptions."
-          href="/#pricing"
+          description="Start immediately with managed Cloudflare Edge credits or Orthese Router auto-selection—or flip to your local CLIProxyAPI sidecar on Desktop to reuse existing CLI OAuth subscriptions."
+          href="/router"
         />
 
         <div className="mask-fade-bottom-soft stage-surface mt-12 overflow-hidden rounded-xl p-6 sm:p-10">

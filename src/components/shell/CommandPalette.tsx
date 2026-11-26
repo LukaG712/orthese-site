@@ -72,6 +72,17 @@ export function CommandPalette() {
                     <ArrowUpRight className="h-3.5 w-3.5 text-[#52525b]" />
                   </Command.Item>
                   <Command.Item
+                    value="orthese router auto model selection savings routing"
+                    onSelect={() => go("/router")}
+                    className="flex items-center justify-between rounded-lg px-2.5 py-2 text-[13px] text-[#d4d4d8] aria-selected:bg-white/[0.07] aria-selected:text-[#fafafa] cursor-pointer"
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <Sparkles className="h-3.5 w-3.5 text-[#818cf8]" />
+                      <span>Orthese Router (Auto Model Selection)</span>
+                    </span>
+                    <ArrowUpRight className="h-3.5 w-3.5 text-[#52525b]" />
+                  </Command.Item>
+                  <Command.Item
                     value="browse marketplace registry pieces skills"
                     onSelect={() => go("/marketplace")}
                     className="flex items-center justify-between rounded-lg px-2.5 py-2 text-[13px] text-[#d4d4d8] aria-selected:bg-white/[0.07] aria-selected:text-[#fafafa] cursor-pointer"
