@@ -163,6 +163,83 @@
   border-color: rgba(255, 255, 255, 0.18);
 }
 
+/* Original multi-layer orbiting radial colour-wash text effect */
+@property --orbit-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes orbit-text-loop {
+  from {
+    --orbit-angle: 0deg;
+  }
+  to {
+    --orbit-angle: 360deg;
+  }
+}
+
+.orbit-gradient-text {
+  --orbit-angle: 0deg;
+  display: inline-block;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-image:
+    radial-gradient(
+      52% 135% at calc(50% + cos(var(--orbit-angle)) * 46%)
+        calc(50% + sin(var(--orbit-angle)) * 62%),
+      rgba(129, 140, 248, 0.96) 0%,
+      rgba(129, 140, 248, 0.42) 48%,
+      transparent 100%
+    ),
+    radial-gradient(
+      48% 130% at calc(50% + cos(var(--orbit-angle) + 120deg) * 48%)
+        calc(50% + sin(var(--orbit-angle) + 120deg) * 64%),
+      rgba(56, 189, 248, 0.92) 0%,
+      rgba(56, 189, 248, 0.36) 46%,
+      transparent 100%
+    ),
+    radial-gradient(
+      46% 128% at calc(50% + cos(var(--orbit-angle) + 240deg) * 46%)
+        calc(50% + sin(var(--orbit-angle) + 240deg) * 60%),
+      rgba(240, 171, 252, 0.88) 0%,
+      rgba(244, 114, 182, 0.32) 48%,
+      transparent 100%
+    ),
+    linear-gradient(180deg, #ffffff 0%, #c6cbd6 100%);
+  animation: orbit-text-loop var(--orbit-dur, 7s) linear infinite;
+}
+
+.orbit-gradient-text--silver {
+  background-image:
+    radial-gradient(
+      52% 135% at calc(50% + cos(var(--orbit-angle)) * 46%)
+        calc(50% + sin(var(--orbit-angle)) * 62%),
+      rgba(220, 228, 255, 0.95) 0%,
+      rgba(220, 228, 255, 0.42) 48%,
+      transparent 100%
+    ),
+    radial-gradient(
+      48% 130% at calc(50% + cos(var(--orbit-angle) + 120deg) * 48%)
+        calc(50% + sin(var(--orbit-angle) + 120deg) * 64%),
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(255, 255, 255, 0.32) 46%,
+      transparent 100%
+    ),
+    radial-gradient(
+      46% 128% at calc(50% + cos(var(--orbit-angle) + 240deg) * 46%)
+        calc(50% + sin(var(--orbit-angle) + 240deg) * 60%),
+      rgba(148, 163, 184, 0.72) 0%,
+      rgba(148, 163, 184, 0.25) 48%,
+      transparent 100%
+    ),
+    linear-gradient(180deg, #f7f8f8 0%, #9ca3af 100%);
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;

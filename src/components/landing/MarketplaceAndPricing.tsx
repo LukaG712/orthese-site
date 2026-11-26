@@ -5,6 +5,7 @@ import NumberFlow from "@number-flow/react";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { CREDIT_PACKS, MARKETPLACE_ITEMS } from "@/data/catalog";
 import { AssetIcon } from "@/components/ui/Icon";
+import { OrbitGradientText } from "@/components/ui/OrbitGradientText";
 import { useStorefront } from "@/components/shell/StorefrontContext";
 import { cn } from "@/lib/cn";
 
@@ -228,7 +229,7 @@ export function MarketplaceAndPricing() {
         <h2 className="text-3xl font-medium tracking-[-0.04em] leading-[1.08] text-[#f7f8f8] sm:text-[46px]">
           Built for modular work.
           <br />
-          Available today.
+          <OrbitGradientText>Available today.</OrbitGradientText>
         </h2>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

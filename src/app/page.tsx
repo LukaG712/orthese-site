@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { OrbitGradientText } from "@/components/ui/OrbitGradientText";
 import { HeroWorkspaceWindow } from "@/components/landing/HeroWorkspaceWindow";
 import { EcosystemAndPillars } from "@/components/landing/EcosystemAndPillars";
 import { FeatureChapters } from "@/components/landing/FeatureChapters";
@@ -15,7 +16,7 @@ export default function HomePage() {
         <h1 className="max-w-3xl text-[clamp(2.5rem,4.8vw,3.75rem)] font-medium tracking-[-0.04em] leading-[1.08] text-[#f7f8f8]">
           The modular AI workstation
           <br />
-          for builders and agents.
+          for <OrbitGradientText>builders and agents.</OrbitGradientText>
         </h1>
 
         <div className="mt-7 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
