@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { Command } from "cmdk";
 import { ArrowUpRight, CreditCard, Layers, Search, Sparkles } from "lucide-react";
 import { CREDIT_PACKS, MARKETPLACE_ITEMS } from "@/data/catalog";
@@ -17,25 +17,23 @@ export function CommandPalette() {
     router.push(href);
   };
 
+  if (!commandOpen) return null;
+
   return (
-    <AnimatePresence>
-      {commandOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.16 }}
-          className="fixed inset-0 z-50 flex items-start justify-center bg-black/75 px-4 pt-[14vh] backdrop-blur-sm"
-          onClick={() => setCommandOpen(false)}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: -8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.97, y: -6 }}
-            transition={{ type: "spring", stiffness: 420, damping: 32 }}
-            className="obsidian-card w-full max-w-xl overflow-hidden rounded-xl shadow-[0_32px_90px_rgba(0,0,0,0.92)]"
-            onClick={(e) => e.stopPropagation()}
-          >
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.14 }}
+      className="fixed inset-0 z-50 flex items-start justify-center bg-black/75 px-4 pt-[14vh] backdrop-blur-sm"
+      onClick={() => setCommandOpen(false)}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.97, y: -6 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
+        className="obsidian-surface w-full max-w-xl overflow-hidden rounded-xl border border-white/[0.1]"
+        onClick={(e) => e.stopPropagation()}
+      >
             <Command label="Orthese Command Palette" className="w-full">
               <div className="flex items-center gap-2.5 border-b border-white/[0.08] px-4">
                 <Search className="h-4 w-4 text-[#52525b]" />
@@ -153,7 +151,5 @@ export function CommandPalette() {
             </Command>
           </motion.div>
         </motion.div>
-      )}
-    </AnimatePresence>
   );
 }

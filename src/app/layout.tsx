@@ -31,11 +31,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} dark`}>
-      <body className="min-h-screen bg-[#050505] text-[#fafafa] antialiased selection:bg-white selection:text-black">
+      <body className="min-h-screen bg-[#060607] text-[#fafafa] antialiased selection:bg-white selection:text-black">
         <StorefrontProvider>
-          <div className="flex min-h-screen flex-col">
+          <div className="relative flex min-h-screen flex-col">
+            {/* Continuous 1200px vertical architectural blueprint rails */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none fixed inset-y-0 left-1/2 z-30 w-full max-w-[1200px] -translate-x-1/2 border-x border-white/[0.06]"
+            />
+
             <Navbar />
-            <main className="flex-1">{children}</main>
+            <main className="relative z-10 flex-1">{children}</main>
             <Footer />
           </div>
           <CommandPalette />
@@ -45,10 +51,10 @@ export default function RootLayout({
             position="bottom-right"
             toastOptions={{
               style: {
-                background: "#111111",
+                background: "#0e0e11",
                 border: "1px solid rgba(255,255,255,0.12)",
                 boxShadow:
-                  "inset 0 1px 0 0 rgba(255,255,255,0.16), 0 18px 48px -12px rgba(0,0,0,0.9)",
+                  "inset 0 1px 0 0 rgba(255,255,255,0.14), 0 24px 48px -12px rgba(0,0,0,0.85)",
                 color: "#fafafa",
               },
             }}

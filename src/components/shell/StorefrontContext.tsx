@@ -38,6 +38,8 @@ export function StorefrontProvider({ children }: { children: React.ReactNode }) 
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
         setCommandOpen((prev) => !prev);
+      } else if (event.key === "Escape") {
+        setCommandOpen(false);
       }
     };
     window.addEventListener("keydown", onKeyDown);

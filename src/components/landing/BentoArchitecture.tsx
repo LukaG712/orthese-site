@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import NumberFlow from "@number-flow/react";
 import { Globe, Sparkles, Terminal } from "lucide-react";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { SpotlightCell } from "@/components/ui/SpotlightCell";
 import { cn } from "@/lib/cn";
 
 export function BentoArchitecture() {
@@ -13,21 +13,22 @@ export function BentoArchitecture() {
   return (
     <section id="architecture" className="scroll-mt-20 py-28 sm:py-32">
       <div className="mb-12 max-w-2xl">
-        <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#52525b]">
+        <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-zinc-500">
           01 / ARCHITECTURE
         </span>
-        <h2 className="text-metallic mt-3 text-3xl font-medium tracking-[-0.04em] leading-[1.06] sm:text-4xl">
+        <h2 className="mt-3 bg-gradient-to-b from-white via-white to-white/65 bg-clip-text text-3xl font-medium tracking-[-0.04em] leading-[1.05] text-transparent sm:text-4xl">
           Why modular wins.
         </h2>
         <p className="mt-3 max-w-lg text-[15px] leading-relaxed text-[#a1a1aa]">
-          Every Piece connects to one Shared Context Bus, one Hybrid AI Router, and one
+          Every Piece plugs into one Shared Context Bus, one Hybrid AI Router, and one
           extensible Rust Base Harness.
         </p>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-12">
-        {/* Card 1 (Wide — 7 cols): Snap & Pipe */}
-        <SpotlightCard className="p-7 lg:col-span-7">
+      {/* Seamless Hairline-Divided Architectural Bento Frame */}
+      <div className="grid gap-px border border-white/[0.06] bg-white/[0.06] lg:grid-cols-12">
+        {/* Cell 1 (Wide — 7 cols): Snap & Pipe */}
+        <SpotlightCell className="p-7 sm:p-8 lg:col-span-7">
           <div className="flex items-start justify-between gap-4">
             <div className="max-w-md">
               <h3 className="text-[18px] font-medium tracking-[-0.025em] text-[#fafafa]">
@@ -44,14 +45,13 @@ export function BentoArchitecture() {
           </div>
 
           {/* Precision Silver Circuit Schematic */}
-          <div className="bg-micro-grid relative mt-8 overflow-hidden rounded-xl border border-white/[0.07] bg-[#080809] px-5 py-8">
+          <div className="bg-micro-grid relative mt-8 overflow-hidden border border-white/[0.06] bg-[#060607] px-5 py-8">
             <svg
               className="pointer-events-none absolute inset-x-0 top-1/2 hidden h-10 w-full -translate-y-1/2 sm:block"
               viewBox="0 0 600 40"
               preserveAspectRatio="none"
               aria-hidden="true"
             >
-              {/* Static 1px hairline rails */}
               <line
                 x1="155"
                 y1="20"
@@ -69,7 +69,6 @@ export function BentoArchitecture() {
                 strokeWidth="1"
               />
 
-              {/* Animated monochrome silver circuit pulses */}
               <motion.line
                 x1="155"
                 y1="20"
@@ -111,9 +110,9 @@ export function BentoArchitecture() {
                 return (
                   <div
                     key={node.name}
-                    className="rounded-xl border border-white/[0.1] bg-[#111111] p-3.5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_12px_28px_-12px_rgba(0,0,0,0.9)]"
+                    className="obsidian-surface border border-white/[0.09] p-3.5 text-center"
                   >
-                    <span className="mx-auto flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.1] bg-white/[0.03] text-[#fafafa]">
+                    <span className="mx-auto flex h-8 w-8 items-center justify-center rounded-md border border-white/[0.1] bg-white/[0.03] text-[#fafafa]">
                       <Icon className="h-4 w-4" />
                     </span>
                     <span className="mt-2.5 block text-[13px] font-medium text-[#fafafa]">
@@ -127,61 +126,60 @@ export function BentoArchitecture() {
               })}
             </div>
           </div>
-        </SpotlightCard>
+        </SpotlightCell>
 
-        {/* Card 2 (5 cols): Hybrid AI Routing */}
-        <SpotlightCard className="p-7 lg:col-span-5">
+        {/* Cell 2 (5 cols): Hybrid AI Routing */}
+        <SpotlightCell className="p-7 sm:p-8 lg:col-span-5">
           <div className="flex h-full flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between gap-2">
-                <h3 className="text-[18px] font-medium tracking-[-0.025em] text-[#fafafa]">
-                  Hybrid AI Routing
-                </h3>
-
-                {/* Tactile Motion Toggle */}
-                <div className="inline-flex rounded-lg border border-white/[0.08] bg-[#060607] p-0.5">
-                  {(
-                    [
-                      { id: "credits", label: "Credits" },
-                      { id: "cliproxy", label: "CLIProxyAPI" },
-                    ] as const
-                  ).map((opt) => {
-                    const active = routingMode === opt.id;
-                    return (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        onClick={() => setRoutingMode(opt.id)}
-                        className={cn(
-                          "relative rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors cursor-pointer",
-                          active ? "text-[#fafafa]" : "text-[#71717a] hover:text-[#a1a1aa]"
-                        )}
-                      >
-                        {active && (
-                          <motion.span
-                            layoutId="routing-toggle-pill"
-                            transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                            className="absolute inset-0 rounded-md bg-white/[0.11] shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]"
-                          />
-                        )}
-                        <span className="relative z-10">{opt.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
+              <h3 className="text-[18px] font-medium tracking-[-0.025em] text-[#fafafa]">
+                Hybrid AI Routing
+              </h3>
               <p className="mt-1.5 text-[14px] leading-relaxed text-[#a1a1aa]">
-                Use managed Orthese Credits on Cloudflare Edge, or switch to your local
-                CLIProxyAPI sidecar on Desktop.
+                Switch seamlessly between managed Cloudflare Edge credits and your local
+                Desktop OAuth sidecar.
               </p>
+
+              {/* Segmented Toggle */}
+              <div className="mt-5 inline-flex w-full rounded-md border border-white/[0.08] bg-[#060607] p-0.5">
+                {(
+                  [
+                    { id: "credits", label: "Orthese Credits (Cloud)" },
+                    { id: "cliproxy", label: "Local CLIProxyAPI" },
+                  ] as const
+                ).map((opt) => {
+                  const active = routingMode === opt.id;
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      data-testid={`routing-${opt.id}`}
+                      onClick={() => setRoutingMode(opt.id)}
+                      className={cn(
+                        "relative flex-1 rounded-[4px] px-2.5 py-1.5 text-[11px] font-medium transition-colors cursor-pointer",
+                        active ? "text-[#fafafa]" : "text-[#71717a] hover:text-[#a1a1aa]"
+                      )}
+                    >
+                      {active && (
+                        <motion.span
+                          layoutId="routing-toggle-pill"
+                          transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                          className="absolute inset-0 rounded-[4px] bg-white/[0.11] shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]"
+                        />
+                      )}
+                      <span className="relative z-10">{opt.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Animated Telemetry Readout */}
-            <div className="mt-8 rounded-xl border border-white/[0.07] bg-[#080809] p-4">
-              <div className="flex items-baseline justify-between">
-                <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#52525b]">
-                  {routingMode === "credits" ? "CLOUDFLARE EDGE PROXY" : "LOCAL OAUTH SIDECAR"}
+            {/* Live Animated Telemetry Readout */}
+            <div className="mt-6 border border-white/[0.07] bg-[#060607] p-4">
+              <div className="flex items-center justify-between">
+                <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-[#71717a]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  {routingMode === "credits" ? "Cloudflare Edge" : "Desktop Sidecar"}
                 </span>
                 <span className="font-mono text-[13px] font-medium tabular-nums text-[#fafafa]">
                   <NumberFlow value={routingMode === "credits" ? 28 : 4} />
@@ -189,74 +187,74 @@ export function BentoArchitecture() {
                 </span>
               </div>
 
-              <AnimatePresence mode="wait">
-                {routingMode === "credits" ? (
-                  <motion.div
-                    key="credits-view"
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                    className="mt-4 space-y-2.5"
-                  >
-                    <div className="flex items-center justify-between font-mono text-[12px] tabular-nums">
-                      <span className="text-[#a1a1aa]">Remaining balance</span>
-                      <span className="text-[#fafafa]">
-                        <NumberFlow value={2410} /> cr
-                      </span>
-                    </div>
-                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.07]">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: "78%" }}
-                        transition={{ type: "spring", stiffness: 320, damping: 32 }}
-                        className="h-full rounded-full bg-[#fafafa]"
-                      />
-                    </div>
-                    <div className="flex justify-between font-mono text-[10px] text-[#52525b]">
-                      <span>fast · balanced · reasoning</span>
-                      <span>Zero API keys required</span>
-                    </div>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="cliproxy-view"
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                    className="mt-4 space-y-2.5"
-                  >
-                    {[
-                      { acct: "Claude Code OAuth", pct: 84 },
-                      { acct: "Codex CLI OAuth", pct: 62 },
-                      { acct: "Gemini CLI OAuth", pct: 95 },
-                    ].map((row) => (
-                      <div key={row.acct} className="space-y-1">
-                        <div className="flex justify-between font-mono text-[11px] tabular-nums">
-                          <span className="text-[#a1a1aa]">{row.acct}</span>
-                          <span className="text-[#71717a]">{row.pct}%</span>
-                        </div>
-                        <div className="h-1 w-full overflow-hidden rounded-full bg-white/[0.07]">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${row.pct}%` }}
-                            transition={{ type: "spring", stiffness: 320, damping: 32 }}
-                            className="h-full rounded-full bg-[#d4d4d8]"
-                          />
-                        </div>
+              {routingMode === "credits" ? (
+                <motion.div
+                  key="credits-view"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-4 space-y-2.5"
+                >
+                  <div className="flex items-center justify-between font-mono text-[12px] tabular-nums">
+                    <span className="text-[#a1a1aa]">Active balance</span>
+                    <span className="text-[#fafafa]">
+                      <NumberFlow value={2410} /> cr
+                    </span>
+                  </div>
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.07]">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: "78%" }}
+                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                      className="h-full rounded-full bg-[#fafafa]"
+                    />
+                  </div>
+                  <div className="flex justify-between font-mono text-[10px] text-[#52525b]">
+                    <span>fast · balanced · reasoning</span>
+                    <span>Zero API keys</span>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="cliproxy-view"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-4 space-y-2.5"
+                >
+                  <div className="flex items-center justify-between font-mono text-[12px] tabular-nums">
+                    <span className="text-[#a1a1aa]">Local OAuth · €0</span>
+                    <span className="text-[#fafafa]">84% quota</span>
+                  </div>
+                  {[
+                    { acct: "Claude Code OAuth", pct: 84 },
+                    { acct: "Codex CLI OAuth", pct: 62 },
+                    { acct: "Gemini CLI OAuth", pct: 95 },
+                  ].map((row) => (
+                    <div key={row.acct} className="space-y-1">
+                      <div className="flex justify-between font-mono text-[10px] tabular-nums">
+                        <span className="text-[#71717a]">{row.acct}</span>
+                        <span className="text-[#a1a1aa]">{row.pct}%</span>
                       </div>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                      <div className="h-1 w-full overflow-hidden rounded-full bg-white/[0.07]">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${row.pct}%` }}
+                          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                          className="h-full rounded-full bg-[#d4d4d8]"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </motion.div>
+              )}
             </div>
           </div>
-        </SpotlightCard>
+        </SpotlightCell>
 
-        {/* Card 3 (Full 12 cols): Extensible Base Harness */}
-        <SpotlightCard className="p-7 lg:col-span-12">
-          <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.7fr]">
+        {/* Cell 3 (Full 12 cols): Extensible Base Harness */}
+        <SpotlightCell className="p-7 sm:p-8 lg:col-span-12">
+          <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.75fr]">
             <div>
               <h3 className="text-[18px] font-medium tracking-[-0.025em] text-[#fafafa]">
                 Extensible Base Harness
@@ -268,7 +266,7 @@ export function BentoArchitecture() {
               </p>
             </div>
 
-            <div className="grid divide-y divide-white/[0.07] rounded-xl border border-white/[0.07] bg-[#080809] sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+            <div className="grid gap-px border border-white/[0.06] bg-white/[0.06] sm:grid-cols-3">
               {[
                 {
                   idx: "01",
@@ -286,7 +284,7 @@ export function BentoArchitecture() {
                   desc: "Native GPUI panels or sandboxed community Pieces via piece.json.",
                 },
               ].map((layer) => (
-                <div key={layer.idx} className="p-5">
+                <div key={layer.idx} className="bg-[#060607] p-5">
                   <span className="font-mono text-[10px] text-[#52525b]">{layer.idx}</span>
                   <div className="mt-2 text-[14px] font-medium text-[#fafafa]">
                     {layer.title}
@@ -298,7 +296,7 @@ export function BentoArchitecture() {
               ))}
             </div>
           </div>
-        </SpotlightCard>
+        </SpotlightCell>
       </div>
     </section>
   );

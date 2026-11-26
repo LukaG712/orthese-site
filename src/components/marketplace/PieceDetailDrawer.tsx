@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import type { MarketplaceItem } from "@/types/piece-sdk";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -26,6 +27,15 @@ interface PieceDetailDrawerProps {
 export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
   const { openCheckout } = useStorefront();
 
+  useEffect(() => {
+    if (!item) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [item, onClose]);
+
   const handlePrimaryAction = () => {
     if (!item) return;
     if (item.pricing === "paid") {
@@ -46,26 +56,24 @@ export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
     });
   };
 
-  return (
-    <AnimatePresence>
-      {item && (
-        <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={onClose}
-            className="fixed inset-0 bg-black/75 backdrop-blur-sm"
-          />
+  if (!item) return null;
 
-          <motion.aside
-            initial={{ x: "100%", opacity: 0.6 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "100%", opacity: 0.6 }}
-            transition={{ type: "spring", stiffness: 400, damping: 36 }}
-            className="relative z-10 flex h-full w-full max-w-2xl flex-col border-l border-white/[0.1] bg-[#0a0a0b] shadow-[-24px_0_80px_rgba(0,0,0,0.9)]"
-          >
+  return (
+    <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.18 }}
+        onClick={onClose}
+        className="fixed inset-0 bg-black/75 backdrop-blur-sm"
+      />
+
+      <motion.aside
+        initial={{ x: "100%", opacity: 0.7 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 400, damping: 36 }}
+        className="relative z-10 flex h-full w-full max-w-2xl flex-col border-l border-white/[0.1] bg-[#0a0a0b] shadow-[-24px_0_80px_rgba(0,0,0,0.9)]"
+      >
             {/* Header */}
             <div className="flex items-start justify-between gap-4 border-b border-white/[0.08] bg-[#111111] px-6 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
               <div className="flex items-start gap-3 min-w-0">
@@ -111,7 +119,7 @@ export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
             {/* Scrollable Drawer Body */}
             <div className="flex-1 space-y-6 overflow-y-auto px-6 py-6">
               {/* Primary Action Bar */}
-              <div className="obsidian-card flex flex-wrap items-center justify-between gap-4 rounded-xl p-4">
+              <div className="obsidian-surface border border-white/[0.08] flex flex-wrap items-center justify-between gap-4 rounded-xl p-4">
                 <div>
                   <span className="block text-[12px] text-[#71717a]">
                     {item.pricing === "paid"
@@ -179,7 +187,7 @@ export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
               )}
 
               {item.includedPieceIds && item.includedPieceIds.length > 0 && (
-                <div className="obsidian-card rounded-xl p-4">
+                <div className="obsidian-surface border border-white/[0.08] rounded-xl p-4">
                   <h3 className="text-[12px] font-medium text-[#fafafa]">Included Pieces</h3>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {item.includedPieceIds.map((pid) => (
@@ -229,9 +237,7 @@ export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
                 </div>
               </div>
             </div>
-          </motion.aside>
-        </div>
-      )}
-    </AnimatePresence>
+      </motion.aside>
+    </div>
   );
 }

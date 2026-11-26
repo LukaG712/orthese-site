@@ -43,14 +43,14 @@ export function Navbar() {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "/#workspace-demo";
 
   return (
-    <header className="sticky top-0 z-40 h-14 w-full border-b border-white/[0.08] bg-[#050505]/75 backdrop-blur-md">
-      <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-5 sm:px-6">
+    <header className="sticky top-0 z-40 h-14 w-full border-b border-white/[0.06] bg-[#060607]/80 backdrop-blur-md">
+      <div className="mx-auto flex h-full max-w-[1200px] items-center justify-between px-6 sm:px-8">
         {/* Left: Crisp Orthese Wordmark */}
         <Link
           href="/"
           className="group flex items-center gap-2.5 text-[14px] font-medium tracking-[-0.02em] text-[#fafafa]"
         >
-          <span className="flex h-6 w-6 items-center justify-center rounded-[6px] border border-white/[0.14] bg-[#111111] shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] transition-colors group-hover:border-white/25">
+          <span className="flex h-6 w-6 items-center justify-center rounded-[5px] border border-white/[0.14] bg-[#111113] shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] transition-colors group-hover:border-white/25">
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <rect x="2" y="2" width="5" height="5" rx="1" fill="#FAFAFA" />
               <rect x="9" y="2" width="5" height="5" rx="1" stroke="#FAFAFA" strokeWidth="1.5" />
@@ -61,7 +61,7 @@ export function Navbar() {
           <span>Orthese</span>
         </Link>
 
-        {/* Center: Clean Navigation */}
+        {/* Center: Primary Navigation */}
         <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
           <div
             className="relative"
@@ -72,7 +72,7 @@ export function Navbar() {
               type="button"
               onClick={() => setPiecesOpen((o) => !o)}
               aria-expanded={piecesOpen}
-              className="inline-flex h-8 items-center gap-1 rounded-md px-3 text-[13px] font-normal text-[#a1a1aa] hover:text-[#fafafa] transition-colors cursor-pointer"
+              className="inline-flex h-8 items-center gap-1 rounded-md px-3 text-[13px] text-[#a1a1aa] hover:text-[#fafafa] transition-colors cursor-pointer"
             >
               <span>Pieces</span>
               <ChevronDown
@@ -93,7 +93,7 @@ export function Navbar() {
                   style={{ transformOrigin: "top center" }}
                   className="absolute left-1/2 top-full pt-2.5 -translate-x-1/2 w-[336px]"
                 >
-                  <div className="obsidian-card rounded-xl p-1.5 backdrop-blur-xl">
+                  <div className="obsidian-surface rounded-xl border border-white/[0.1] p-1.5 backdrop-blur-xl">
                     {PIECES_MENU.map((item) => {
                       const Icon = item.icon;
                       return (
@@ -150,16 +150,18 @@ export function Navbar() {
           </Link>
         </nav>
 
-        {/* Right: Subtle Cmd+K Keycap + High-Contrast Launch CTA */}
+        {/* Right: Clickable Cmd+K Keycap + High-Contrast Launch App */}
         <div className="flex items-center gap-2.5">
           <button
             type="button"
             onClick={() => setCommandOpen(true)}
-            className="inline-flex h-8 items-center gap-2 rounded-md border border-white/[0.08] bg-white/[0.025] px-2.5 text-[12px] text-[#a1a1aa] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:border-white/[0.16] hover:text-[#fafafa] transition-colors cursor-pointer"
             aria-label="Open command palette"
+            className="inline-flex h-8 items-center gap-2 rounded-md border border-white/[0.08] bg-white/[0.025] px-2.5 text-[12px] text-[#a1a1aa] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] hover:border-white/[0.16] hover:text-[#fafafa] transition-colors cursor-pointer"
           >
             <span className="hidden sm:inline">Search</span>
-            <kbd className="font-mono text-[11px] text-[#71717a]">⌘K</kbd>
+            <kbd className="rounded border border-white/[0.08] bg-[#060607] px-1 py-0.5 font-mono text-[10px] leading-none text-[#a1a1aa]">
+              ⌘K
+            </kbd>
           </button>
 
           <Link

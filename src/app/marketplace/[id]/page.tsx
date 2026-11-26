@@ -79,7 +79,7 @@ export default async function MarketplaceItemPage({
         )}
 
         {item.includedPieceIds && item.includedPieceIds.length > 0 && (
-          <div className="obsidian-card rounded-xl p-5">
+          <div className="obsidian-surface border border-white/[0.08] rounded-xl p-5">
             <h2 className="font-mono text-[11px] uppercase tracking-wider text-zinc-500">
               Included Pieces
             </h2>
@@ -97,7 +97,7 @@ export default async function MarketplaceItemPage({
           </div>
         )}
 
-        <div className="obsidian-card rounded-xl p-5">
+        <div className="obsidian-surface border border-white/[0.08] rounded-xl p-5">
           <div className="flex items-center justify-between">
             <h2 className="font-mono text-[11px] uppercase tracking-wider text-zinc-500">
               Changelog

@@ -15,7 +15,7 @@ export function ManifestSecurityPanel({ manifest }: ManifestSecurityPanelProps) 
   const hasElevated = manifest.permissions.elevated.length > 0;
 
   return (
-    <div className="obsidian-card overflow-hidden rounded-xl">
+    <div className="obsidian-surface overflow-hidden rounded-lg border border-white/[0.08]">
       <div className="flex items-center justify-between border-b border-white/[0.07] bg-white/[0.02] px-4 py-3">
         <div className="flex items-center gap-2">
           {hasElevated ? (
