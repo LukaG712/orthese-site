@@ -7,6 +7,7 @@ import { ArrowUpRight, Check, CheckCircle2, RotateCcw, Search, Shield, ShieldAle
 import { MARKETPLACE_ITEMS } from "@/data/catalog";
 import { AssetIcon } from "@/components/ui/Icon";
 import { SlidingTabs } from "@/components/ui/SlidingTabs";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { cn } from "@/lib/cn";
 import { PieceDetailDrawer } from "./PieceDetailDrawer";
 
@@ -28,25 +29,25 @@ function FilterCheckbox({
   hint?: string;
 }) {
   return (
-    <label className="flex cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-xs text-zinc-300 hover:bg-white/[0.04] transition-colors">
+    <label className="flex cursor-pointer items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-[13px] text-[#a1a1aa] hover:bg-white/[0.03] hover:text-[#fafafa] transition-colors">
       <span className="flex items-center gap-2.5">
         <Checkbox.Root
           checked={checked}
           onCheckedChange={(val) => onChange(Boolean(val))}
           className={cn(
-            "flex h-4 w-4 items-center justify-center rounded border transition-colors",
+            "flex h-4 w-4 items-center justify-center rounded-[4px] border transition-colors",
             checked
-              ? "border-white bg-white text-black"
-              : "border-white/20 bg-transparent text-transparent"
+              ? "border-[#fafafa] bg-[#fafafa] text-[#050505]"
+              : "border-white/[0.16] bg-transparent text-transparent"
           )}
         >
           <Checkbox.Indicator className="flex items-center justify-center">
             <Check className="h-3 w-3 stroke-[2.5]" />
           </Checkbox.Indicator>
         </Checkbox.Root>
-        <span>{label}</span>
+        <span className={checked ? "text-[#fafafa]" : undefined}>{label}</span>
       </span>
-      {hint && <span className="font-mono text-[10px] text-zinc-500">{hint}</span>}
+      {hint && <span className="font-mono text-[10px] text-[#52525b]">{hint}</span>}
     </label>
   );
 }
@@ -84,23 +85,14 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-
     const list = MARKETPLACE_ITEMS.filter((item) => {
       if (tab !== "all" && item.kind !== tab) return false;
-
       if (q) {
         const hay = `${item.name} ${item.id} ${item.tagline} ${item.tags.join(" ")} ${item.authorHandle}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
-
-      if (selectedRuntimes.length > 0 && !selectedRuntimes.includes(item.runtime)) {
-        return false;
-      }
-
-      if (selectedPricing.length > 0 && !selectedPricing.includes(item.pricing)) {
-        return false;
-      }
-
+      if (selectedRuntimes.length > 0 && !selectedRuntimes.includes(item.runtime)) return false;
+      if (selectedPricing.length > 0 && !selectedPricing.includes(item.pricing)) return false;
       if (selectedPerms.length > 0) {
         const isElevated =
           (item.manifest?.permissions.elevated.length ?? 0) > 0 ||
@@ -108,7 +100,6 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
         const tier: PermissionTier = isElevated ? "elevated" : "standard";
         if (!selectedPerms.includes(tier)) return false;
       }
-
       return true;
     });
 
@@ -124,291 +115,304 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
   );
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      {/* Header */}
-      <div className="border-b border-white/[0.08] pb-8">
-        <span className="font-mono text-[11px] uppercase tracking-widest text-zinc-500">
-          Orthese Registry · v0.1
-        </span>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-          Marketplace
-        </h1>
-        <p className="mt-2 max-w-2xl text-sm text-zinc-400">
-          Package registry meets industrial hardware catalog. Browse Pieces, portable{" "}
-          <code className="text-zinc-200">SKILL.md</code> packs, and one-click Starter Packs—every
-          entry exposes its exact <code className="text-zinc-200">piece.json</code> permissions
-          before installation.
-        </p>
+    <div className="relative">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[360px] bg-[radial-gradient(55%_45%_at_50%_0%,rgba(255,255,255,0.045)_0%,rgba(5,5,5,0)_100%)]"
+      />
 
-        {/* Top Search, Tabs & Sort */}
-        <div className="mt-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="relative flex-1 max-w-md">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Filter Pieces, Skills, tags, or @creators..."
-              className="h-9 w-full rounded-lg border border-white/[0.1] bg-[#111111] pl-9 pr-3 text-xs text-zinc-100 placeholder:text-zinc-500 focus:border-white/25 focus:outline-none"
-            />
-          </div>
+      <div className="relative mx-auto max-w-6xl px-5 py-16 sm:px-6">
+        {/* Header */}
+        <div className="border-b border-white/[0.08] pb-10">
+          <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#52525b]">
+            ORTHESE REGISTRY · V0.1
+          </span>
+          <h1 className="text-metallic mt-3 text-3xl font-medium tracking-[-0.04em] leading-[1.05] sm:text-5xl">
+            Marketplace
+          </h1>
+          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[#a1a1aa]">
+            Browse Pieces, <code className="font-mono text-[13px] text-[#fafafa]">SKILL.md</code>{" "}
+            packs, and Starter Packs. Click any card to inspect its{" "}
+            <code className="font-mono text-[13px] text-[#fafafa]">piece.json</code> permissions.
+          </p>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <SlidingTabs
-              ariaLabel="Asset Categories"
-              value={tab}
-              onChange={setTab}
-              options={[
-                { value: "all", label: "All", count: MARKETPLACE_ITEMS.length },
-                {
-                  value: "piece",
-                  label: "Pieces",
-                  count: MARKETPLACE_ITEMS.filter((i) => i.kind === "piece").length,
-                },
-                {
-                  value: "skill",
-                  label: "Skills",
-                  count: MARKETPLACE_ITEMS.filter((i) => i.kind === "skill").length,
-                },
-                {
-                  value: "starter-pack",
-                  label: "Starter Packs",
-                  count: MARKETPLACE_ITEMS.filter((i) => i.kind === "starter-pack").length,
-                },
-              ]}
-            />
+          {/* Search, Sliding Tabs & Sort */}
+          <div className="mt-8 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div className="relative max-w-md flex-1">
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#52525b]" />
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search Pieces, Skills, or @creators..."
+                className="h-9 w-full rounded-lg border border-white/[0.08] bg-[#111111] pl-10 pr-3 text-[13px] text-[#fafafa] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] placeholder:text-[#52525b] focus:border-white/25 focus:outline-none"
+              />
+            </div>
 
-            <select
-              aria-label="Sort marketplace items"
-              value={sort}
-              onChange={(e) => setSort(e.target.value as SortMode)}
-              className="h-9 rounded-lg border border-white/[0.1] bg-[#111111] px-2.5 font-mono text-xs text-zinc-300 focus:border-white/25 focus:outline-none cursor-pointer"
-            >
-              <option value="popular">Sort: Popular</option>
-              <option value="newest">Sort: Newest</option>
-              <option value="price">Sort: Price</option>
-            </select>
-          </div>
-        </div>
-      </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <SlidingTabs
+                ariaLabel="Asset Categories"
+                value={tab}
+                onChange={setTab}
+                options={[
+                  { value: "all", label: "All", count: MARKETPLACE_ITEMS.length },
+                  {
+                    value: "piece",
+                    label: "Pieces",
+                    count: MARKETPLACE_ITEMS.filter((i) => i.kind === "piece").length,
+                  },
+                  {
+                    value: "skill",
+                    label: "Skills",
+                    count: MARKETPLACE_ITEMS.filter((i) => i.kind === "skill").length,
+                  },
+                  {
+                    value: "starter-pack",
+                    label: "Starter Packs",
+                    count: MARKETPLACE_ITEMS.filter((i) => i.kind === "starter-pack").length,
+                  },
+                ]}
+              />
 
-      {/* Main Split: Sticky 220px Filter Rail + Catalog Content */}
-      <div className="mt-8 grid gap-8 lg:grid-cols-[220px_1fr]">
-        {/* Sticky Left Filter Rail */}
-        <aside className="lg:sticky lg:top-20 lg:self-start space-y-6">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-[11px] uppercase tracking-wider text-zinc-400">
-              Filters
-            </span>
-            {activeFilterCount > 0 && (
-              <button
-                type="button"
-                onClick={resetFilters}
-                className="inline-flex items-center gap-1 font-mono text-[10px] text-zinc-400 hover:text-white cursor-pointer"
-              >
-                <RotateCcw className="h-3 w-3" />
-                Reset ({activeFilterCount})
-              </button>
-            )}
-          </div>
-
-          <div className="space-y-1.5 border-t border-white/[0.06] pt-4">
-            <span className="block px-2 font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-              Permissions
-            </span>
-            <FilterCheckbox
-              label="Standard"
-              hint="Sandboxed"
-              checked={selectedPerms.includes("standard")}
-              onChange={() => toggle(selectedPerms, "standard", setSelectedPerms)}
-            />
-            <FilterCheckbox
-              label="Elevated"
-              hint="fs / shell"
-              checked={selectedPerms.includes("elevated")}
-              onChange={() => toggle(selectedPerms, "elevated", setSelectedPerms)}
-            />
-          </div>
-
-          <div className="space-y-1.5 border-t border-white/[0.06] pt-4">
-            <span className="block px-2 font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-              Runtime Target
-            </span>
-            <FilterCheckbox
-              label="Web + Desktop"
-              hint="WASM"
-              checked={selectedRuntimes.includes("wasm+desktop")}
-              onChange={() => toggle(selectedRuntimes, "wasm+desktop", setSelectedRuntimes)}
-            />
-            <FilterCheckbox
-              label="Desktop Only"
-              hint="Native"
-              checked={selectedRuntimes.includes("desktop-only")}
-              onChange={() => toggle(selectedRuntimes, "desktop-only", setSelectedRuntimes)}
-            />
-          </div>
-
-          <div className="space-y-1.5 border-t border-white/[0.06] pt-4">
-            <span className="block px-2 font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-              Pricing
-            </span>
-            <FilterCheckbox
-              label="Free"
-              checked={selectedPricing.includes("free")}
-              onChange={() => toggle(selectedPricing, "free", setSelectedPricing)}
-            />
-            <FilterCheckbox
-              label="Free + Rev-Share"
-              checked={selectedPricing.includes("rev-share")}
-              onChange={() => toggle(selectedPricing, "rev-share", setSelectedPricing)}
-            />
-            <FilterCheckbox
-              label="Paid One-Time"
-              checked={selectedPricing.includes("paid")}
-              onChange={() => toggle(selectedPricing, "paid", setSelectedPricing)}
-            />
-          </div>
-        </aside>
-
-        {/* Right Content: Featured Banner + Dense 3-Column Grid */}
-        <div className="space-y-8 min-w-0">
-          {tab === "all" && activeFilterCount === 0 && (
-            <div>
-              <div className="mb-3 flex items-center justify-between">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-                  Featured Starter Packs
-                </span>
-                <span className="font-mono text-[10px] text-zinc-600">
-                  1-click workspace layouts
-                </span>
-              </div>
-              <div className="grid gap-3 md:grid-cols-2">
-                {featuredPacks.map((pack) => (
+              <div className="inline-flex rounded-lg border border-white/[0.08] bg-white/[0.02] p-0.5">
+                {(
+                  [
+                    { id: "popular", label: "Popular" },
+                    { id: "newest", label: "Newest" },
+                    { id: "price", label: "Price" },
+                  ] as const
+                ).map((s) => (
                   <button
-                    key={pack.id}
+                    key={s.id}
                     type="button"
-                    onClick={() => setActiveItem(pack)}
-                    className="workstation-card workstation-card-hover border-beam-ring group rounded-xl p-5 text-left cursor-pointer"
+                    onClick={() => setSort(s.id)}
+                    className={cn(
+                      "rounded-md px-2.5 py-1 text-[12px] transition-colors cursor-pointer",
+                      sort === s.id
+                        ? "bg-white/[0.09] text-[#fafafa] font-medium"
+                        : "text-[#71717a] hover:text-[#fafafa]"
+                    )}
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.12] bg-white/[0.04] text-white">
-                        <AssetIcon name={pack.icon} className="h-4 w-4" />
-                      </span>
-                      <span className="inline-flex items-center gap-1 font-mono text-[10px] text-zinc-400 group-hover:text-white">
-                        Inspect Pack
-                        <ArrowUpRight className="h-3.5 w-3.5" />
-                      </span>
-                    </div>
-                    <h2 className="mt-3.5 text-sm font-semibold text-white">{pack.name}</h2>
-                    <p className="mt-1 text-xs leading-relaxed text-zinc-400">{pack.tagline}</p>
-                    <div className="mt-3 flex items-center gap-2 font-mono text-[10px] text-zinc-500">
-                      <span>{pack.includedPieceIds?.length ?? 2} Pieces</span>
-                      <span>·</span>
-                      <span>
-                        {pack.runtime === "wasm+desktop" ? "WASM + Desktop" : "Desktop Only"}
-                      </span>
-                    </div>
+                    {s.label}
                   </button>
                 ))}
               </div>
             </div>
-          )}
+          </div>
+        </div>
 
-          {/* Dense 3-Column Asset Grid */}
-          <div>
-            <div className="mb-3 flex items-center justify-between font-mono text-[11px] text-zinc-500">
-              <span>
-                Showing <strong className="text-zinc-200">{filtered.length}</strong>{" "}
-                {filtered.length === 1 ? "asset" : "assets"}
-              </span>
-              <span>Click any card to inspect piece.json</span>
-            </div>
-
-            {filtered.length === 0 ? (
-              <div className="workstation-card rounded-xl py-16 text-center">
-                <p className="text-sm text-zinc-300">No assets match those filters.</p>
+        {/* Sticky 220px Filter Rail + Dense 3-Column Asset Grid */}
+        <div className="mt-10 grid gap-10 lg:grid-cols-[220px_1fr]">
+          <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
+            <div className="flex items-center justify-between px-2">
+              <span className="text-[12px] font-medium text-[#fafafa]">Filters</span>
+              {activeFilterCount > 0 && (
                 <button
                   type="button"
                   onClick={resetFilters}
-                  className="mt-3 rounded-md border border-white/[0.12] bg-white/[0.04] px-3 py-1.5 text-xs text-white hover:bg-white/[0.08] cursor-pointer"
+                  className="inline-flex items-center gap-1 text-[11px] text-[#a1a1aa] hover:text-[#fafafa] cursor-pointer"
                 >
-                  Clear all filters
+                  <RotateCcw className="h-3 w-3" />
+                  Reset ({activeFilterCount})
                 </button>
-              </div>
-            ) : (
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                {filtered.map((item) => {
-                  const isElevated =
-                    (item.manifest?.permissions.elevated.length ?? 0) > 0 ||
-                    item.runtime === "desktop-only";
+              )}
+            </div>
 
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => setActiveItem(item)}
-                      className="workstation-card workstation-card-hover flex flex-col justify-between rounded-xl p-4 text-left cursor-pointer"
+            <div className="space-y-1 border-t border-white/[0.06] pt-4">
+              <span className="block px-2 pb-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#52525b]">
+                Permissions
+              </span>
+              <FilterCheckbox
+                label="Standard"
+                hint="sandbox"
+                checked={selectedPerms.includes("standard")}
+                onChange={() => toggle(selectedPerms, "standard", setSelectedPerms)}
+              />
+              <FilterCheckbox
+                label="Elevated"
+                hint="fs / shell"
+                checked={selectedPerms.includes("elevated")}
+                onChange={() => toggle(selectedPerms, "elevated", setSelectedPerms)}
+              />
+            </div>
+
+            <div className="space-y-1 border-t border-white/[0.06] pt-4">
+              <span className="block px-2 pb-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#52525b]">
+                Runtime
+              </span>
+              <FilterCheckbox
+                label="Web + Desktop"
+                hint="wasm32"
+                checked={selectedRuntimes.includes("wasm+desktop")}
+                onChange={() => toggle(selectedRuntimes, "wasm+desktop", setSelectedRuntimes)}
+              />
+              <FilterCheckbox
+                label="Desktop Only"
+                hint="native"
+                checked={selectedRuntimes.includes("desktop-only")}
+                onChange={() => toggle(selectedRuntimes, "desktop-only", setSelectedRuntimes)}
+              />
+            </div>
+
+            <div className="space-y-1 border-t border-white/[0.06] pt-4">
+              <span className="block px-2 pb-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#52525b]">
+                Pricing
+              </span>
+              <FilterCheckbox
+                label="Free"
+                checked={selectedPricing.includes("free")}
+                onChange={() => toggle(selectedPricing, "free", setSelectedPricing)}
+              />
+              <FilterCheckbox
+                label="Free + Rev-Share"
+                checked={selectedPricing.includes("rev-share")}
+                onChange={() => toggle(selectedPricing, "rev-share", setSelectedPricing)}
+              />
+              <FilterCheckbox
+                label="Paid One-Time"
+                checked={selectedPricing.includes("paid")}
+                onChange={() => toggle(selectedPricing, "paid", setSelectedPricing)}
+              />
+            </div>
+          </aside>
+
+          {/* Right Catalog */}
+          <div className="space-y-10 min-w-0">
+            {tab === "all" && activeFilterCount === 0 && (
+              <div>
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#52525b]">
+                    Featured Starter Packs
+                  </span>
+                  <span className="text-[12px] text-[#52525b]">One-click canvas presets</span>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  {featuredPacks.map((pack) => (
+                    <SpotlightCard
+                      key={pack.id}
+                      featured
+                      onClick={() => setActiveItem(pack)}
+                      className="cursor-pointer p-5 transition-transform duration-200 hover:-translate-y-0.5"
                     >
-                      <div>
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.1] bg-white/[0.04] text-zinc-100">
-                            <AssetIcon name={item.icon} className="h-4 w-4" />
-                          </span>
-                          <span
-                            className={cn(
-                              "rounded-full border px-2 py-0.5 font-mono text-[10px] font-medium uppercase",
-                              item.pricing === "paid"
-                                ? "border-white/25 bg-white text-black"
-                                : "border-white/[0.1] bg-white/[0.04] text-zinc-200"
-                            )}
-                          >
-                            {item.pricing === "paid"
-                              ? `€${item.priceEur}`
-                              : item.pricing === "rev-share"
-                                ? "REV-SHARE"
-                                : "FREE"}
-                          </span>
-                        </div>
-
-                        <h3 className="mt-3 text-sm font-semibold text-white">{item.name}</h3>
-                        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-zinc-400">
-                          {item.tagline}
-                        </p>
+                      <div className="flex items-start justify-between gap-3">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.12] bg-white/[0.04] text-[#fafafa]">
+                          <AssetIcon name={pack.icon} className="h-4 w-4" />
+                        </span>
+                        <ArrowUpRight className="h-4 w-4 text-[#71717a] transition-colors group-hover:text-[#fafafa]" />
                       </div>
-
-                      <div className="mt-4 space-y-2.5 border-t border-white/[0.06] pt-3">
-                        <div className="flex flex-wrap items-center gap-1.5 font-mono text-[10px]">
-                          <span className="inline-flex items-center gap-1 rounded border border-white/[0.09] bg-white/[0.03] px-1.5 py-0.5 text-zinc-300">
-                            {isElevated ? (
-                              <ShieldAlert className="h-2.5 w-2.5" />
-                            ) : (
-                              <Shield className="h-2.5 w-2.5" />
-                            )}
-                            {isElevated ? "Elevated" : "Standard"}
-                          </span>
-                          <span className="rounded border border-white/[0.08] px-1.5 py-0.5 text-zinc-400">
-                            {item.runtime === "wasm+desktop" ? "WASM" : "Desktop"}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center justify-between font-mono text-[10px] text-zinc-500">
-                          <span className="inline-flex items-center gap-1 text-zinc-400">
-                            <span>{item.authorHandle}</span>
-                            {item.official && <CheckCircle2 className="h-3 w-3 text-zinc-300" />}
-                          </span>
-                          <span>{item.installs.toLocaleString()}</span>
-                        </div>
+                      <h2 className="mt-4 text-[15px] font-medium text-[#fafafa]">{pack.name}</h2>
+                      <p className="mt-1 text-[13px] leading-relaxed text-[#a1a1aa]">
+                        {pack.tagline}
+                      </p>
+                      <div className="mt-4 font-mono text-[11px] text-[#52525b]">
+                        {pack.includedPieceIds?.length ?? 2} Pieces ·{" "}
+                        {pack.runtime === "wasm+desktop" ? "WASM + Desktop" : "Desktop Only"}
                       </div>
-                    </button>
-                  );
-                })}
+                    </SpotlightCard>
+                  ))}
+                </div>
               </div>
             )}
+
+            <div>
+              <div className="mb-3 flex items-center justify-between text-[12px] text-[#52525b]">
+                <span className="tabular-nums">
+                  Showing <span className="text-[#fafafa]">{filtered.length}</span>{" "}
+                  {filtered.length === 1 ? "asset" : "assets"}
+                </span>
+                <span className="font-mono text-[11px]">Click card for piece.json</span>
+              </div>
+
+              {filtered.length === 0 ? (
+                <div className="obsidian-card rounded-2xl py-16 text-center">
+                  <p className="text-[14px] text-[#a1a1aa]">No assets match those filters.</p>
+                  <button
+                    type="button"
+                    onClick={resetFilters}
+                    className="btn-secondary mt-4 rounded-lg px-3.5 py-2 text-[12px] font-medium cursor-pointer"
+                  >
+                    Clear filters
+                  </button>
+                </div>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {filtered.map((item) => {
+                    const isElevated =
+                      (item.manifest?.permissions.elevated.length ?? 0) > 0 ||
+                      item.runtime === "desktop-only";
+
+                    return (
+                      <SpotlightCard
+                        key={item.id}
+                        onClick={() => setActiveItem(item)}
+                        className="cursor-pointer p-5 transition-transform duration-200 hover:-translate-y-0.5"
+                      >
+                        <div className="flex h-full flex-col justify-between">
+                          <div>
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.1] bg-white/[0.03] text-[#fafafa]">
+                                <AssetIcon name={item.icon} className="h-4 w-4" />
+                              </span>
+                              <span
+                                className={cn(
+                                  "font-mono text-[10px] uppercase tracking-wider",
+                                  item.pricing === "paid"
+                                    ? "rounded-md bg-[#fafafa] px-2 py-0.5 font-medium text-[#050505]"
+                                    : "text-[#71717a]"
+                                )}
+                              >
+                                {item.pricing === "paid"
+                                  ? `€${item.priceEur}`
+                                  : item.pricing === "rev-share"
+                                    ? "Rev-Share"
+                                    : "Free"}
+                              </span>
+                            </div>
+
+                            <h3 className="mt-4 text-[14px] font-medium text-[#fafafa]">
+                              {item.name}
+                            </h3>
+                            <p className="mt-1 line-clamp-2 text-[12.5px] leading-relaxed text-[#a1a1aa]">
+                              {item.tagline}
+                            </p>
+                          </div>
+
+                          <div className="mt-5 space-y-2.5 border-t border-white/[0.06] pt-3">
+                            <div className="flex items-center gap-2 font-mono text-[10px] text-[#71717a]">
+                              <span className="inline-flex items-center gap-1">
+                                {isElevated ? (
+                                  <ShieldAlert className="h-3 w-3 text-[#a1a1aa]" />
+                                ) : (
+                                  <Shield className="h-3 w-3 text-[#71717a]" />
+                                )}
+                                {isElevated ? "Elevated" : "Standard"}
+                              </span>
+                              <span>·</span>
+                              <span>{item.runtime === "wasm+desktop" ? "WASM" : "Desktop"}</span>
+                            </div>
+
+                            <div className="flex items-center justify-between text-[11px] text-[#52525b]">
+                              <span className="inline-flex items-center gap-1 text-[#a1a1aa]">
+                                <span>{item.authorHandle}</span>
+                                {item.official && <CheckCircle2 className="h-3 w-3 text-[#fafafa]" />}
+                              </span>
+                              <span className="font-mono tabular-nums">
+                                {item.installs.toLocaleString()}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </SpotlightCard>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Piece Detail Slide-Over Drawer */}
       <PieceDetailDrawer item={activeItem} onClose={() => setActiveItem(null)} />
     </div>
   );

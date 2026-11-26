@@ -14,7 +14,7 @@ export function MarketplaceItemActions({ item }: { item: MarketplaceItem }) {
       {item.runtime === "wasm+desktop" && (
         <Link
           href="/#workspace-demo"
-          className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-white/[0.14] bg-white/[0.04] px-3.5 text-xs font-medium text-white hover:border-white/25 hover:bg-white/[0.08] transition-colors"
+          className="btn-secondary inline-flex h-9 items-center gap-1.5 rounded-lg px-3.5 text-[13px] font-medium"
         >
           <Play className="h-3.5 w-3.5" />
           <span>Try in Sandbox</span>
@@ -34,7 +34,7 @@ export function MarketplaceItemActions({ item }: { item: MarketplaceItem }) {
             toast.success(`Added ${item.name} to Orthese Canvas`);
           }
         }}
-        className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-white px-4 text-xs font-semibold text-black hover:bg-zinc-200 transition-colors cursor-pointer"
+        className="btn-primary inline-flex h-9 items-center gap-1.5 rounded-lg px-4 text-[13px] font-medium cursor-pointer"
       >
         {item.pricing === "paid" ? (
           <>

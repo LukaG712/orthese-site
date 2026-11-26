@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useId } from "react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/cn";
 
 export interface TabOption<T extends string> {
@@ -24,76 +25,44 @@ export function SlidingTabs<T extends string>({
   className,
   ariaLabel = "Tabs",
 }: SlidingTabsProps<T>) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const [pill, setPill] = useState<{ left: number; width: number; ready: boolean }>({
-    left: 0,
-    width: 0,
-    ready: false,
-  });
-
-  const measure = (animate: boolean) => {
-    const el = tabRefs.current[value];
-    if (!el) return;
-    setPill((prev) => ({
-      left: el.offsetLeft,
-      width: el.offsetWidth,
-      ready: animate ? true : prev.ready,
-    }));
-  };
-
-  useLayoutEffect(() => {
-    measure(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, options.length]);
-
-  useEffect(() => {
-    const onResize = () => measure(false);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  const layoutGroup = useId();
 
   return (
     <div
-      ref={containerRef}
       role="tablist"
       aria-label={ariaLabel}
-      className={cn("t-tabs", className)}
+      className={cn(
+        "relative inline-flex items-center gap-0.5 rounded-lg border border-white/[0.08] bg-white/[0.03] p-0.5",
+        className
+      )}
     >
-      <span
-        aria-hidden="true"
-        className="t-tabs-pill"
-        style={{
-          transform: `translateX(${pill.left}px)`,
-          width: `${pill.width}px`,
-          opacity: pill.width > 0 ? 1 : 0,
-          transition: pill.ready ? undefined : "none",
-        }}
-      />
       {options.map((opt) => {
         const selected = opt.value === value;
         return (
           <button
             key={opt.value}
-            ref={(node) => {
-              tabRefs.current[opt.value] = node;
-            }}
             type="button"
             role="tab"
             aria-selected={selected}
             onClick={() => onChange(opt.value)}
             className={cn(
-              "relative z-10 inline-flex h-7 items-center gap-1.5 rounded-full px-3 text-xs font-medium transition-colors cursor-pointer whitespace-nowrap",
-              selected ? "text-[#fafafa]" : "text-zinc-400 hover:text-zinc-200"
+              "relative inline-flex h-7 items-center gap-1.5 rounded-[6px] px-3 text-xs font-medium transition-colors cursor-pointer whitespace-nowrap",
+              selected ? "text-[#fafafa]" : "text-[#a1a1aa] hover:text-[#fafafa]"
             )}
           >
-            <span>{opt.label}</span>
+            {selected && (
+              <motion.span
+                layoutId={`sliding-pill-${layoutGroup}`}
+                transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                className="absolute inset-0 rounded-[6px] border border-white/[0.1] bg-white/[0.09] shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]"
+              />
+            )}
+            <span className="relative z-10">{opt.label}</span>
             {typeof opt.count === "number" && (
               <span
                 className={cn(
-                  "font-mono text-[10px]",
-                  selected ? "text-zinc-300" : "text-zinc-500"
+                  "relative z-10 font-mono text-[10px] tabular-nums",
+                  selected ? "text-[#d4d4d8]" : "text-[#52525b]"
                 )}
               >
                 {opt.count}

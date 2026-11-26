@@ -1,84 +1,84 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { MARKETPLACE_ITEMS } from "@/data/catalog";
 import { AssetIcon } from "@/components/ui/Icon";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
+
+const CURATED_IDS = [
+  "orthese.website-builder",
+  "orthese.ai-prompt-box",
+  "orthese.software-engineer",
+  "community.ui-component-forge",
+];
 
 export function MarketplaceTeaserRail() {
-  const featured = MARKETPLACE_ITEMS.slice(0, 8);
-  const looped = [...featured, ...featured];
+  const curated = CURATED_IDS.map((id) =>
+    MARKETPLACE_ITEMS.find((item) => item.id === id)
+  ).filter((item): item is NonNullable<typeof item> => Boolean(item));
 
   return (
-    <section className="border-t border-white/[0.06] py-20">
-      <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+    <section className="border-t border-white/[0.08] py-28 sm:py-32">
+      <div className="mb-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
         <div className="max-w-xl">
-          <span className="font-mono text-[11px] uppercase tracking-widest text-zinc-500">
-            03 / Marketplace Registry
+          <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#52525b]">
+            03 / MARKETPLACE
           </span>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-            Snap in Pieces, Skills &amp; Starter Packs.
+          <h2 className="text-metallic mt-3 text-3xl font-medium tracking-[-0.04em] leading-[1.06] sm:text-4xl">
+            Flagship Pieces, ready to snap in.
           </h2>
-          <p className="mt-2 text-sm text-zinc-400">
-            Every asset exposes its exact <code className="text-zinc-200">piece.json</code>{" "}
-            permissions and Shared Context Bus contract before you install or buy.
+          <p className="mt-3 text-[15px] leading-relaxed text-[#a1a1aa]">
+            Every Piece declares its exact permissions and Context Bus contract in{" "}
+            <code className="font-mono text-[13px] text-[#fafafa]">piece.json</code>.
           </p>
         </div>
 
         <Link
           href="/marketplace"
-          className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-white/[0.12] bg-white/[0.04] px-3.5 text-xs font-medium text-white hover:border-white/25 hover:bg-white/[0.08] transition-colors"
+          className="btn-secondary inline-flex h-9 items-center gap-1.5 rounded-lg px-4 text-[13px] font-medium"
         >
           <span>Browse Full Marketplace</span>
           <ArrowRight className="h-3.5 w-3.5" />
         </Link>
       </div>
 
-      {/* Horizontal Marquee Rail */}
-      <div className="relative -mx-4 overflow-hidden px-4 sm:-mx-6 sm:px-6">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#0a0a0a] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#0a0a0a] to-transparent" />
+      {/* Clean Single-Row 4-Card Curated Strip (No Duplicated Marquee Clutter) */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {curated.map((item) => (
+          <Link key={item.id} href={`/marketplace/${item.id}`} className="block h-full">
+            <SpotlightCard className="h-full p-5 transition-transform duration-200 hover:-translate-y-0.5">
+              <div className="flex h-full flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.1] bg-white/[0.03] text-[#fafafa] shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]">
+                      <AssetIcon name={item.icon} className="h-4 w-4" />
+                    </span>
+                    <ArrowUpRight className="h-4 w-4 text-[#52525b] transition-colors group-hover:text-[#fafafa]" />
+                  </div>
 
-        <div className="animate-marquee gap-3 py-2">
-          {looped.map((item, idx) => (
-            <Link
-              key={`${item.id}-${idx}`}
-              href={`/marketplace/${item.id}`}
-              className="workstation-card workstation-card-hover mr-3 flex w-[290px] shrink-0 flex-col justify-between rounded-xl p-4"
-            >
-              <div>
-                <div className="flex items-center justify-between gap-2">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.1] bg-white/[0.04] text-zinc-200">
-                    <AssetIcon name={item.icon} className="h-4 w-4" />
-                  </span>
-                  <span className="rounded-full border border-white/[0.1] bg-white/[0.04] px-2 py-0.5 font-mono text-[10px] font-medium uppercase text-zinc-200">
-                    {item.pricing === "paid"
-                      ? `€${item.priceEur}`
-                      : item.pricing === "rev-share"
-                        ? "REV-SHARE"
-                        : "FREE"}
-                  </span>
+                  <h3 className="mt-5 text-[15px] font-medium tracking-[-0.015em] text-[#fafafa]">
+                    {item.name}
+                  </h3>
+                  <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-[#a1a1aa]">
+                    {item.tagline}
+                  </p>
                 </div>
 
-                <div className="mt-3 flex items-center gap-1.5">
-                  <h3 className="truncate text-sm font-semibold text-white">{item.name}</h3>
-                  {item.official && (
-                    <CheckCircle2
-                      className="h-3.5 w-3.5 shrink-0 text-zinc-300"
-                      aria-label="Official Orthese asset"
-                    />
-                  )}
+                <div className="mt-6 flex items-center justify-between border-t border-white/[0.07] pt-3 font-mono text-[11px] tabular-nums text-[#52525b]">
+                  <span>
+                    {item.runtime === "wasm+desktop" ? "WASM + Desktop" : "Desktop"}
+                  </span>
+                  <span className="text-[#a1a1aa]">
+                    {item.pricing === "rev-share"
+                      ? "Rev-Share"
+                      : item.pricing === "paid"
+                        ? `€${item.priceEur}`
+                        : "Free"}
+                  </span>
                 </div>
-                <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-zinc-400">
-                  {item.tagline}
-                </p>
               </div>
-
-              <div className="mt-4 flex items-center justify-between border-t border-white/[0.06] pt-2.5 font-mono text-[10px] text-zinc-500">
-                <span>{item.runtime === "wasm+desktop" ? "WASM + Desktop" : "Desktop Only"}</span>
-                <span>{item.installs.toLocaleString()} installs</span>
-              </div>
-            </Link>
-          ))}
-        </div>
+            </SpotlightCard>
+          </Link>
+        ))}
       </div>
     </section>
   );

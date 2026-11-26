@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} dark`}>
-      <body className="min-h-screen bg-[#0a0a0a] text-[#fafafa] antialiased selection:bg-white selection:text-black">
+      <body className="min-h-screen bg-[#050505] text-[#fafafa] antialiased selection:bg-white selection:text-black">
         <StorefrontProvider>
           <div className="flex min-h-screen flex-col">
             <Navbar />
@@ -47,6 +47,8 @@ export default function RootLayout({
               style: {
                 background: "#111111",
                 border: "1px solid rgba(255,255,255,0.12)",
+                boxShadow:
+                  "inset 0 1px 0 0 rgba(255,255,255,0.16), 0 18px 48px -12px rgba(0,0,0,0.9)",
                 color: "#fafafa",
               },
             }}

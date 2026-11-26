@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { MarketplaceItem } from "@/types/piece-sdk";
-import { Dialog } from "@base-ui/react/dialog";
+import { AnimatePresence, motion } from "motion/react";
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -47,205 +47,191 @@ export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
   };
 
   return (
-    <Dialog.Root
-      open={Boolean(item)}
-      onOpenChange={(open) => {
-        if (!open) onClose();
-      }}
-    >
-      <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm" />
-        <Dialog.Popup className="fixed inset-y-0 right-0 z-50 flex w-full max-w-2xl flex-col border-l border-white/[0.1] bg-[#0c0c0c] shadow-[0_0_80px_rgba(0,0,0,0.9)] focus:outline-none">
-          {item && (
-            <>
-              {/* Top Action Bar */}
-              <div className="flex items-start justify-between gap-4 border-b border-white/[0.08] bg-[#111111] px-6 py-4">
-                <div className="flex items-start gap-3 min-w-0">
-                  <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.04] text-zinc-100">
-                    <AssetIcon name={item.icon} className="h-5 w-5" />
-                  </span>
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Dialog.Title className="text-base font-semibold text-white">
-                        {item.name}
-                      </Dialog.Title>
-                      {item.official && (
-                        <span className="inline-flex items-center gap-1 rounded-full border border-white/[0.12] bg-white/[0.04] px-2 py-0.5 font-mono text-[10px] text-zinc-200">
-                          <CheckCircle2 className="h-3 w-3" />
-                          Official
-                        </span>
-                      )}
-                      <span className="rounded border border-white/[0.09] px-1.5 py-0.5 font-mono text-[10px] uppercase text-zinc-400">
-                        {item.kind}
-                      </span>
-                    </div>
-                    <Dialog.Description className="mt-0.5 font-mono text-[11px] text-zinc-500">
-                      {item.id} · by {item.authorHandle} · {item.installs.toLocaleString()} installs
-                    </Dialog.Description>
-                  </div>
-                </div>
+    <AnimatePresence>
+      {item && (
+        <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/75 backdrop-blur-sm"
+          />
 
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <Link
-                    href={`/marketplace/${item.id}`}
-                    onClick={onClose}
-                    className="inline-flex h-8 items-center gap-1 rounded-md border border-white/[0.09] px-2.5 font-mono text-[11px] text-zinc-300 hover:border-white/20 hover:text-white transition-colors"
-                    title="Open standalone page"
-                  >
-                    <span>Permalink</span>
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </Link>
-                  <Dialog.Close className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/[0.09] text-zinc-400 hover:bg-white/[0.06] hover:text-white cursor-pointer">
-                    <X className="h-4 w-4" />
-                  </Dialog.Close>
-                </div>
-              </div>
-
-              {/* Scrollable Body */}
-              <div className="flex-1 space-y-6 overflow-y-auto px-6 py-5">
-                {/* Action CTA Strip */}
-                <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-[#111111] p-4">
-                  <div>
-                    <span className="block font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-                      {item.pricing === "paid"
-                        ? "One-Time Purchase (85% to Creator)"
-                        : item.pricing === "rev-share"
-                          ? "Free + Creator Token Rev-Share"
-                          : "Free Official Asset"}
-                    </span>
-                    <span className="mt-0.5 block font-mono text-lg font-semibold text-white">
-                      {item.pricing === "paid" ? `€${item.priceEur}` : "€0 · Free"}
-                    </span>
-                  </div>
-
+          <motion.aside
+            initial={{ x: "100%", opacity: 0.6 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "100%", opacity: 0.6 }}
+            transition={{ type: "spring", stiffness: 400, damping: 36 }}
+            className="relative z-10 flex h-full w-full max-w-2xl flex-col border-l border-white/[0.1] bg-[#0a0a0b] shadow-[-24px_0_80px_rgba(0,0,0,0.9)]"
+          >
+            {/* Header */}
+            <div className="flex items-start justify-between gap-4 border-b border-white/[0.08] bg-[#111111] px-6 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+              <div className="flex items-start gap-3 min-w-0">
+                <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/[0.12] bg-white/[0.04] text-[#fafafa]">
+                  <AssetIcon name={item.icon} className="h-5 w-5" />
+                </span>
+                <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    {item.runtime === "wasm+desktop" && (
-                      <Link
-                        href="/#workspace-demo"
-                        onClick={onClose}
-                        className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-white/[0.14] bg-white/[0.04] px-3.5 text-xs font-medium text-white hover:border-white/25 hover:bg-white/[0.08] transition-colors"
-                      >
-                        <Play className="h-3.5 w-3.5" />
-                        <span>Try in Sandbox</span>
-                      </Link>
-                    )}
-
-                    <button
-                      type="button"
-                      onClick={handlePrimaryAction}
-                      className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-white px-4 text-xs font-semibold text-black hover:bg-zinc-200 transition-colors cursor-pointer"
-                    >
-                      {item.pricing === "paid" ? (
-                        <>
-                          <ShoppingBag className="h-3.5 w-3.5" />
-                          <span>Buy · €{item.priceEur}</span>
-                        </>
-                      ) : (
-                        <>
-                          <Plus className="h-3.5 w-3.5" />
-                          <span>Add to Canvas</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Description */}
-                <div>
-                  <h4 className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-                    Overview
-                  </h4>
-                  <p className="mt-2 text-sm leading-relaxed text-zinc-300">
-                    {item.description}
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {item.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-md border border-white/[0.08] bg-white/[0.02] px-2 py-0.5 font-mono text-[10px] text-zinc-400"
-                      >
-                        #{tag}
+                    <h2 className="text-[16px] font-medium text-[#fafafa]">{item.name}</h2>
+                    {item.official && (
+                      <span className="inline-flex items-center gap-1 font-mono text-[10px] text-[#a1a1aa]">
+                        <CheckCircle2 className="h-3 w-3 text-[#fafafa]" />
+                        Official
                       </span>
-                    ))}
+                    )}
                   </div>
-                </div>
-
-                {/* Transparent Manifest & Security Panel OR Skill Preview OR Starter Pack Breakdown */}
-                {item.manifest && <ManifestSecurityPanel manifest={item.manifest} />}
-
-                {item.skillPreview && (
-                  <div>
-                    <h4 className="mb-2 font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-                      SKILL.md Bundle Preview
-                    </h4>
-                    <CodeBlock
-                      code={item.skillPreview}
-                      filename={`${item.id}/SKILL.md`}
-                      language="markdown"
-                    />
-                  </div>
-                )}
-
-                {item.includedPieceIds && item.includedPieceIds.length > 0 && (
-                  <div className="rounded-xl border border-white/[0.08] bg-[#111111] p-4">
-                    <h4 className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-                      Included Pieces in Starter Pack
-                    </h4>
-                    <div className="mt-2.5 flex flex-wrap gap-2">
-                      {item.includedPieceIds.map((pid) => (
-                        <Link
-                          key={pid}
-                          href={`/marketplace/${pid}`}
-                          onClick={onClose}
-                          className="rounded-md border border-white/[0.1] bg-[#0a0a0a] px-2.5 py-1 font-mono text-xs text-zinc-200 hover:border-white/25 transition-colors"
-                        >
-                          {pid} →
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Changelog */}
-                <div>
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-                      Changelog
-                    </h4>
-                    <a
-                      href={item.repoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1 font-mono text-[11px] text-zinc-400 hover:text-white transition-colors"
-                    >
-                      <span>Source / README</span>
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
-                  </div>
-                  <div className="mt-2.5 space-y-3">
-                    {item.changelog.map((entry) => (
-                      <div
-                        key={entry.version}
-                        className="rounded-lg border border-white/[0.07] bg-[#111111] p-3.5"
-                      >
-                        <div className="flex items-center justify-between font-mono text-[11px]">
-                          <span className="font-semibold text-white">v{entry.version}</span>
-                          <span className="text-zinc-500">{entry.date}</span>
-                        </div>
-                        <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-zinc-400">
-                          {entry.notes.map((note) => (
-                            <li key={note}>{note}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
+                  <p className="mt-0.5 font-mono text-[11px] tabular-nums text-[#71717a]">
+                    {item.id} · {item.authorHandle} · {item.installs.toLocaleString()} installs
+                  </p>
                 </div>
               </div>
-            </>
-          )}
-        </Dialog.Popup>
-      </Dialog.Portal>
-    </Dialog.Root>
+
+              <div className="flex items-center gap-1.5 shrink-0">
+                <Link
+                  href={`/marketplace/${item.id}`}
+                  onClick={onClose}
+                  className="btn-secondary inline-flex h-8 items-center gap-1 rounded-md px-2.5 text-[12px]"
+                >
+                  <span>Permalink</span>
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </Link>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  aria-label="Close drawer"
+                  className="btn-secondary inline-flex h-8 w-8 items-center justify-center rounded-md text-[#a1a1aa] hover:text-[#fafafa] cursor-pointer"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Scrollable Drawer Body */}
+            <div className="flex-1 space-y-6 overflow-y-auto px-6 py-6">
+              {/* Primary Action Bar */}
+              <div className="obsidian-card flex flex-wrap items-center justify-between gap-4 rounded-xl p-4">
+                <div>
+                  <span className="block text-[12px] text-[#71717a]">
+                    {item.pricing === "paid"
+                      ? "One-time purchase · 85% to creator"
+                      : item.pricing === "rev-share"
+                        ? "Free · 20% credit margin rev-share"
+                        : "Free official asset"}
+                  </span>
+                  <span className="mt-0.5 block font-mono text-[18px] font-medium tabular-nums text-[#fafafa]">
+                    {item.pricing === "paid" ? `€${item.priceEur}` : "€0 · Free"}
+                  </span>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  {item.runtime === "wasm+desktop" && (
+                    <Link
+                      href="/#workspace-demo"
+                      onClick={onClose}
+                      className="btn-secondary inline-flex h-9 items-center gap-1.5 rounded-lg px-3.5 text-[13px] font-medium"
+                    >
+                      <Play className="h-3.5 w-3.5" />
+                      <span>Try in Sandbox</span>
+                    </Link>
+                  )}
+                  <button
+                    type="button"
+                    onClick={handlePrimaryAction}
+                    className="btn-primary inline-flex h-9 items-center gap-1.5 rounded-lg px-4 text-[13px] font-medium cursor-pointer"
+                  >
+                    {item.pricing === "paid" ? (
+                      <>
+                        <ShoppingBag className="h-3.5 w-3.5" />
+                        <span>Buy · €{item.priceEur}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="h-3.5 w-3.5" />
+                        <span>Add to Canvas</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-[12px] font-medium text-[#fafafa]">Overview</h3>
+                <p className="mt-2 text-[14px] leading-relaxed text-[#a1a1aa]">
+                  {item.description}
+                </p>
+              </div>
+
+              {item.manifest && <ManifestSecurityPanel manifest={item.manifest} />}
+
+              {item.skillPreview && (
+                <div>
+                  <h3 className="mb-2 text-[12px] font-medium text-[#fafafa]">
+                    SKILL.md Bundle
+                  </h3>
+                  <CodeBlock
+                    code={item.skillPreview}
+                    filename={`${item.id}/SKILL.md`}
+                    language="markdown"
+                  />
+                </div>
+              )}
+
+              {item.includedPieceIds && item.includedPieceIds.length > 0 && (
+                <div className="obsidian-card rounded-xl p-4">
+                  <h3 className="text-[12px] font-medium text-[#fafafa]">Included Pieces</h3>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {item.includedPieceIds.map((pid) => (
+                      <Link
+                        key={pid}
+                        href={`/marketplace/${pid}`}
+                        onClick={onClose}
+                        className="rounded-md border border-white/[0.1] bg-[#080809] px-2.5 py-1 font-mono text-[11px] text-[#d4d4d8] hover:border-white/25 hover:text-[#fafafa] transition-colors"
+                      >
+                        {pid} →
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="border-t border-white/[0.08] pt-5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-[12px] font-medium text-[#fafafa]">Changelog</h3>
+                  <a
+                    href={item.repoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-[12px] text-[#a1a1aa] hover:text-[#fafafa] transition-colors"
+                  >
+                    <span>Source</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                </div>
+                <div className="mt-3 space-y-3">
+                  {item.changelog.map((entry) => (
+                    <div
+                      key={entry.version}
+                      className="rounded-xl border border-white/[0.07] bg-[#111111] p-4"
+                    >
+                      <div className="flex items-center justify-between font-mono text-[11px]">
+                        <span className="font-medium text-[#fafafa]">v{entry.version}</span>
+                        <span className="text-[#52525b]">{entry.date}</span>
+                      </div>
+                      <ul className="mt-2 list-disc space-y-1 pl-4 text-[13px] text-[#a1a1aa]">
+                        {entry.notes.map((note) => (
+                          <li key={note}>{note}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.aside>
+        </div>
+      )}
+    </AnimatePresence>
   );
 }
