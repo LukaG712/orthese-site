@@ -595,24 +595,27 @@ export function ModelSelectorPopover({
   };
 
   return (
-    <div className="relative">
+    <div className="min-w-0 max-w-full sm:relative">
       {/* Quiet Trigger Button */}
       <button
         type="button"
         data-testid="composer-model-btn"
         onClick={handleOpenToggle}
         className={cn(
-          "inline-flex h-8 items-center gap-1.5 rounded-full px-2.5 text-[12.5px] font-medium transition-colors cursor-pointer",
+          "inline-flex h-8 max-w-full items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-2.5 text-[12px] sm:text-[12.5px] font-medium transition-colors cursor-pointer",
           open
             ? "bg-white/[0.08] text-[#f7f8f8]"
             : "text-[#9ca3af] hover:bg-white/[0.05] hover:text-[#f7f8f8]"
         )}
       >
-        <ProviderGlyph provider={activeModel.provider} className="h-3.5 w-3.5 text-[#c4c8d0]" />
-        <span>{activeModel.name}</span>
+        <ProviderGlyph
+          provider={activeModel.provider}
+          className="h-3.5 w-3.5 shrink-0 text-[#c4c8d0]"
+        />
+        <span className="truncate">{activeModel.name}</span>
         <ChevronDown
           className={cn(
-            "h-3.5 w-3.5 text-[#5e626a] transition-transform duration-150",
+            "h-3.5 w-3.5 shrink-0 text-[#5e626a] transition-transform duration-150",
             open && "rotate-180 text-[#c4c8d0]"
           )}
         />
@@ -622,7 +625,7 @@ export function ModelSelectorPopover({
       {open && (
         <div
           data-testid="composer-model-menu"
-          className="absolute top-10 right-0 z-40 flex h-[292px] w-[340px] sm:w-[366px] overflow-visible rounded-2xl border border-white/[0.11] bg-[#141518] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_70px_-14px_rgba(0,0,0,0.92)]"
+          className="absolute left-2 right-2 top-full mt-2 sm:left-auto sm:right-0 sm:top-10 sm:mt-0 z-40 flex h-[308px] sm:w-[366px] overflow-visible rounded-2xl border border-white/[0.11] bg-[#141518] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_70px_-14px_rgba(0,0,0,0.92)]"
         >
           {/* Left Scrollable Vertical Provider Icon Rail (13 Providers) */}
           <div
@@ -661,7 +664,7 @@ export function ModelSelectorPopover({
           </div>
 
           {/* Right Model List Column */}
-          <div className="flex min-w-0 flex-1 flex-col p-2">
+          <div className="relative flex min-w-0 flex-1 flex-col p-2">
             {/* Top Bar: Active Provider Label + Quick Search */}
             <div className="flex h-7 shrink-0 items-center justify-between gap-2 px-2 pb-1">
               {searchOpen ? (
@@ -773,65 +776,18 @@ export function ModelSelectorPopover({
                       {/* Right side: Effort pill (on active model) + Radio dot */}
                       <div className="flex shrink-0 items-center gap-2">
                         {isSelected && model.supportsEffort ? (
-                          <div className="relative">
-                            <button
-                              type="button"
-                              data-testid="effort-picker-btn"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setEffortMenuOpen((v) => !v);
-                              }}
-                              className="inline-flex items-center gap-0.5 rounded-full border border-white/[0.1] bg-[#0e0f12] px-2.5 py-0.5 text-[11px] font-medium text-[#c4c8d0] hover:border-white/[0.2] hover:text-white transition-colors cursor-pointer"
-                            >
-                              <span>{effort}</span>
-                              <ChevronRight className="h-3 w-3 text-[#6b707a]" />
-                            </button>
-
-                            {effortMenuOpen && (
-                              <div
-                                data-testid="effort-submenu"
-                                onClick={(e) => e.stopPropagation()}
-                                className="absolute right-0 top-7 z-50 w-48 rounded-xl border border-white/[0.12] bg-[#121317] p-1 shadow-2xl"
-                              >
-                                <div className="px-2 py-1 font-mono text-[9.5px] uppercase tracking-[0.12em] text-[#5e626a]">
-                                  Reasoning Effort
-                                </div>
-                                {EFFORT_LEVELS.map((lvl) => {
-                                  const activeLvl = effort === lvl.id;
-                                  return (
-                                    <button
-                                      key={lvl.id}
-                                      type="button"
-                                      data-testid={`effort-${lvl.id.toLowerCase()}`}
-                                      onClick={() => {
-                                        onSelectEffort(lvl.id);
-                                        setEffortMenuOpen(false);
-                                      }}
-                                      className={cn(
-                                        "flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left transition-colors cursor-pointer",
-                                        activeLvl
-                                          ? "bg-white/[0.08] text-[#f7f8f8]"
-                                          : "text-[#c4c8d0] hover:bg-white/[0.04]"
-                                      )}
-                                    >
-                                      <div>
-                                        <div className="text-[12px] font-medium">{lvl.id}</div>
-                                        <div className="text-[10px] text-[#6b707a]">{lvl.hint}</div>
-                                      </div>
-                                      <span
-                                        className={cn(
-                                          "h-3 w-3 rounded-full border",
-                                          activeLvl
-                                            ? "border-[#3b82f6] bg-[#3b82f6] ring-2 ring-inset ring-white/90"
-                                            : "border-white/[0.18]"
-                                        )}
-                                      />
-                                    </button>
-                                  );
-                                })}
-                              </div>
-                            )}
-                          </div>
+                          <button
+                            type="button"
+                            data-testid="effort-picker-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setEffortMenuOpen((v) => !v);
+                            }}
+                            className="inline-flex items-center gap-0.5 rounded-full border border-white/[0.1] bg-[#0e0f12] px-2.5 py-0.5 text-[11px] font-medium text-[#c4c8d0] hover:border-white/[0.2] hover:text-white transition-colors cursor-pointer"
+                          >
+                            <span>{effort}</span>
+                            <ChevronRight className="h-3 w-3 text-[#6b707a]" />
+                          </button>
                         ) : (
                           <span className="font-mono text-[10.5px] tabular-nums text-[#5e626a]">
                             {model.baseCostCr === 0 ? "€0" : `${model.baseCostCr} cr`}
@@ -858,6 +814,62 @@ export function ModelSelectorPopover({
                 })
               )}
             </div>
+
+            {/* Effort Submenu anchored cleanly inside right pane (never clipped by list scroll) */}
+            {effortMenuOpen && activeModel.supportsEffort && (
+              <div
+                data-testid="effort-submenu"
+                onClick={(e) => e.stopPropagation()}
+                className="absolute right-2.5 top-[42px] z-50 w-[212px] rounded-xl border border-white/[0.13] bg-[#121317] p-1.5 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.95)]"
+              >
+                <div className="flex items-center justify-between px-2 py-1">
+                  <span className="font-mono text-[9.5px] uppercase tracking-[0.12em] text-[#6b707a]">
+                    Reasoning Effort
+                  </span>
+                  <button
+                    type="button"
+                    aria-label="Close reasoning effort"
+                    onClick={() => setEffortMenuOpen(false)}
+                    className="text-[#6b707a] hover:text-[#f7f8f8] cursor-pointer"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+                {EFFORT_LEVELS.map((lvl) => {
+                  const activeLvl = effort === lvl.id;
+                  return (
+                    <button
+                      key={lvl.id}
+                      type="button"
+                      data-testid={`effort-${lvl.id.toLowerCase()}`}
+                      onClick={() => {
+                        onSelectEffort(lvl.id);
+                        setEffortMenuOpen(false);
+                      }}
+                      className={cn(
+                        "flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left transition-colors cursor-pointer",
+                        activeLvl
+                          ? "bg-white/[0.08] text-[#f7f8f8]"
+                          : "text-[#c4c8d0] hover:bg-white/[0.04]"
+                      )}
+                    >
+                      <div>
+                        <div className="text-[12px] font-medium">{lvl.id}</div>
+                        <div className="text-[10px] text-[#6b707a]">{lvl.hint}</div>
+                      </div>
+                      <span
+                        className={cn(
+                          "h-3 w-3 shrink-0 rounded-full border",
+                          activeLvl
+                            ? "border-[#3b82f6] bg-[#3b82f6] ring-2 ring-inset ring-white/90"
+                            : "border-white/[0.18]"
+                        )}
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Subtle Footer Meta / Router Link */}
             <div className="mt-auto flex shrink-0 items-center justify-between border-t border-white/[0.07] px-2 pt-2 text-[11px] text-[#6b707a]">

@@ -302,11 +302,19 @@ export function FeatureChapters() {
             </div>
 
             {/* Working Segmented Toggle */}
-            <div className="inline-flex rounded-lg border border-white/[0.08] bg-[#08090a] p-0.5">
+            <div className="grid w-full grid-cols-2 rounded-lg border border-white/[0.08] bg-[#08090a] p-0.5 sm:inline-flex sm:w-auto">
               {(
                 [
-                  { id: "credits", label: "Orthese Credits · Cloudflare Edge" },
-                  { id: "cliproxy", label: "Local CLIProxyAPI Sidecar" },
+                  {
+                    id: "credits",
+                    short: "Orthese Credits",
+                    label: "Orthese Credits · Cloudflare Edge",
+                  },
+                  {
+                    id: "cliproxy",
+                    short: "Local CLIProxyAPI",
+                    label: "Local CLIProxyAPI Sidecar",
+                  },
                 ] as const
               ).map((opt) => {
                 const active = routingMode === opt.id;
@@ -317,7 +325,7 @@ export function FeatureChapters() {
                     data-testid={`routing-${opt.id}`}
                     onClick={() => setRoutingMode(opt.id)}
                     className={cn(
-                      "relative rounded-[6px] px-3 py-1.5 text-[12px] font-medium transition-colors cursor-pointer",
+                      "relative rounded-[6px] px-2.5 py-1.5 text-[11.5px] sm:px-3 sm:text-[12px] font-medium transition-colors cursor-pointer",
                       active ? "text-[#f7f8f8]" : "text-[#8a8f98] hover:text-[#f7f8f8]"
                     )}
                   >
@@ -328,7 +336,8 @@ export function FeatureChapters() {
                         className="absolute inset-0 rounded-[6px] bg-white/[0.1] shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]"
                       />
                     )}
-                    <span className="relative z-10">{opt.label}</span>
+                    <span className="relative z-10 sm:hidden">{opt.short}</span>
+                    <span className="relative z-10 hidden sm:inline">{opt.label}</span>
                   </button>
                 );
               })}
@@ -533,7 +542,8 @@ export function FeatureChapters() {
         <div className="mask-fade-bottom-soft stage-surface mt-12 overflow-hidden rounded-xl">
           <div className="grid md:grid-cols-[1.15fr_1fr]">
             {/* Left Capability Matrix */}
-            <div className="border-b border-white/[0.06] p-6 pb-10 md:border-b-0 md:border-r">
+            <div className="overflow-x-auto border-b border-white/[0.06] p-5 pb-10 sm:p-6 md:border-b-0 md:border-r">
+              <div className="min-w-[420px] sm:min-w-0">
               <div className="grid grid-cols-[1.5fr_0.9fr_0.9fr] border-b border-white/[0.07] pb-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[#5e626a]">
                 <span>Capability</span>
                 <span>Web (WASM)</span>
@@ -549,22 +559,23 @@ export function FeatureChapters() {
                     <span className="text-[#8a8f98]">
                       {row.wasm ? (
                         <span className="inline-flex items-center gap-1.5">
-                          <Check className="h-3.5 w-3.5 text-[#8a8f98]" />
+                          <Check className="h-3.5 w-3.5 shrink-0 text-[#8a8f98]" />
                           {row.wasm}
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1.5 text-[#5e626a]">
-                          <Minus className="h-3.5 w-3.5" />
+                          <Minus className="h-3.5 w-3.5 shrink-0" />
                           Desktop only
                         </span>
                       )}
                     </span>
                     <span className="inline-flex items-center gap-1.5 text-[#f7f8f8]">
-                      <Check className="h-3.5 w-3.5 text-[#f7f8f8]" />
+                      <Check className="h-3.5 w-3.5 shrink-0 text-[#f7f8f8]" />
                       {row.desktop}
                     </span>
                   </div>
                 ))}
+              </div>
               </div>
             </div>
 

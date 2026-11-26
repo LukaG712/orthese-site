@@ -447,9 +447,9 @@ export function HeroComposerPanel() {
           </div>
 
           {/* ROW 2: Controls Bar (Add, Permission Mode | Model, Mic, Send) */}
-          <div className="flex flex-wrap items-center justify-between gap-2 px-3 pb-3 pt-1">
+          <div className="relative flex items-center justify-between gap-1.5 px-2.5 pb-3 pt-1 sm:gap-2 sm:px-3">
             {/* Left Controls: + Add & Permission Mode */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
               {/* Hidden file input for real file attach */}
               <input
                 ref={fileInputRef}
@@ -470,14 +470,14 @@ export function HeroComposerPanel() {
               />
 
               {/* + Add Button + Popover */}
-              <div className="relative">
+              <div className="sm:relative">
                 <button
                   type="button"
                   data-testid="composer-add-btn"
                   aria-label="Add attachment or context"
                   onClick={() => setOpenMenu((m) => (m === "add" ? null : "add"))}
                   className={cn(
-                    "flex h-8 w-8 items-center justify-center rounded-full border transition-colors cursor-pointer",
+                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors cursor-pointer",
                     openMenu === "add"
                       ? "border-white/25 bg-white/[0.12] text-[#f7f8f8]"
                       : "border-white/[0.09] bg-white/[0.04] text-[#c4c8d0] hover:border-white/[0.18] hover:bg-white/[0.08] hover:text-white"
@@ -489,7 +489,7 @@ export function HeroComposerPanel() {
                 {openMenu === "add" && (
                   <div
                     data-testid="composer-add-menu"
-                    className="absolute top-10 left-0 z-30 w-64 rounded-xl border border-white/[0.12] bg-[#121419] p-1.5 shadow-2xl"
+                    className="absolute left-2 right-2 top-full mt-2 sm:left-0 sm:right-auto sm:top-10 sm:mt-0 sm:w-64 z-30 rounded-xl border border-white/[0.12] bg-[#121419] p-1.5 shadow-2xl"
                   >
                     <div className="px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#5e626a]">
                       Attach Context
@@ -526,7 +526,7 @@ export function HeroComposerPanel() {
               </div>
 
               {/* Permission Mode Selector + Popover */}
-              <div className="relative">
+              <div className="sm:relative">
                 <button
                   type="button"
                   data-testid="composer-permission-btn"
@@ -534,22 +534,29 @@ export function HeroComposerPanel() {
                     setOpenMenu((m) => (m === "permission" ? null : "permission"))
                   }
                   className={cn(
-                    "inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-[12px] font-medium transition-colors cursor-pointer",
+                    "inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border px-2 sm:px-3 text-[12px] font-medium transition-colors cursor-pointer",
                     openMenu === "permission"
                       ? "border-white/25 bg-white/[0.1] text-[#f7f8f8]"
                       : "border-white/[0.08] bg-white/[0.03] text-[#c4c8d0] hover:border-white/[0.16] hover:bg-white/[0.06] hover:text-[#f7f8f8]"
                   )}
                 >
-                  <span className={cn("h-1.5 w-1.5 rounded-full", activePerm.dotClass)} />
-                  <PermIcon className="h-3.5 w-3.5 text-[#8a8f98]" />
-                  <span>{activePerm.shortLabel}</span>
-                  <ChevronDown className="h-3 w-3 text-[#5e626a]" />
+                  <span className={cn("h-1.5 w-1.5 shrink-0 rounded-full", activePerm.dotClass)} />
+                  <PermIcon className="hidden sm:block h-3.5 w-3.5 shrink-0 text-[#8a8f98]" />
+                  <span className="hidden sm:inline">{activePerm.shortLabel}</span>
+                  <span className="sm:hidden">
+                    {activePerm.id === "standard"
+                      ? "Std"
+                      : activePerm.id === "ask"
+                        ? "Ask"
+                        : "Auto"}
+                  </span>
+                  <ChevronDown className="h-3 w-3 shrink-0 text-[#5e626a]" />
                 </button>
 
                 {openMenu === "permission" && (
                   <div
                     data-testid="composer-permission-menu"
-                    className="absolute top-10 left-0 z-30 w-72 rounded-xl border border-white/[0.12] bg-[#121419] p-1.5 shadow-2xl"
+                    className="absolute left-2 right-2 top-full mt-2 sm:left-0 sm:right-auto sm:top-10 sm:mt-0 sm:w-72 z-30 rounded-xl border border-white/[0.12] bg-[#121419] p-1.5 shadow-2xl"
                   >
                     <div className="px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#5e626a]">
                       Piece Permission Mode
@@ -591,7 +598,7 @@ export function HeroComposerPanel() {
             </div>
 
             {/* Right Controls: Model Picker, Mic, Send */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex min-w-0 flex-1 items-center justify-end gap-1 sm:flex-initial sm:gap-1.5">
               {/* Two-Pane Provider-Rail Model Picker + Effort Submenu */}
               <ModelSelectorPopover
                 open={openMenu === "model"}
@@ -613,7 +620,7 @@ export function HeroComposerPanel() {
                 onClick={toggleRecording}
                 aria-label={isRecording ? "Stop dictation" : "Voice dictation"}
                 className={cn(
-                  "flex h-8 items-center justify-center rounded-full border transition-all cursor-pointer",
+                  "flex h-8 shrink-0 items-center justify-center rounded-full border transition-all cursor-pointer",
                   isRecording
                     ? "gap-0.5 border-[#818cf8]/50 bg-[#818cf8]/15 px-2.5 text-[#c7d2fe]"
                     : "w-8 border-white/[0.08] bg-white/[0.03] text-[#c4c8d0] hover:border-white/[0.16] hover:bg-white/[0.08] hover:text-white"
@@ -644,7 +651,7 @@ export function HeroComposerPanel() {
                 disabled={!isWorking && !prompt.trim()}
                 aria-label={isWorking ? "Stop generation" : "Send prompt"}
                 className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-full transition-all cursor-pointer",
+                  "flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all cursor-pointer",
                   isWorking
                     ? "bg-white/[0.14] text-[#f7f8f8] hover:bg-white/[0.22]"
                     : "bg-[#f7f8f8] text-[#08090a] hover:bg-white disabled:opacity-35"

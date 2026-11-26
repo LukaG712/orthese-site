@@ -61,6 +61,7 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
   const [selectedRuntimes, setSelectedRuntimes] = useState<RuntimeTarget[]>([]);
   const [selectedPricing, setSelectedPricing] = useState<PricingFilter[]>([]);
   const [activeItem, setActiveItem] = useState<MarketplaceItem | null>(null);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   useEffect(() => {
     const param = new URLSearchParams(window.location.search).get("tab") as TabFilter | null;
@@ -196,10 +197,25 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
       {/* Main Catalog Body */}
       <div className="mx-auto max-w-[1080px] border-t border-white/[0.06] px-5 py-12 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[220px_1fr]">
-          {/* Sticky 220px Filter Rail */}
-          <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
-            <div className="flex items-center justify-between px-2">
-              <span className="text-[12px] font-medium text-[#fafafa]">Filters</span>
+          {/* Sticky 220px Filter Rail (collapsible on <lg mobile) */}
+          <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start lg:space-y-6">
+            <div className="flex items-center justify-between px-1 lg:px-2">
+              <button
+                type="button"
+                data-testid="mobile-filters-toggle"
+                onClick={() => setMobileFiltersOpen((v) => !v)}
+                className="inline-flex items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-[12.5px] font-medium text-[#fafafa] lg:pointer-events-none lg:border-0 lg:bg-transparent lg:p-0 lg:text-[12px] cursor-pointer"
+              >
+                <span>Filters</span>
+                {activeFilterCount > 0 && (
+                  <span className="rounded-full bg-white/[0.12] px-1.5 py-0.5 font-mono text-[10px] text-[#f7f8f8] lg:hidden">
+                    {activeFilterCount}
+                  </span>
+                )}
+                <span className="font-mono text-[11px] text-[#8a8f98] lg:hidden">
+                  {mobileFiltersOpen ? "Hide" : "Show"}
+                </span>
+              </button>
               {activeFilterCount > 0 && (
                 <button
                   type="button"
@@ -212,61 +228,63 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
               )}
             </div>
 
-            <div className="space-y-1 border-t border-white/[0.06] pt-4">
-              <span className="block px-2 pb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">
-                Permissions
-              </span>
-              <FilterCheckbox
-                label="Standard"
-                hint="sandbox"
-                checked={selectedPerms.includes("standard")}
-                onChange={() => toggle(selectedPerms, "standard", setSelectedPerms)}
-              />
-              <FilterCheckbox
-                label="Elevated"
-                hint="fs / shell"
-                checked={selectedPerms.includes("elevated")}
-                onChange={() => toggle(selectedPerms, "elevated", setSelectedPerms)}
-              />
-            </div>
+            <div className={cn("space-y-6", mobileFiltersOpen ? "block" : "hidden lg:block")}>
+              <div className="space-y-1 border-t border-white/[0.06] pt-4">
+                <span className="block px-2 pb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">
+                  Permissions
+                </span>
+                <FilterCheckbox
+                  label="Standard"
+                  hint="sandbox"
+                  checked={selectedPerms.includes("standard")}
+                  onChange={() => toggle(selectedPerms, "standard", setSelectedPerms)}
+                />
+                <FilterCheckbox
+                  label="Elevated"
+                  hint="fs / shell"
+                  checked={selectedPerms.includes("elevated")}
+                  onChange={() => toggle(selectedPerms, "elevated", setSelectedPerms)}
+                />
+              </div>
 
-            <div className="space-y-1 border-t border-white/[0.06] pt-4">
-              <span className="block px-2 pb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">
-                Runtime
-              </span>
-              <FilterCheckbox
-                label="Web + Desktop"
-                hint="wasm32"
-                checked={selectedRuntimes.includes("wasm+desktop")}
-                onChange={() => toggle(selectedRuntimes, "wasm+desktop", setSelectedRuntimes)}
-              />
-              <FilterCheckbox
-                label="Desktop Only"
-                hint="native"
-                checked={selectedRuntimes.includes("desktop-only")}
-                onChange={() => toggle(selectedRuntimes, "desktop-only", setSelectedRuntimes)}
-              />
-            </div>
+              <div className="space-y-1 border-t border-white/[0.06] pt-4">
+                <span className="block px-2 pb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">
+                  Runtime
+                </span>
+                <FilterCheckbox
+                  label="Web + Desktop"
+                  hint="wasm32"
+                  checked={selectedRuntimes.includes("wasm+desktop")}
+                  onChange={() => toggle(selectedRuntimes, "wasm+desktop", setSelectedRuntimes)}
+                />
+                <FilterCheckbox
+                  label="Desktop Only"
+                  hint="native"
+                  checked={selectedRuntimes.includes("desktop-only")}
+                  onChange={() => toggle(selectedRuntimes, "desktop-only", setSelectedRuntimes)}
+                />
+              </div>
 
-            <div className="space-y-1 border-t border-white/[0.06] pt-4">
-              <span className="block px-2 pb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">
-                Pricing
-              </span>
-              <FilterCheckbox
-                label="Free"
-                checked={selectedPricing.includes("free")}
-                onChange={() => toggle(selectedPricing, "free", setSelectedPricing)}
-              />
-              <FilterCheckbox
-                label="Free + Rev-Share"
-                checked={selectedPricing.includes("rev-share")}
-                onChange={() => toggle(selectedPricing, "rev-share", setSelectedPricing)}
-              />
-              <FilterCheckbox
-                label="Paid One-Time"
-                checked={selectedPricing.includes("paid")}
-                onChange={() => toggle(selectedPricing, "paid", setSelectedPricing)}
-              />
+              <div className="space-y-1 border-t border-white/[0.06] pt-4">
+                <span className="block px-2 pb-1 font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">
+                  Pricing
+                </span>
+                <FilterCheckbox
+                  label="Free"
+                  checked={selectedPricing.includes("free")}
+                  onChange={() => toggle(selectedPricing, "free", setSelectedPricing)}
+                />
+                <FilterCheckbox
+                  label="Free + Rev-Share"
+                  checked={selectedPricing.includes("rev-share")}
+                  onChange={() => toggle(selectedPricing, "rev-share", setSelectedPricing)}
+                />
+                <FilterCheckbox
+                  label="Paid One-Time"
+                  checked={selectedPricing.includes("paid")}
+                  onChange={() => toggle(selectedPricing, "paid", setSelectedPricing)}
+                />
+              </div>
             </div>
           </aside>
 

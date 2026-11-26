@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <div className="bg-[#08090a]">
       {/* FOCUSED HERO: DISPLAY HEADLINE + COMPOSER PANEL DIRECTLY UNDERNEATH */}
-      <section className="relative overflow-x-clip px-5 pb-20 pt-24 sm:px-6 sm:pb-28 sm:pt-32">
+      <section className="relative overflow-x-clip px-4 pb-16 pt-14 sm:px-6 sm:pb-28 sm:pt-32">
         {/* Subtle monochrome top-center radial glow behind the hero */}
         <div
           aria-hidden="true"
@@ -20,18 +20,18 @@ export default function HomePage() {
         />
 
         <div className="relative mx-auto max-w-[820px] text-center">
-          <h1 className="text-[clamp(2.5rem,5vw,3.85rem)] font-medium tracking-[-0.04em] leading-[1.08] text-[#f7f8f8]">
+          <h1 className="text-[clamp(2rem,5.2vw,3.85rem)] font-medium tracking-[-0.04em] leading-[1.08] text-[#f7f8f8]">
             The modular AI workstation
             <br />
             for <OrbitGradientText>builders and agents.</OrbitGradientText>
           </h1>
 
-          <p className="mt-5 font-mono text-[12.5px] text-[#8a8f98]">
+          <p className="mt-4 font-mono text-[11.5px] sm:mt-5 sm:text-[12.5px] text-[#8a8f98]">
             Free dashboard · €2 starter credits · No subscription
           </p>
         </div>
 
-        <div className="relative mt-11">
+        <div className="relative mt-8 sm:mt-11">
           <HeroComposerPanel />
         </div>
       </section>
