@@ -205,9 +205,9 @@ export function HeroWorkspaceWindow() {
 
   return (
     <div id="workspace-demo" className="scroll-mt-20">
-      {/* Dark Anodized Hardware Outer Bezel */}
-      <div className="hardware-frame rounded-2xl">
-        <div className="overflow-hidden rounded-[15px] bg-[#0a0a0c]">
+      {/* Dark Obsidian Window Floating on Smoky-Silver Stage */}
+      <div className="overflow-hidden rounded-xl border border-white/[0.12] bg-[#0b0c0e] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_36px_100px_-14px_rgba(0,0,0,0.88)]">
+        <div className="overflow-hidden bg-[#0b0c0e]">
           {/* Window Top Chrome Bar */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] bg-[#0e0e11] px-4 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
             <div className="flex items-center gap-3">

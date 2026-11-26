@@ -8,7 +8,6 @@ import { MARKETPLACE_ITEMS } from "@/data/catalog";
 import { AssetIcon } from "@/components/ui/Icon";
 import { SlidingTabs } from "@/components/ui/SlidingTabs";
 import { SpotlightCell } from "@/components/ui/SpotlightCell";
-import { BlueprintDivider } from "@/components/ui/BlueprintDivider";
 import { cn } from "@/lib/cn";
 import { PieceDetailDrawer } from "./PieceDetailDrawer";
 
@@ -116,36 +115,28 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
   );
 
   return (
-    <div className="relative">
-      <div
-        aria-hidden="true"
-        className="hero-bloom pointer-events-none absolute inset-x-0 top-0 h-[380px]"
-      />
-
+    <div className="relative bg-[#08090a]">
       {/* Top Header Band */}
-      <div className="relative mx-auto max-w-[1200px] px-6 pb-12 pt-16 sm:px-8">
-        <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-zinc-500">
-          ORTHESE REGISTRY · V0.1
-        </span>
-        <h1 className="mt-3 bg-gradient-to-b from-white via-white to-white/60 bg-clip-text text-4xl font-medium tracking-[-0.045em] leading-[1.02] text-transparent sm:text-5xl">
+      <div className="relative mx-auto max-w-[1080px] px-5 pb-12 pt-16 sm:px-6">
+        <h1 className="text-4xl font-medium tracking-[-0.04em] leading-[1.06] text-[#f7f8f8] sm:text-5xl">
           Marketplace
         </h1>
-        <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[#a1a1aa]">
-          Browse Pieces, <code className="font-mono text-[13px] text-[#fafafa]">SKILL.md</code>{" "}
-          packs, and Starter Packs. Click any cell to inspect its{" "}
-          <code className="font-mono text-[13px] text-[#fafafa]">piece.json</code> permissions.
+        <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[#8a8f98]">
+          Browse Pieces, <code className="font-mono text-[13px] text-[#f7f8f8]">SKILL.md</code>{" "}
+          packs, and Starter Packs. Click any item to inspect its{" "}
+          <code className="font-mono text-[13px] text-[#f7f8f8]">piece.json</code> permissions.
         </p>
 
         {/* Search, Sliding Tabs & Sort */}
         <div className="mt-8 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="relative max-w-md flex-1">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#52525b]" />
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#5e626a]" />
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search Pieces, Skills, or @creators..."
-              className="h-9 w-full rounded-md border border-white/[0.08] bg-[#0c0c0e] pl-10 pr-3 text-[13px] text-[#fafafa] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] placeholder:text-[#52525b] focus:border-white/25 focus:outline-none"
+              className="h-9 w-full rounded-lg border border-white/[0.08] bg-[#0e0f12] pl-10 pr-3 text-[13px] text-[#f7f8f8] placeholder:text-[#5e626a] focus:border-white/25 focus:outline-none"
             />
           </div>
 
@@ -174,7 +165,7 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
               ]}
             />
 
-            <div className="inline-flex rounded-md border border-white/[0.08] bg-white/[0.02] p-0.5">
+            <div className="inline-flex rounded-lg border border-white/[0.08] bg-white/[0.02] p-0.5">
               {(
                 [
                   { id: "popular", label: "Popular" },
@@ -187,10 +178,10 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
                   type="button"
                   onClick={() => setSort(s.id)}
                   className={cn(
-                    "rounded px-2.5 py-1 text-[12px] transition-colors cursor-pointer",
+                    "rounded-md px-2.5 py-1 text-[12px] transition-colors cursor-pointer",
                     sort === s.id
-                      ? "bg-white/[0.09] text-[#fafafa] font-medium"
-                      : "text-[#71717a] hover:text-[#fafafa]"
+                      ? "bg-white/[0.09] text-[#f7f8f8] font-medium"
+                      : "text-[#8a8f98] hover:text-[#f7f8f8]"
                   )}
                 >
                   {s.label}
@@ -201,10 +192,8 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
         </div>
       </div>
 
-      <BlueprintDivider />
-
-      {/* Main Blueprint Catalog Body */}
-      <div className="mx-auto max-w-[1200px] px-6 py-12 sm:px-8">
+      {/* Main Catalog Body */}
+      <div className="mx-auto max-w-[1080px] border-t border-white/[0.06] px-5 py-12 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[220px_1fr]">
           {/* Sticky 220px Filter Rail */}
           <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">

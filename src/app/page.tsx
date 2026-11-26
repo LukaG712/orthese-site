@@ -1,95 +1,61 @@
 import Link from "next/link";
-import { ArrowRight, Download } from "lucide-react";
-import { BlueprintDivider } from "@/components/ui/BlueprintDivider";
+import { ChevronRight } from "lucide-react";
 import { HeroWorkspaceWindow } from "@/components/landing/HeroWorkspaceWindow";
-import { BentoArchitecture } from "@/components/landing/BentoArchitecture";
-import { DesktopVsWasmStrip } from "@/components/landing/DesktopVsWasmStrip";
-import { MarketplaceTeaserRail } from "@/components/landing/MarketplaceTeaserRail";
-import { PricingBlock } from "@/components/landing/PricingBlock";
+import { EcosystemAndPillars } from "@/components/landing/EcosystemAndPillars";
+import { FeatureChapters } from "@/components/landing/FeatureChapters";
+import { MarketplaceAndPricing } from "@/components/landing/MarketplaceAndPricing";
 
 export default function HomePage() {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "#workspace-demo";
 
   return (
-    <div className="relative">
-      {/* Subtle Top-Center Radial Monochrome Light Bloom behind Hero */}
-      <div
-        aria-hidden="true"
-        className="hero-bloom pointer-events-none absolute inset-x-0 top-0 h-[620px]"
-      />
+    <div className="bg-[#08090a]">
+      {/* LEFT-ALIGNED EDITORIAL HERO */}
+      <section className="mx-auto max-w-[1080px] px-5 pb-12 pt-20 sm:px-6 sm:pt-28">
+        <h1 className="max-w-3xl text-[clamp(2.5rem,4.8vw,3.75rem)] font-medium tracking-[-0.04em] leading-[1.08] text-[#f7f8f8]">
+          The modular AI workstation
+          <br />
+          for builders and agents.
+        </h1>
 
-      {/* HERO + INTERACTIVE LIVE WORKSPACE */}
-      <div className="relative mx-auto max-w-[1200px] px-6 sm:px-8">
-        <section className="pb-14 pt-20 sm:pt-28">
-          <div className="mx-auto max-w-[1040px] text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-[#0e0e11] px-3.5 py-1 font-mono text-[11px] text-[#a1a1aa] shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              <span>Rust + GPUI · Native Desktop &amp; Zero-Install WASM</span>
-            </div>
+        <div className="mt-7 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+          <p className="font-mono text-[12px] text-[#8a8f98]">
+            Free dashboard · €2 starter credits · No subscription
+          </p>
 
-            <h1 className="mt-7 bg-gradient-to-b from-white via-white to-white/60 bg-clip-text text-[clamp(2.5rem,4.7vw,4.15rem)] font-medium tracking-[-0.045em] leading-[1.02] text-transparent">
-              Your modular AI workstation,
-              <br />
-              snapped together from Pieces.
-            </h1>
-
-            <p className="mx-auto mt-6 max-w-xl text-[16px] leading-relaxed text-[#a1a1aa]">
-              Assemble AI Prompt Box, Website Builder, and Software Engineer on one
-              obsidian canvas—with shared context and non-expiring credits.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href={appUrl}
-                className="btn-primary inline-flex h-10 items-center gap-2 rounded-md px-5 text-[14px] font-medium"
-              >
-                <span>Launch in Browser (WASM)</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-
-              <Link
-                href="#architecture"
-                className="btn-secondary inline-flex h-10 items-center gap-2 rounded-md px-5 text-[14px] font-medium"
-              >
-                <Download className="h-4 w-4 text-[#a1a1aa]" />
-                <span>Download Desktop</span>
-              </Link>
-            </div>
-
-            <p className="mt-5 font-mono text-[11px] text-[#52525b]">
-              Free dashboard · €2 starter credits · No subscription
-            </p>
+          <div className="flex items-center gap-5">
+            <Link
+              href={appUrl}
+              className="btn-pill-white inline-flex h-8 items-center rounded-full px-4 text-[13px] font-medium"
+            >
+              Launch in Browser
+            </Link>
+            <Link
+              href="#dual-target"
+              className="inline-flex items-center gap-1 text-[13px] text-[#8a8f98] hover:text-[#f7f8f8] transition-colors"
+            >
+              <span>Download Desktop</span>
+              <ChevronRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="pb-24 sm:pb-28">
+      {/* SIGNATURE FULL-BLEED SMOKY-SILVER METALLIC HERO STAGE */}
+      <section className="linear-hero-stage w-full px-4 pb-12 pt-8 sm:px-6 sm:pb-16 sm:pt-12">
+        <div className="mx-auto max-w-[1080px]">
           <HeroWorkspaceWindow />
-        </section>
-      </div>
+        </div>
+      </section>
 
-      {/* SECTION 01: ASYMMETRIC BENTO GRID */}
-      <BlueprintDivider />
-      <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
-        <BentoArchitecture />
-      </div>
+      {/* ECOSYSTEM STRIP + TWO-TONE STATEMENT + 3 BOXLESS WIREFRAME PILLARS */}
+      <EcosystemAndPillars />
 
-      {/* SECTION 02: DUAL TARGET — WEB (WASM) VS DESKTOP */}
-      <BlueprintDivider />
-      <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
-        <DesktopVsWasmStrip />
-      </div>
+      {/* FOUR REPEATING FEATURE CHAPTERS */}
+      <FeatureChapters />
 
-      {/* SECTION 03: CURATED MARKETPLACE STRIP */}
-      <BlueprintDivider />
-      <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
-        <MarketplaceTeaserRail />
-      </div>
-
-      {/* SECTION 04: TRANSPARENT PRICING */}
-      <BlueprintDivider />
-      <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
-        <PricingBlock />
-      </div>
+      {/* MARKETPLACE ROW + QUIET PRICING + DUAL EDITORIAL CARDS + CLOSING CTA */}
+      <MarketplaceAndPricing />
     </div>
   );
 }

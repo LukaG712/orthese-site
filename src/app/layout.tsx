@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Orthese — Modular AI Workstation & Piece Marketplace",
+  title: "Orthese — The modular AI workstation for builders and agents",
   description:
     "Assemble your custom AI workspace out of interchangeable Pieces. Free Rust + GPUI desktop & zero-install WebAssembly dashboard with transparent non-expiring credits.",
 };
@@ -31,17 +31,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} dark`}>
-      <body className="min-h-screen bg-[#060607] text-[#fafafa] antialiased selection:bg-white selection:text-black">
+      <body className="min-h-screen bg-[#08090a] text-[#f7f8f8] antialiased selection:bg-[#f7f8f8] selection:text-[#08090a]">
         <StorefrontProvider>
-          <div className="relative flex min-h-screen flex-col">
-            {/* Continuous 1200px vertical architectural blueprint rails */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none fixed inset-y-0 left-1/2 z-30 w-full max-w-[1200px] -translate-x-1/2 border-x border-white/[0.06]"
-            />
-
+          <div className="flex min-h-screen flex-col">
             <Navbar />
-            <main className="relative z-10 flex-1">{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
           </div>
           <CommandPalette />
@@ -51,11 +45,11 @@ export default function RootLayout({
             position="bottom-right"
             toastOptions={{
               style: {
-                background: "#0e0e11",
-                border: "1px solid rgba(255,255,255,0.12)",
+                background: "#111215",
+                border: "1px solid rgba(255,255,255,0.1)",
                 boxShadow:
-                  "inset 0 1px 0 0 rgba(255,255,255,0.14), 0 24px 48px -12px rgba(0,0,0,0.85)",
-                color: "#fafafa",
+                  "inset 0 1px 0 0 rgba(255,255,255,0.12), 0 24px 48px -12px rgba(0,0,0,0.85)",
+                color: "#f7f8f8",
               },
             }}
           />
