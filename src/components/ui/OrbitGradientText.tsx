@@ -3,7 +3,7 @@ import { cn } from "@/lib/cn";
 
 interface OrbitGradientTextProps {
   children: React.ReactNode;
-  variant?: "prismatic" | "silver";
+  variant?: "prismatic" | "purple" | "silver";
   durationSec?: number;
   className?: string;
 }
@@ -15,7 +15,7 @@ interface OrbitGradientTextProps {
 export function OrbitGradientText({
   children,
   variant = "prismatic",
-  durationSec = 7.5,
+  durationSec = 4,
   className,
 }: OrbitGradientTextProps) {
   return (
@@ -23,6 +23,7 @@ export function OrbitGradientText({
       style={{ "--orbit-dur": `${durationSec}s` } as CSSProperties}
       className={cn(
         "orbit-gradient-text",
+        variant === "purple" && "orbit-gradient-text--purple",
         variant === "silver" && "orbit-gradient-text--silver",
         className
       )}

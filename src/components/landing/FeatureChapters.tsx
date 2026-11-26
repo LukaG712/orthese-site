@@ -16,6 +16,7 @@ import {
   Terminal,
 } from "lucide-react";
 import { toast } from "sonner";
+import { OrbitGradientText } from "@/components/ui/OrbitGradientText";
 import { cn } from "@/lib/cn";
 
 function ChapterHeader({
@@ -35,7 +36,7 @@ function ChapterHeader({
         <h2 className="text-3xl font-medium tracking-[-0.035em] leading-[1.08] text-[#f7f8f8] md:text-[38px]">
           {titleLine1}
           <br />
-          {titleLine2}
+          <OrbitGradientText>{titleLine2}</OrbitGradientText>
         </h2>
       </div>
       <div className="md:col-span-7 md:pl-8">

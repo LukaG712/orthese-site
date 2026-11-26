@@ -6,6 +6,7 @@ import { Checkbox } from "@base-ui/react/checkbox";
 import { ArrowUpRight, Check, CheckCircle2, RotateCcw, Search } from "lucide-react";
 import { MARKETPLACE_ITEMS } from "@/data/catalog";
 import { AssetIcon } from "@/components/ui/Icon";
+import { OrbitGradientText } from "@/components/ui/OrbitGradientText";
 import { SlidingTabs } from "@/components/ui/SlidingTabs";
 import { SpotlightCell } from "@/components/ui/SpotlightCell";
 import { cn } from "@/lib/cn";
@@ -119,7 +120,7 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
       {/* Top Header Band */}
       <div className="relative mx-auto max-w-[1080px] px-5 pb-12 pt-16 sm:px-6">
         <h1 className="text-4xl font-medium tracking-[-0.04em] leading-[1.06] text-[#f7f8f8] sm:text-5xl">
-          Marketplace
+          <OrbitGradientText>Marketplace</OrbitGradientText>
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[#8a8f98]">
           Browse Pieces, <code className="font-mono text-[13px] text-[#f7f8f8]">SKILL.md</code>{" "}

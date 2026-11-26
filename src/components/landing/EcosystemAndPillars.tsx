@@ -1,4 +1,5 @@
 import { Cpu, Globe, Layers, Radio, Shield, Terminal } from "lucide-react";
+import { OrbitGradientText } from "@/components/ui/OrbitGradientText";
 
 const ECOSYSTEM_MARKS = [
   { label: "Rust + GPUI", icon: Cpu },
@@ -33,8 +34,10 @@ export function EcosystemAndPillars() {
       {/* 4. Two-Tone Editorial Statement + 3 Boxless Wireframe Pillars */}
       <section id="architecture" className="scroll-mt-16 py-24 sm:py-32">
         <p className="max-w-[780px] text-2xl font-medium tracking-[-0.03em] leading-[1.25] text-[#8a8f98] md:text-[32px]">
-          <span className="text-[#f7f8f8]">A new species of AI workstation.</span> Built
-          on one Rust + GPUI core so your prompt box, website builder, and coding agent
+          <span className="text-[#f7f8f8]">
+            A new species of <OrbitGradientText>AI workstation.</OrbitGradientText>
+          </span>{" "}
+          Built on one Rust + GPUI core so your prompt box, website builder, and coding agent
           share context—with zero monthly subscription.
         </p>
 

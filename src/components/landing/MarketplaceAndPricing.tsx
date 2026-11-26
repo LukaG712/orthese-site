@@ -78,7 +78,7 @@ export function MarketplaceAndPricing() {
       <section id="pricing" className="scroll-mt-20 border-t border-white/[0.06] py-28">
         <div className="max-w-xl">
           <h2 className="text-2xl font-medium tracking-[-0.03em] text-[#f7f8f8] sm:text-3xl">
-            Transparent pricing
+            Transparent <OrbitGradientText>pricing</OrbitGradientText>
           </h2>
           <p className="mt-2.5 text-[15px] leading-relaxed text-[#8a8f98]">
             Free dashboard forever. Buy non-expiring Orthese Credits only when you want
