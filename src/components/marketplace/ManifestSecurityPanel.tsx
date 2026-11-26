@@ -133,8 +133,10 @@ export function ManifestSecurityPanel({ manifest }: ManifestSecurityPanelProps) 
 
           <div className="grid grid-cols-3 divide-x divide-white/[0.06] rounded-lg border border-white/[0.06] bg-[#080809] font-mono text-[11px] tabular-nums">
             <div className="p-2.5">
-              <span className="block text-[10px] text-[#52525b]">TIER</span>
-              <span className="text-[#fafafa]">{manifest.defaultTier ?? "balanced"}</span>
+              <span className="block text-[10px] text-[#52525b]">MODEL</span>
+              <span className="truncate block text-[#fafafa]">
+                {manifest.defaultModel ?? "claude-sonnet-4.5"}
+              </span>
             </div>
             <div className="p-2.5">
               <span className="block text-[10px] text-[#52525b]">GRID</span>

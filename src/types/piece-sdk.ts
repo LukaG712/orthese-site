@@ -1,4 +1,10 @@
-export type ModelTier = "fast" | "balanced" | "reasoning";
+export type ModelId =
+  | "claude-sonnet-4.5"
+  | "claude-opus-4.5"
+  | "gpt-5.2"
+  | "gemini-2.5-pro"
+  | "gemini-2.5-flash"
+  | (string & {});
 
 export type StandardPermission =
   | "ai:generate"
@@ -24,7 +30,7 @@ export interface PieceManifest {
   author: string;
   entry: string;
   extends?: string;
-  defaultTier?: ModelTier;
+  defaultModel?: ModelId;
   layout: {
     defaultSize: GridSize;
     minSize: GridSize;

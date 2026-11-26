@@ -29,7 +29,13 @@ import { toast } from "sonner";
 import { cn } from "@/lib/cn";
 
 type PermissionMode = "standard" | "ask" | "auto";
-type ModelOptionId = "balanced" | "fast" | "reasoning" | "cliproxy";
+type ModelOptionId =
+  | "claude-sonnet-4.5"
+  | "claude-opus-4.5"
+  | "gpt-5.2"
+  | "gemini-2.5-pro"
+  | "gemini-2.5-flash"
+  | "cliproxy";
 type AttachmentKind = "code" | "doc" | "image";
 
 interface AttachmentTile {
@@ -91,25 +97,39 @@ const MODEL_OPTIONS: {
   cost: number;
 }[] = [
   {
-    id: "balanced",
-    label: "Orthese Balanced",
-    shortLabel: "Balanced",
-    meta: "Cloudflare Edge · 3 cr",
+    id: "claude-sonnet-4.5",
+    label: "Claude Sonnet 4.5",
+    shortLabel: "Claude Sonnet 4.5",
+    meta: "Anthropic · 3 cr / turn",
     cost: 3,
   },
   {
-    id: "fast",
-    label: "Orthese Fast",
-    shortLabel: "Fast",
-    meta: "Cloudflare Edge · 1 cr",
-    cost: 1,
+    id: "claude-opus-4.5",
+    label: "Claude Opus 4.5",
+    shortLabel: "Claude Opus 4.5",
+    meta: "Anthropic · 6 cr / turn",
+    cost: 6,
   },
   {
-    id: "reasoning",
-    label: "Orthese Reasoning",
-    shortLabel: "Reasoning",
-    meta: "Deep coding & specs · 5 cr",
-    cost: 5,
+    id: "gpt-5.2",
+    label: "GPT-5.2",
+    shortLabel: "GPT-5.2",
+    meta: "OpenAI · 3 cr / turn",
+    cost: 3,
+  },
+  {
+    id: "gemini-2.5-pro",
+    label: "Gemini 2.5 Pro",
+    shortLabel: "Gemini 2.5 Pro",
+    meta: "Google · 2 cr / turn",
+    cost: 2,
+  },
+  {
+    id: "gemini-2.5-flash",
+    label: "Gemini 2.5 Flash",
+    shortLabel: "Gemini 2.5 Flash",
+    meta: "Google · 1 cr / turn",
+    cost: 1,
   },
   {
     id: "cliproxy",
@@ -194,7 +214,7 @@ export function HeroComposerPanel() {
 
   const [prompt, setPrompt] = useState("");
   const [permission, setPermission] = useState<PermissionMode>("ask");
-  const [modelId, setModelId] = useState<ModelOptionId>("balanced");
+  const [modelId, setModelId] = useState<ModelOptionId>("claude-sonnet-4.5");
   const [attachments, setAttachments] = useState<AttachmentTile[]>([]);
   const [openMenu, setOpenMenu] = useState<"add" | "permission" | "model" | null>(null);
   const [isRecording, setIsRecording] = useState(false);

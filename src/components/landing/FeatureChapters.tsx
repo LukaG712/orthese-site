@@ -77,7 +77,7 @@ const HARNESS_FILES = {
   "id": "orthese.website-builder",
   "version": "0.1.0",
   "extends": "orthese.base-harness",
-  "defaultTier": "balanced",
+  "defaultModel": "claude-sonnet-4.5",
   "permissions": {
     "standard": ["ai:generate", "context:send", "context:receive"],
     "elevated": []
@@ -95,13 +95,13 @@ const HARNESS_FILES = {
   },
   "lib.rs": {
     path: "crates/pieces/website-builder/src/lib.rs",
-    code: `use orthese_sdk::{ModelTier, PieceManifest};
+    code: `use orthese_sdk::PieceManifest;
 
 pub fn manifest() -> PieceManifest {
     PieceManifest {
         id: "orthese.website-builder".into(),
         extends: Some("orthese.base-harness".into()),
-        default_tier: Some(ModelTier::Balanced),
+        default_model: Some("claude-sonnet-4.5".into()),
         // Zero elevated permissions -> instant wasm32
         ..Default::default()
     }
@@ -371,9 +371,10 @@ export function FeatureChapters() {
             >
               {(routingMode === "credits"
                 ? [
-                    { label: "Fast tier · Lightweight edits", meta: "~1 cr / call", pct: 92 },
-                    { label: "Balanced tier · Website Builder & chat", meta: "~3 cr / call", pct: 76 },
-                    { label: "Reasoning tier · Software Engineer", meta: "~7 cr / call", pct: 58 },
+                    { label: "Gemini 2.5 Flash · Fast edits & SQL", meta: "~1 cr / turn", pct: 94 },
+                    { label: "Claude Sonnet 4.5 · Website Builder & chat", meta: "~3 cr / turn", pct: 80 },
+                    { label: "GPT-5.2 · Specs & full-stack UI", meta: "~3 cr / turn", pct: 74 },
+                    { label: "Claude Opus 4.5 · Software Engineer", meta: "~6 cr / turn", pct: 56 },
                   ]
                 : [
                     { label: "Claude Code OAuth", meta: "84% quota", pct: 84 },
@@ -405,8 +406,8 @@ export function FeatureChapters() {
         <SubColumns
           items={[
             {
-              title: "Model-Weighted Credits",
-              body: "Abstract fast, balanced, and reasoning tiers keep Marketplace Pieces resilient as models evolve.",
+              title: "Token-Weighted Real Models",
+              body: "Pick Claude Sonnet 4.5, Opus 4.5, GPT-5.2, or Gemini 2.5 directly—metered transparently from one non-expiring token balance.",
             },
             {
               title: "Local OAuth Sidecar",
