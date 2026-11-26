@@ -1,0 +1,275 @@
+@import "tailwindcss";
+
+:root {
+  --canvas: #0a0a0a;
+  --surface: #111111;
+  --surface-elevated: #161616;
+  --surface-hover: #1c1c1c;
+  --border-hairline: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --specular-top: rgba(255, 255, 255, 0.18);
+  --ink-primary: #fafafa;
+  --ink-secondary: #a1a1aa;
+  --ink-muted: #71717a;
+
+  /* Transitions.dev free core motion tokens */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --tabs-dur: 240ms;
+  --menu-dur: 180ms;
+  --panel-open-dur: 340ms;
+  --panel-close-dur: 260ms;
+  --panel-blur: 2px;
+}
+
+@layer base {
+  html {
+    background-color: var(--canvas);
+    color: var(--ink-primary);
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink-primary);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+
+  code,
+  pre,
+  kbd,
+  .font-mono {
+    font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Specular workstation surface card */
+.workstation-card {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.0) 100%
+  ),
+  var(--surface);
+  border: 1px solid var(--border-hairline);
+  box-shadow: inset 0 1px 0 0 var(--specular-top);
+}
+
+.workstation-card-hover {
+  transition:
+    border-color 200ms var(--ease-out-quint),
+    background-color 200ms var(--ease-out-quint),
+    transform 220ms var(--ease-out-quint);
+}
+
+.workstation-card-hover:hover {
+  border-color: var(--border-strong);
+  background-color: var(--surface-elevated);
+}
+
+/* Subtle architectural dot grid background */
+.bg-workstation-grid {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.09) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+/* Transitions.dev — Shimmer text (monochrome silver) */
+@keyframes orthese-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.t-shimmer-text {
+  background: linear-gradient(
+    110deg,
+    #8c8c96 0%,
+    #fafafa 42%,
+    #ffffff 50%,
+    #8c8c96 58%,
+    #8c8c96 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: orthese-shimmer 7s linear infinite;
+}
+
+/* Transitions.dev — Tabs sliding pill */
+.t-tabs {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-hairline);
+}
+
+.t-tabs-pill {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  height: calc(100% - 6px);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.11);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transition:
+    transform var(--tabs-dur) var(--ease-out-quint),
+    width var(--tabs-dur) var(--ease-out-quint);
+  will-change: transform, width;
+  pointer-events: none;
+}
+
+/* Transitions.dev — Origin-aware menu dropdown */
+.t-menu-dropdown {
+  transform-origin: top center;
+  transition:
+    opacity var(--menu-dur) var(--ease-out-quint),
+    transform var(--menu-dur) var(--ease-out-quint),
+    filter var(--menu-dur) var(--ease-out-quint);
+}
+
+.t-menu-dropdown[data-open="false"] {
+  opacity: 0;
+  transform: translateY(-6px) scale(0.97);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.t-menu-dropdown[data-open="true"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+/* Transitions.dev — Panel reveal (slide-over drawer) */
+.t-panel-reveal {
+  transition:
+    transform var(--panel-open-dur) var(--ease-out-quint),
+    opacity var(--panel-open-dur) var(--ease-out-quint),
+    filter var(--panel-open-dur) var(--ease-out-quint);
+}
+
+.t-panel-reveal[data-open="false"] {
+  transform: translateX(36px);
+  opacity: 0;
+  filter: blur(var(--panel-blur));
+  pointer-events: none;
+}
+
+.t-panel-reveal[data-open="true"] {
+  transform: translateX(0);
+  opacity: 1;
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+/* Transitions.dev — Error state shake */
+@keyframes t-error-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+.t-error-shake {
+  animation: t-error-shake 320ms var(--ease-out-quint);
+}
+
+/* Magic UI style — Monochrome marquee */
+@keyframes orthese-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: orthese-marquee 38s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Animated beam pulse along SVG path */
+@keyframes beam-dash {
+  0% {
+    stroke-dashoffset: 240;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-beam {
+  stroke-dasharray: 48 192;
+  animation: beam-dash 2.8s linear infinite;
+}
+
+/* Subtle silver border beam */
+@keyframes border-beam-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.border-beam-ring::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    transparent 74%,
+    rgba(255, 255, 255, 0.55) 86%,
+    transparent 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-shimmer-text,
+  .animate-marquee,
+  .animate-beam,
+  .t-error-shake {
+    animation: none !important;
+  }
+  .t-tabs-pill,
+  .t-menu-dropdown,
+  .t-panel-reveal,
+  .workstation-card-hover {
+    transition: none !important;
+  }
+}
