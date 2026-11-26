@@ -9,7 +9,6 @@ import {
   Check,
   ChevronDown,
   ChevronRight,
-  Cpu,
   FileCode2,
   FileText,
   GitBranch,
@@ -26,17 +25,16 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
+import {
+  EFFORT_LEVELS,
+  ModelSelectorPopover,
+  REAL_MODELS,
+  type EffortLevel,
+  type RealModelSpec,
+} from "@/components/landing/ModelSelectorPopover";
 import { cn } from "@/lib/cn";
 
 type PermissionMode = "standard" | "ask" | "auto";
-type ModelOptionId =
-  | "orthese-router"
-  | "claude-sonnet-4.5"
-  | "claude-opus-4.5"
-  | "gpt-5.2"
-  | "gemini-2.5-pro"
-  | "gemini-2.5-flash"
-  | "cliproxy";
 type AttachmentKind = "code" | "doc" | "image";
 
 interface AttachmentTile {
@@ -91,64 +89,6 @@ const PERMISSION_MODES: {
   },
 ];
 
-const MODEL_OPTIONS: {
-  id: ModelOptionId;
-  label: string;
-  shortLabel: string;
-  meta: string;
-  cost: number;
-}[] = [
-  {
-    id: "orthese-router",
-    label: "Orthese Router (Auto)",
-    shortLabel: "Orthese Router",
-    meta: "Auto real-model · saves ~63% cr",
-    cost: 2,
-  },
-  {
-    id: "claude-sonnet-4.5",
-    label: "Claude Sonnet 4.5",
-    shortLabel: "Claude Sonnet 4.5",
-    meta: "Anthropic · 3 cr / turn",
-    cost: 3,
-  },
-  {
-    id: "claude-opus-4.5",
-    label: "Claude Opus 4.5",
-    shortLabel: "Claude Opus 4.5",
-    meta: "Anthropic · 6 cr / turn",
-    cost: 6,
-  },
-  {
-    id: "gpt-5.2",
-    label: "GPT-5.2",
-    shortLabel: "GPT-5.2",
-    meta: "OpenAI · 3 cr / turn",
-    cost: 3,
-  },
-  {
-    id: "gemini-2.5-pro",
-    label: "Gemini 2.5 Pro",
-    shortLabel: "Gemini 2.5 Pro",
-    meta: "Google · 2 cr / turn",
-    cost: 2,
-  },
-  {
-    id: "gemini-2.5-flash",
-    label: "Gemini 2.5 Flash",
-    shortLabel: "Gemini 2.5 Flash",
-    meta: "Google · 1 cr / turn",
-    cost: 1,
-  },
-  {
-    id: "cliproxy",
-    label: "CLIProxyAPI Local",
-    shortLabel: "CLIProxy · €0",
-    meta: "Desktop OAuth sidecar · €0",
-    cost: 0,
-  },
-];
-
 const SAMPLE_ATTACHMENTS: { name: string; kind: AttachmentKind; label: string }[] = [
   { name: "piece.json", kind: "code", label: "Attach piece.json manifest" },
   { name: "SKILL.md", kind: "doc", label: "Attach landing-page SKILL.md" },
@@ -178,11 +118,15 @@ const QUICK_PROMPTS = [
 
 function buildRunResult(
   prompt: string,
-  model: (typeof MODEL_OPTIONS)[number],
+  model: RealModelSpec,
+  effort: EffortLevel,
   perm: (typeof PERMISSION_MODES)[number]
 ): ComposerRunResult {
   const lower = prompt.toLowerCase();
-  const isAuto = model.id === "orthese-router";
+  const isAuto = model.provider === "router";
+  const mult = EFFORT_LEVELS.find((e) => e.id === effort)?.multiplier ?? 1;
+  const scaledCost =
+    model.baseCostCr === 0 ? 0 : Math.max(1, Math.round(model.baseCostCr * mult));
 
   if (lower.includes("audit") || lower.includes("permission") || lower.includes("piece.json")) {
     return {
@@ -191,10 +135,10 @@ function buildRunResult(
       contextType: "orthese/audit-report",
       summary:
         "Verified piece.json: ai:generate, context:send, and context:receive stay inside standard WASM bounds with zero unprompted shell calls.",
-      modelLabel: isAuto ? "Claude Opus 4.5" : model.label,
+      modelLabel: isAuto ? "Claude Opus 4.5" : model.name,
       routedByAuto: isAuto,
       permissionLabel: perm.label,
-      cost: isAuto ? 6 : model.cost,
+      cost: isAuto ? 6 : scaledCost,
     };
   }
   if (lower.includes("engineer") || lower.includes("diff") || lower.includes("refactor")) {
@@ -204,10 +148,10 @@ function buildRunResult(
       contextType: "orthese/git-diff",
       summary:
         "Received orthese/spec on bus://workspace.default, staged typed changes across 2 files, and verified zero TypeScript errors.",
-      modelLabel: isAuto ? "Claude Sonnet 4.5" : model.label,
+      modelLabel: isAuto ? "Claude Sonnet 4.5" : model.name,
       routedByAuto: isAuto,
       permissionLabel: perm.label,
-      cost: isAuto ? 3 : model.cost,
+      cost: isAuto ? 3 : scaledCost,
     };
   }
   return {
@@ -216,10 +160,10 @@ function buildRunResult(
     contextType: "orthese/html-bundle",
     summary:
       "Drafted an obsidian #08090A layout bundle with hairline surfaces, tabular counters, and instant zero-install WASM preview.",
-    modelLabel: isAuto ? "Claude Sonnet 4.5" : model.label,
+    modelLabel: isAuto ? "Claude Sonnet 4.5" : model.name,
     routedByAuto: isAuto,
     permissionLabel: perm.label,
-    cost: isAuto ? 3 : model.cost,
+    cost: isAuto ? 3 : scaledCost,
   };
 }
 
@@ -228,7 +172,8 @@ export function HeroComposerPanel() {
 
   const [prompt, setPrompt] = useState("");
   const [permission, setPermission] = useState<PermissionMode>("ask");
-  const [modelId, setModelId] = useState<ModelOptionId>("orthese-router");
+  const [modelId, setModelId] = useState<string>("orthese-router");
+  const [effort, setEffort] = useState<EffortLevel>("Medium");
   const [attachments, setAttachments] = useState<AttachmentTile[]>([]);
   const [openMenu, setOpenMenu] = useState<"add" | "permission" | "model" | null>(null);
   const [isRecording, setIsRecording] = useState(false);
@@ -244,7 +189,7 @@ export function HeroComposerPanel() {
   const activePerm =
     PERMISSION_MODES.find((p) => p.id === permission) ?? PERMISSION_MODES[1];
   const activeModel =
-    MODEL_OPTIONS.find((m) => m.id === modelId) ?? MODEL_OPTIONS[0];
+    REAL_MODELS.find((m) => m.id === modelId) ?? REAL_MODELS[0];
 
   // Detect active @ or / trigger at the end of the prompt
   const activeTrigger: "@" | "/" | null = (() => {
@@ -343,7 +288,7 @@ export function HeroComposerPanel() {
     setPrompt("");
 
     const tid = window.setTimeout(() => {
-      const result = buildRunResult(text, activeModel, activePerm);
+      const result = buildRunResult(text, activeModel, effort, activePerm);
       if (result.cost > 0) {
         setCredits((c) => Math.max(0, c - result.cost));
       }
@@ -647,72 +592,19 @@ export function HeroComposerPanel() {
 
             {/* Right Controls: Model Picker, Mic, Send */}
             <div className="flex items-center gap-1.5">
-              {/* Model Picker + Popover */}
-              <div className="relative">
-                <button
-                  type="button"
-                  data-testid="composer-model-btn"
-                  onClick={() => setOpenMenu((m) => (m === "model" ? null : "model"))}
-                  className={cn(
-                    "inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-[12px] font-medium transition-colors cursor-pointer",
-                    openMenu === "model"
-                      ? "border-white/25 bg-white/[0.1] text-[#f7f8f8]"
-                      : "border-white/[0.08] bg-white/[0.03] text-[#c4c8d0] hover:border-white/[0.16] hover:bg-white/[0.06] hover:text-[#f7f8f8]"
-                  )}
-                >
-                  <Cpu className="h-3.5 w-3.5 text-[#818cf8]" />
-                  <span>{activeModel.shortLabel}</span>
-                  <ChevronDown className="h-3 w-3 text-[#5e626a]" />
-                </button>
-
-                {openMenu === "model" && (
-                  <div
-                    data-testid="composer-model-menu"
-                    className="absolute top-10 right-0 z-30 w-64 rounded-xl border border-white/[0.12] bg-[#121419] p-1.5 shadow-2xl"
-                  >
-                    <div className="px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#5e626a]">
-                      Model &amp; Routing
-                    </div>
-                    {MODEL_OPTIONS.map((m) => {
-                      const active = m.id === modelId;
-                      return (
-                        <button
-                          key={m.id}
-                          type="button"
-                          data-testid={`model-${m.id}`}
-                          onClick={() => {
-                            setModelId(m.id);
-                            setOpenMenu(null);
-                          }}
-                          className={cn(
-                            "flex w-full items-center justify-between gap-2 rounded-lg px-2.5 py-2 text-left transition-colors cursor-pointer",
-                            active ? "bg-white/[0.08]" : "hover:bg-white/[0.04]"
-                          )}
-                        >
-                          <div>
-                            <div className="text-[12.5px] font-medium text-[#f7f8f8]">
-                              {m.label}
-                            </div>
-                            <div className="font-mono text-[10.5px] text-[#8a8f98]">
-                              {m.meta}
-                            </div>
-                          </div>
-                          {active && <Check className="h-3.5 w-3.5 shrink-0 text-[#f7f8f8]" />}
-                        </button>
-                      );
-                    })}
-                    <div className="my-1 border-t border-white/[0.07]" />
-                    <Link
-                      href="/router"
-                      onClick={() => setOpenMenu(null)}
-                      className="flex items-center justify-between rounded-lg px-2.5 py-1.5 text-[11.5px] text-[#8a8f98] hover:bg-white/[0.04] hover:text-[#f7f8f8] transition-colors"
-                    >
-                      <span>How Orthese Router works</span>
-                      <ChevronRight className="h-3.5 w-3.5" />
-                    </Link>
-                  </div>
-                )}
-              </div>
+              {/* Two-Pane Provider-Rail Model Picker + Effort Submenu */}
+              <ModelSelectorPopover
+                open={openMenu === "model"}
+                onToggle={() => setOpenMenu((m) => (m === "model" ? null : "model"))}
+                onClose={() => setOpenMenu(null)}
+                selectedModelId={modelId}
+                effort={effort}
+                onSelectModel={(model) => {
+                  setModelId(model.id);
+                  setEffort(model.defaultEffort);
+                }}
+                onSelectEffort={(next) => setEffort(next)}
+              />
 
               {/* Voice / Mic Button */}
               <button
@@ -784,8 +676,16 @@ export function HeroComposerPanel() {
               <div className="flex items-center gap-2.5 text-[12.5px] text-[#c4c8d0]">
                 <span className="h-2 w-2 rounded-full bg-[#38bdf8] animate-pulse" />
                 <span>
-                  Routing via <span className="text-[#f7f8f8] font-medium">{activeModel.label}</span>{" "}
-                  under <span className="font-mono text-[11.5px] text-[#a5b4fc]">{activePerm.shortLabel}</span>…
+                  Routing via{" "}
+                  <span className="text-[#f7f8f8] font-medium">
+                    {activeModel.name}
+                    {activeModel.supportsEffort ? ` (${effort})` : ""}
+                  </span>{" "}
+                  under{" "}
+                  <span className="font-mono text-[11.5px] text-[#a5b4fc]">
+                    {activePerm.shortLabel}
+                  </span>
+                  …
                 </span>
               </div>
               <span className="font-mono text-[10.5px] text-[#5e626a]">
