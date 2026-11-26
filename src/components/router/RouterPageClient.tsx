@@ -19,6 +19,7 @@ import {
   Zap,
 } from "lucide-react";
 import { OrbitGradientText } from "@/components/ui/OrbitGradientText";
+import { ProviderGlyph, type ProviderId } from "@/components/landing/ModelSelectorPopover";
 import { cn } from "@/lib/cn";
 
 type RouteTierKey = "efficient" | "mid" | "frontier";
@@ -27,6 +28,7 @@ interface RoutedModelNode {
   key: RouteTierKey;
   model: string;
   provider: string;
+  brandIcons: ProviderId[];
   priceTier: "$" | "$$" | "$$$";
   costCr: number;
   relative: string;
@@ -38,6 +40,7 @@ const MODEL_NODES: RoutedModelNode[] = [
     key: "efficient",
     model: "Gemini 2.5 Flash",
     provider: "Google",
+    brandIcons: ["google"],
     priceTier: "$",
     costCr: 1,
     relative: "0.16×",
@@ -47,6 +50,7 @@ const MODEL_NODES: RoutedModelNode[] = [
     key: "mid",
     model: "Claude Sonnet 4.5 · GPT-5.2",
     provider: "Anthropic / OpenAI",
+    brandIcons: ["anthropic", "openai"],
     priceTier: "$$",
     costCr: 3,
     relative: "0.50×",
@@ -56,6 +60,7 @@ const MODEL_NODES: RoutedModelNode[] = [
     key: "frontier",
     model: "Claude Opus 4.5",
     provider: "Anthropic",
+    brandIcons: ["anthropic"],
     priceTier: "$$$",
     costCr: 6,
     relative: "1.0×",
@@ -440,18 +445,23 @@ export function RouterPageClient() {
                     )}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 min-w-0">
                         <span
                           className={cn(
-                            "h-2 w-2 rounded-full",
+                            "h-2 w-2 shrink-0 rounded-full",
                             isSelected ? "bg-emerald-400" : "bg-white/20"
                           )}
                         />
-                        <span className="text-[13.5px] font-medium text-[#f7f8f8]">
+                        <div className="flex shrink-0 items-center gap-1 text-[#c4c8d0]">
+                          {node.brandIcons.map((b) => (
+                            <ProviderGlyph key={b} provider={b} className="h-3.5 w-3.5" />
+                          ))}
+                        </div>
+                        <span className="truncate text-[13.5px] font-medium text-[#f7f8f8]">
                           {node.model}
                         </span>
                       </div>
-                      <span className="font-mono text-[11px] text-[#8a8f98]">
+                      <span className="shrink-0 font-mono text-[11px] text-[#8a8f98]">
                         {node.priceTier}
                       </span>
                     </div>
