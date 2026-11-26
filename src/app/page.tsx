@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { OrbitGradientText } from "@/components/ui/OrbitGradientText";
-import { HeroWorkspaceWindow } from "@/components/landing/HeroWorkspaceWindow";
+import { HeroMultiAgentWorkspace } from "@/components/landing/HeroMultiAgentWorkspace";
 import { EcosystemAndPillars } from "@/components/landing/EcosystemAndPillars";
 import { FeatureChapters } from "@/components/landing/FeatureChapters";
 import { MarketplaceAndPricing } from "@/components/landing/MarketplaceAndPricing";
@@ -42,10 +42,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SIGNATURE FULL-BLEED SMOKY-SILVER METALLIC HERO STAGE */}
+      {/* SIGNATURE FULL-BLEED SMOKY-SILVER METALLIC HERO STAGE: MULTI-AGENT CHAT */}
       <section className="linear-hero-stage w-full px-4 pb-12 pt-8 sm:px-6 sm:pb-16 sm:pt-12">
-        <div className="mx-auto max-w-[1080px]">
-          <HeroWorkspaceWindow />
+        <div className="mx-auto max-w-[1160px]">
+          <HeroMultiAgentWorkspace />
         </div>
       </section>
 
