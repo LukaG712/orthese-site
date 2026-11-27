@@ -30,7 +30,7 @@ export default function HomePage() {
             for <OrbitGradientText>builders and agents.</OrbitGradientText>
           </h1>
 
-          <p className="mx-auto mt-4 max-w-[520px] text-[14.5px] leading-relaxed text-[#8a8f98] sm:mt-5 sm:text-[16px]">
+          <p className="mx-auto mt-4 max-w-[640px] text-balance text-[14.5px] leading-relaxed text-[#8a8f98] sm:mt-5 sm:text-[16px]">
             Snap prompt boxes, site builders, and coding agents onto one shared canvas.
           </p>
         </div>
