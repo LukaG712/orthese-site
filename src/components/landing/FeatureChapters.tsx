@@ -22,6 +22,12 @@ import {
 import { toast } from "sonner";
 import { AgentLimitsCard } from "@/components/primitives/AgentLimitsCard";
 import {
+  CodeBlock,
+  CodeBlockCode,
+  CodeBlockCopyButton,
+  CodeBlockGroup,
+} from "@/components/primitives/CodeBlock";
+import {
   ContextMenuTrigger,
   type ContextMenuEntry,
 } from "@/components/primitives/ContextMenu";
@@ -710,19 +716,27 @@ export function FeatureChapters() {
             </div>
 
             {/* Right Manifest / Code Viewer */}
-            <div className="bg-[#171717] p-6 pb-12">
-              <div className="mb-3 font-mono text-[11px] text-[#737373]">
-                {HARNESS_FILES[selectedFile].path}
-              </div>
-              <motion.pre
+            <div className="bg-[#171717] p-5 pb-12">
+              <motion.div
                 key={selectedFile}
                 initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                className="overflow-x-auto font-mono text-[12px] leading-[1.7] text-[#d4d4d4]"
               >
-                {HARNESS_FILES[selectedFile].code}
-              </motion.pre>
+                <CodeBlock
+                  code={HARNESS_FILES[selectedFile].code}
+                  filename={HARNESS_FILES[selectedFile].path}
+                  language={
+                    selectedFile === "lib.rs"
+                      ? "rust"
+                      : selectedFile === "SKILL.md"
+                        ? "markdown"
+                        : "json"
+                  }
+                  maxHeight="max-h-[340px]"
+                  className="bg-[#141414]"
+                />
+              </motion.div>
             </div>
           </div>
         </div>
@@ -795,32 +809,35 @@ export function FeatureChapters() {
             </div>
 
             {/* Right Live Code Diff Preview */}
-            <div className="bg-[#171717] p-6 pb-10">
-              <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                <span className="font-mono text-[11px] text-[#a3a3a3]">
-                  crates/orthese-sdk/src/lib.rs
-                </span>
-                <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-[#a3a3a3]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-                  fs:write · shell:exec
-                </span>
-              </div>
+            <div className="bg-[#171717] p-5 pb-10">
+              <CodeBlock className="bg-[#141414]">
+                <CodeBlockGroup>
+                  <div className="flex min-w-0 items-center gap-2">
+                    <span className="shrink-0 rounded-md bg-white/[0.07] px-2 py-0.5 text-[11px] font-medium text-[#e5e5e5]">
+                      Diff
+                    </span>
+                    <span className="truncate font-mono text-[11.5px] text-[#a3a3a3]">
+                      crates/orthese-sdk/src/lib.rs
+                    </span>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-2">
+                    <span className="hidden sm:inline-flex items-center gap-1.5 font-mono text-[10px] text-[#a3a3a3]">
+                      <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                      fs:write · shell:exec
+                    </span>
+                    <CodeBlockCopyButton
+                      filename="crates/orthese-sdk/src/lib.rs"
+                      code={`@@ -112,6 +112,11 @@ impl PieceManifest {\n+    pub fn supports_wasm(&self) -> bool {\n+        self.permissions.elevated.is_empty()\n+    }\n}`}
+                    />
+                  </div>
+                </CodeBlockGroup>
+                <CodeBlockCode
+                  language="diff"
+                  code={`@@ -112,6 +112,11 @@ impl PieceManifest {\n+    pub fn supports_wasm(&self) -> bool {\n+        self.permissions.elevated.is_empty()\n+    }\n}`}
+                />
+              </CodeBlock>
 
-              <pre className="mt-4 overflow-x-auto font-mono text-[12px] leading-[1.7] text-[#a3a3a3]">
-                <span className="block text-[#737373]">@@ -112,6 +112,11 @@ impl PieceManifest {"{"}</span>
-                <span className="block text-[#fafafa] bg-white/[0.04] px-1.5 -mx-1.5">
-                  +    pub fn supports_wasm(&amp;self) -&gt; bool {"{"}
-                </span>
-                <span className="block text-[#fafafa] bg-white/[0.04] px-1.5 -mx-1.5">
-                  +        self.permissions.elevated.is_empty()
-                </span>
-                <span className="block text-[#fafafa] bg-white/[0.04] px-1.5 -mx-1.5">
-                  +    {"}"}
-                </span>
-                <span className="block">{"}"}</span>
-              </pre>
-
-              <div className="mt-6 flex items-center justify-between rounded-lg border border-white/[0.08] bg-[#1c1c1c] px-3.5 py-2.5 font-mono text-[11px] text-[#a3a3a3]">
+              <div className="mt-4 flex items-center justify-between rounded-xl border border-white/[0.08] bg-[#1c1c1c] px-3.5 py-2.5 font-mono text-[11px] text-[#a3a3a3]">
                 <span>$ cargo test --workspace</span>
                 <span className="text-[#fafafa]">2 passed · 0.01s</span>
               </div>

@@ -18,6 +18,7 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import { CodeBlock } from "@/components/primitives/CodeBlock";
 import { OrbitGradientText } from "@/components/ui/OrbitGradientText";
 import { ProviderGlyph, type ProviderId } from "@/components/landing/ModelSelectorPopover";
 import { cn } from "@/lib/cn";
@@ -807,10 +808,17 @@ export function RouterPageClient() {
                     />
                   </button>
                   {open && (
-                    <div className="border-t border-white/[0.06] bg-[#121212] px-5 py-4">
-                      <pre className="overflow-x-auto font-mono text-[12px] leading-[1.65] text-[#d4d4d4]">
-                        {pol.code}
-                      </pre>
+                    <div className="border-t border-white/[0.06] bg-[#121212] p-4">
+                      <CodeBlock
+                        code={pol.code}
+                        language="json"
+                        filename={
+                          pol.id === "piece-policy"
+                            ? "piece.json"
+                            : "workspace.router.json"
+                        }
+                        maxHeight="max-h-[300px]"
+                      />
                     </div>
                   )}
                 </div>
