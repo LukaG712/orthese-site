@@ -135,10 +135,10 @@ function buildRunResult(
       contextType: "orthese/audit-report",
       summary:
         "Verified piece.json: ai:generate, context:send, and context:receive stay inside standard WASM bounds with zero unprompted shell calls.",
-      modelLabel: isAuto ? "Claude Opus 4.5" : model.name,
+      modelLabel: isAuto ? "Claude Opus 5.5" : model.name,
       routedByAuto: isAuto,
       permissionLabel: perm.label,
-      cost: isAuto ? 6 : scaledCost,
+      cost: isAuto ? 5 : scaledCost,
     };
   }
   if (lower.includes("engineer") || lower.includes("diff") || lower.includes("refactor")) {
@@ -148,10 +148,10 @@ function buildRunResult(
       contextType: "orthese/git-diff",
       summary:
         "Received orthese/spec on bus://workspace.default, staged typed changes across 2 files, and verified zero TypeScript errors.",
-      modelLabel: isAuto ? "Claude Sonnet 4.5" : model.name,
+      modelLabel: isAuto ? "Gemini 4 Neon" : model.name,
       routedByAuto: isAuto,
       permissionLabel: perm.label,
-      cost: isAuto ? 3 : scaledCost,
+      cost: isAuto ? 4 : scaledCost,
     };
   }
   return {
@@ -160,7 +160,7 @@ function buildRunResult(
     contextType: "orthese/html-bundle",
     summary:
       "Drafted an obsidian #08090A layout bundle with hairline surfaces, tabular counters, and instant zero-install WASM preview.",
-    modelLabel: isAuto ? "Claude Sonnet 4.5" : model.name,
+    modelLabel: isAuto ? "GPT-6.2 Sol" : model.name,
     routedByAuto: isAuto,
     permissionLabel: perm.label,
     cost: isAuto ? 3 : scaledCost,

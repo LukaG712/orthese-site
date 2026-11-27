@@ -101,7 +101,7 @@ export const MARKETPLACE_ITEMS: MarketplaceItem[] = [
       author: "Orthese",
       entry: "./dist/index.html",
       extends: "orthese.base-harness",
-      defaultModel: "claude-sonnet-4.5",
+      defaultModel: "gemini-4-neon",
       layout: {
         defaultSize: { w: 7, h: 6 },
         minSize: { w: 5, h: 4 },
@@ -162,7 +162,7 @@ export const MARKETPLACE_ITEMS: MarketplaceItem[] = [
       author: "Orthese",
       entry: "./dist/index.html",
       extends: "orthese.base-harness",
-      defaultModel: "claude-sonnet-4.5",
+      defaultModel: "orthese-router",
       layout: {
         defaultSize: { w: 5, h: 6 },
         minSize: { w: 4, h: 4 },
@@ -223,7 +223,7 @@ export const MARKETPLACE_ITEMS: MarketplaceItem[] = [
       author: "Orthese",
       entry: "./dist/index.html",
       extends: "orthese.base-harness",
-      defaultModel: "claude-opus-4.5",
+      defaultModel: "claude-opus-5.5",
       layout: {
         defaultSize: { w: 8, h: 6 },
         minSize: { w: 5, h: 4 },
@@ -283,7 +283,7 @@ export const MARKETPLACE_ITEMS: MarketplaceItem[] = [
       author: "Studio Nord",
       entry: "./dist/index.html",
       extends: "orthese.base-harness",
-      defaultModel: "gemini-2.5-pro",
+      defaultModel: "gpt-6.2-sol",
       layout: {
         defaultSize: { w: 6, h: 6 },
         minSize: { w: 4, h: 4 },
@@ -340,7 +340,7 @@ export const MARKETPLACE_ITEMS: MarketplaceItem[] = [
       author: "Marek K.",
       entry: "./dist/index.html",
       extends: "orthese.base-harness",
-      defaultModel: "gemini-2.5-flash",
+      defaultModel: "gemini-4-hydrogen",
       layout: {
         defaultSize: { w: 7, h: 5 },
         minSize: { w: 5, h: 4 },
@@ -397,7 +397,7 @@ export const MARKETPLACE_ITEMS: MarketplaceItem[] = [
       author: "Orthese",
       entry: "./dist/index.html",
       extends: "orthese.base-harness",
-      defaultModel: "gpt-5.2",
+      defaultModel: "muse-wonder",
       layout: {
         defaultSize: { w: 6, h: 6 },
         minSize: { w: 4, h: 4 },
@@ -490,7 +490,7 @@ description: Guides creation of Rust + GPUI Pieces with wasm32 compatibility.
 # Rust GPUI Piece Checklist
 1. Validate piece.json against @/types/piece-sdk schema
 2. Keep permissions.elevated empty for instant WASM execution
-3. Declare a real defaultModel (e.g. claude-sonnet-4.5, gpt-5.2, gemini-2.5-flash)`,
+3. Declare a real defaultModel (e.g. gemini-4-neon, claude-opus-5.5, gpt-6.2-astra)`,
     changelog: [
       {
         version: "0.1.0",

@@ -38,29 +38,29 @@ interface RoutedModelNode {
 const MODEL_NODES: RoutedModelNode[] = [
   {
     key: "efficient",
-    model: "Gemini 2.5 Flash",
+    model: "Gemini 4 Hydrogen",
     provider: "Google",
     brandIcons: ["google"],
     priceTier: "$",
     costCr: 1,
     relative: "0.16×",
-    bestFor: "Copy tweaks, formatting, quick SQL & lightweight edits",
+    bestFor: "Copy tweaks, formatting, quick SQL & lightweight agent edits",
   },
   {
     key: "mid",
-    model: "Claude Sonnet 4.5 · GPT-5.2",
-    provider: "Anthropic / OpenAI",
-    brandIcons: ["anthropic", "openai"],
+    model: "Gemini 4 Neon · GPT-6.2 Sol",
+    provider: "Google / OpenAI",
+    brandIcons: ["google", "openai"],
     priceTier: "$$",
     costCr: 3,
     relative: "0.50×",
-    bestFor: "UI layouts, API endpoints, multi-file components & specs",
+    bestFor: "UI layouts, API endpoints, long-context docs & multi-file components",
   },
   {
     key: "frontier",
-    model: "Claude Opus 4.5",
-    provider: "Anthropic",
-    brandIcons: ["anthropic"],
+    model: "Claude Opus 5.5 · GPT-6.2 Astra",
+    provider: "Anthropic / OpenAI",
+    brandIcons: ["anthropic", "openai"],
     priceTier: "$$$",
     costCr: 6,
     relative: "1.0×",
@@ -79,28 +79,28 @@ const DEMO_PROMPTS: {
     prompt: "Fix spacing on the footer copyright line",
     piece: "orthese.website-builder",
     target: "efficient",
-    chosenModel: "Gemini 2.5 Flash",
+    chosenModel: "Gemini 4 Hydrogen",
     reason: "Single-line CSS adjustment — routed to efficient pool (83% token savings).",
   },
   {
     prompt: "Add pagination & filtering to the Pieces registry API",
     piece: "orthese.software-engineer",
     target: "mid",
-    chosenModel: "Claude Sonnet 4.5",
-    reason: "Scoped multi-file feature — routed to mid-tier frontier balance (50% savings).",
+    chosenModel: "Gemini 4 Neon",
+    reason: "Scoped multi-file feature — routed to Gemini 4 Neon for long-context balance (50% savings).",
   },
   {
     prompt: "Build a dark obsidian pricing strip with Polar checkout",
     piece: "orthese.website-builder",
     target: "mid",
-    chosenModel: "GPT-5.2",
-    reason: "Structured UI layout + state wiring — routed to GPT-5.2 via Cloudflare Edge.",
+    chosenModel: "GPT-6.2 Sol",
+    reason: "Structured UI layout + state wiring — routed to GPT-6.2 Sol via Cloudflare Edge.",
   },
   {
     prompt: "Design the Rust GPUI permission sandbox & MCP allowlist verifier",
     piece: "orthese.software-engineer",
     target: "frontier",
-    chosenModel: "Claude Opus 4.5",
+    chosenModel: "Claude Opus 5.5",
     reason: "High-complexity systems & security boundary — kept directly on frontier.",
   },
 ];
@@ -122,7 +122,7 @@ function classifyPrompt(text: string): {
   ) {
     return {
       target: "frontier",
-      chosenModel: "Claude Opus 4.5",
+      chosenModel: lower.includes("architect") ? "GPT-6.2 Astra" : "Claude Opus 5.5",
       reason: "High-complexity reasoning & architectural constraints — kept on frontier.",
     };
   }
@@ -137,13 +137,13 @@ function classifyPrompt(text: string): {
   ) {
     return {
       target: "efficient",
-      chosenModel: "Gemini 2.5 Flash",
-      reason: "Routine deterministic edit — routed to Gemini 2.5 Flash for 83% savings.",
+      chosenModel: "Gemini 4 Hydrogen",
+      reason: "Routine deterministic edit — routed to Gemini 4 Hydrogen for 83% savings.",
     };
   }
   return {
     target: "mid",
-    chosenModel: lower.includes("pricing") || lower.includes("ui") ? "GPT-5.2" : "Claude Sonnet 4.5",
+    chosenModel: lower.includes("pricing") || lower.includes("ui") ? "GPT-6.2 Sol" : "Gemini 4 Neon",
     reason: "Standard feature implementation — balanced quality & token efficiency (50% savings).",
   };
 }
@@ -163,28 +163,28 @@ const WORKLOAD_PROFILES: Record<
   desk: {
     label: "Daily AI Desk",
     rows: [
-      { prompt: "“Summarize this 4-page PR diff”", routedModel: "Gemini 2.5 Flash", routedCost: 1, frontierCost: 6 },
-      { prompt: "“Add MIT license header to 6 files”", routedModel: "Gemini 2.5 Flash", routedCost: 1, frontierCost: 6 },
-      { prompt: "“Draft a release changelog from git log”", routedModel: "Claude Sonnet 4.5", routedCost: 3, frontierCost: 6 },
-      { prompt: "“Audit elevated shell permissions”", routedModel: "Claude Opus 4.5", routedCost: 6, frontierCost: 6, note: "kept on frontier" },
+      { prompt: "“Summarize this 4-page PR diff”", routedModel: "Gemini 4 Hydrogen", routedCost: 1, frontierCost: 6 },
+      { prompt: "“Add MIT license header to 6 files”", routedModel: "Muse Ember", routedCost: 1, frontierCost: 6 },
+      { prompt: "“Draft a release changelog from git log”", routedModel: "Gemini 4 Neon", routedCost: 3, frontierCost: 6 },
+      { prompt: "“Audit elevated shell permissions”", routedModel: "Claude Opus 5.5", routedCost: 6, frontierCost: 6, note: "kept on frontier" },
     ],
   },
   designer: {
     label: "Web Designer",
     rows: [
-      { prompt: "“Tighten navbar tracking to -0.02em”", routedModel: "Gemini 2.5 Flash", routedCost: 1, frontierCost: 6 },
-      { prompt: "“Convert SVG logo to monochrome”", routedModel: "Gemini 2.5 Flash", routedCost: 1, frontierCost: 6 },
-      { prompt: "“Generate dark hairline pricing grid”", routedModel: "GPT-5.2", routedCost: 3, frontierCost: 6 },
-      { prompt: "“Build interactive split-pane canvas”", routedModel: "Claude Sonnet 4.5", routedCost: 3, frontierCost: 6 },
+      { prompt: "“Tighten navbar tracking to -0.02em”", routedModel: "Gemini 4 Hydrogen", routedCost: 1, frontierCost: 6 },
+      { prompt: "“Convert SVG logo to monochrome”", routedModel: "Gemini 4 Hydrogen", routedCost: 1, frontierCost: 6 },
+      { prompt: "“Generate dark hairline pricing grid”", routedModel: "GPT-6.2 Sol", routedCost: 3, frontierCost: 6 },
+      { prompt: "“Build interactive split-pane canvas”", routedModel: "Gemini 4 Neon", routedCost: 3, frontierCost: 6 },
     ],
   },
   builder: {
     label: "Indie Builder",
     rows: [
-      { prompt: "“Fix TypeScript import path in SDK”", routedModel: "Gemini 2.5 Flash", routedCost: 1, frontierCost: 6 },
-      { prompt: "“Add pagination to Marketplace API”", routedModel: "Claude Sonnet 4.5", routedCost: 3, frontierCost: 6 },
-      { prompt: "“Wire Polar credit-pack webhook”", routedModel: "GPT-5.2", routedCost: 3, frontierCost: 6 },
-      { prompt: "“Design multi-crate WASM Context Bus”", routedModel: "Claude Opus 4.5", routedCost: 6, frontierCost: 6, note: "kept on frontier" },
+      { prompt: "“Fix TypeScript import path in SDK”", routedModel: "Gemini 4 Hydrogen", routedCost: 1, frontierCost: 6 },
+      { prompt: "“Add pagination to Marketplace API”", routedModel: "Gemini 4 Neon", routedCost: 3, frontierCost: 6 },
+      { prompt: "“Wire Polar credit-pack webhook”", routedModel: "GPT-6.2 Sol", routedCost: 3, frontierCost: 6 },
+      { prompt: "“Design multi-crate WASM Context Bus”", routedModel: "GPT-6.2 Astra", routedCost: 6, frontierCost: 6, note: "kept on frontier" },
     ],
   },
 };
@@ -198,8 +198,8 @@ const POLICIES = [
   "id": "orthese.software-engineer",
   "defaultModel": "orthese-router",
   "routerPolicy": {
-    "minModel": "claude-sonnet-4.5",
-    "escalateTo": "claude-opus-4.5",
+    "minModel": "gemini-4-neon",
+    "escalateTo": "claude-opus-5.5",
     "allowLocalCliProxy": true
   }
 }`,
@@ -213,7 +213,7 @@ const POLICIES = [
   "monthlyCreditCap": 2600,
   "preferLocalOAuth": true,
   "escalateOnTestFailure": true,
-  "fallbackOrder": ["anthropic", "openai", "google"]
+  "fallbackOrder": ["anthropic", "openai", "google", "meta"]
 }`,
   },
 ];
@@ -221,19 +221,19 @@ const POLICIES = [
 const FAQS = [
   {
     q: "What is Orthese Router?",
-    a: "Orthese Router is automatic real-model selection built directly into the Orthese Composer Panel and Base Harness. Choose Orthese Router (Auto) once, and every prompt is routed to the best real model—Gemini 2.5 Flash, Claude Sonnet 4.5, GPT-5.2, or Claude Opus 4.5—using your existing non-expiring Orthese Tokens.",
+    a: "Orthese Router is automatic real-model selection built directly into the Orthese Composer Panel and Base Harness. Choose Orthese Router (Auto) once, and every prompt is routed to the best real model—Gemini 4 Hydrogen, Gemini 4 Neon, GPT-6.2 Sol, Claude Opus 5.5, or GPT-6.2 Astra—using your existing non-expiring Orthese Tokens.",
   },
   {
     q: "Can I still pick a specific real model manually?",
-    a: "Yes. Orthese Router is completely optional. You can switch between Orthese Router (Auto), Claude Sonnet 4.5, Claude Opus 4.5, GPT-5.2, Gemini 2.5 Pro, Gemini 2.5 Flash, or your local CLIProxyAPI sidecar at any time—per prompt or per Piece.",
+    a: "Yes. Orthese Router is completely optional. You can switch between Orthese Router (Auto), Claude Opus 5.5, Claude Fable 5.2, GPT-6.2 Astra, Gemini 4 Neon, Meta Muse, Grok 4.7, DeepSeek V4.1, or your local Ollama / CLIProxyAPI sidecar at any time—per prompt or per Piece.",
   },
   {
     q: "What happens if an efficient model struggles on a task?",
-    a: "If a routed model stalls, produces failing typechecks, or hits multi-file complexity mid-turn, Orthese Router automatically escalates the thread to Claude Opus 4.5 while preserving the full Shared Context Bus history.",
+    a: "If a routed model stalls, produces failing typechecks, or hits multi-file complexity mid-turn, Orthese Router automatically escalates the thread to Claude Opus 5.5 or GPT-6.2 Astra while preserving the full Shared Context Bus history.",
   },
   {
     q: "How does it work with Orthese Tokens and CLIProxyAPI?",
-    a: "Every routed call is metered transparently in Orthese Tokens at the chosen model's exact rate (~1 cr for Gemini 2.5 Flash, ~3 cr for Sonnet 4.5 / GPT-5.2, ~6 cr for Opus 4.5). On Desktop, you can also let Orthese Router spill eligible turns to your local CLIProxyAPI OAuth subscriptions for €0.",
+    a: "Every routed call is metered transparently in Orthese Tokens at the chosen model's exact rate (~1 cr for Gemini 4 Hydrogen / Muse Ember, ~3–4 cr for GPT-6.2 Sol / Gemini 4 Neon, ~5–8 cr for Claude Opus 5.5 / GPT-6.2 Astra). On Desktop, you can also let Orthese Router spill eligible turns to your local CLIProxyAPI OAuth subscriptions for €0.",
   },
   {
     q: "Where can I use Orthese Router?",
@@ -241,7 +241,7 @@ const FAQS = [
   },
   {
     q: "How do Piece authors opt in inside piece.json?",
-    a: 'Set "defaultModel": "orthese-router" (or any real model ID like "claude-sonnet-4.5") in piece.json. Users can always override the default model directly from the Composer Panel.',
+    a: 'Set "defaultModel": "orthese-router" (or any real model ID like "gemini-4-neon" or "claude-opus-5.5") in piece.json. Users can always override the default model directly from the Composer Panel.',
   },
 ];
 
@@ -267,8 +267,8 @@ export function RouterPageClient() {
     if (escalated && base.target !== "frontier") {
       return {
         target: "frontier" as RouteTierKey,
-        chosenModel: "Claude Opus 4.5",
-        reason: `Escalated automatically from ${base.chosenModel} → Claude Opus 4.5 after detecting multi-file complexity.`,
+        chosenModel: "Claude Opus 5.5",
+        reason: `Escalated automatically from ${base.chosenModel} → Claude Opus 5.5 after detecting multi-file complexity.`,
         escalatedFrom: base.chosenModel,
       };
     }
@@ -502,7 +502,7 @@ export function RouterPageClient() {
 
               <div className="font-mono text-[11.5px] tabular-nums text-[#f7f8f8]">
                 {savedPct > 0 ? (
-                  <span className="text-emerald-400">-{savedPct}% vs Opus 4.5</span>
+                  <span className="text-emerald-400">-{savedPct}% vs Opus 5.5</span>
                 ) : (
                   <span className="text-[#a5b4fc]">Frontier precision</span>
                 )}
@@ -518,7 +518,7 @@ export function RouterPageClient() {
           {[
             { value: "63%", label: "Aggregate token savings", sub: "across routed Piece sessions" },
             { value: "72.5%", label: "Median session savings", sub: "vs always-frontier pricing" },
-            { value: "1 in 3", label: "At least 80% cheaper", sub: "routed to Gemini 2.5 Flash" },
+            { value: "1 in 3", label: "At least 80% cheaper", sub: "routed to Gemini 4 Hydrogen" },
             { value: "99.9%+", label: "Request reliability", sub: "with automatic failover" },
           ].map((stat) => (
             <div
@@ -561,12 +561,12 @@ export function RouterPageClient() {
             {
               num: "02",
               title: "Routes each prompt to a real model.",
-              body: "Draws from Gemini 2.5 Flash, Claude Sonnet 4.5, GPT-5.2, and Claude Opus 4.5—metered cleanly in Orthese Tokens.",
+              body: "Draws from Gemini 4 Hydrogen, Gemini 4 Neon, GPT-6.2 Sol, Claude Opus 5.5, and GPT-6.2 Astra—metered cleanly in Orthese Tokens.",
             },
             {
               num: "03",
               title: "Recovers if a model struggles.",
-              body: "If an efficient model stalls on a diff or test failure, Orthese Router escalates seamlessly to Claude Opus 4.5.",
+              body: "If an efficient model stalls on a diff or test failure, Orthese Router escalates seamlessly to Claude Opus 5.5 or GPT-6.2 Astra.",
             },
           ].map((step) => (
             <div key={step.num} className="border-t border-white/[0.08] pt-6">
@@ -636,7 +636,7 @@ export function RouterPageClient() {
                   Without Routing
                 </div>
                 <div className="font-mono text-[11px] text-[#5e626a]">
-                  Always Claude Opus 4.5
+                  Always Claude Opus 5.5
                 </div>
               </div>
               <div className="font-mono text-[18px] font-medium tabular-nums text-[#8a8f98]">
@@ -650,7 +650,7 @@ export function RouterPageClient() {
                   <div className="flex items-center justify-between gap-2 text-[12.5px]">
                     <span className="truncate text-[#c4c8d0]">{row.prompt}</span>
                     <span className="shrink-0 font-mono text-[11px] tabular-nums text-[#8a8f98]">
-                      Claude Opus 4.5 · {row.frontierCost} cr
+                      Claude Opus 5.5 · {row.frontierCost} cr
                     </span>
                   </div>
                   <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">

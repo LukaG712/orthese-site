@@ -380,10 +380,10 @@ export function FeatureChapters() {
             >
               {(routingMode === "credits"
                 ? [
-                    { label: "Gemini 2.5 Flash · Fast edits & SQL", meta: "~1 cr / turn", pct: 94 },
-                    { label: "Claude Sonnet 4.5 · Website Builder & chat", meta: "~3 cr / turn", pct: 80 },
-                    { label: "GPT-5.2 · Specs & full-stack UI", meta: "~3 cr / turn", pct: 74 },
-                    { label: "Claude Opus 4.5 · Software Engineer", meta: "~6 cr / turn", pct: 56 },
+                    { label: "Gemini 4 Hydrogen · Fast edits & SQL", meta: "~1 cr / turn", pct: 94 },
+                    { label: "Gemini 4 Neon · Long-context & Website Builder", meta: "~4 cr / turn", pct: 80 },
+                    { label: "Claude Opus 5.5 · Software Engineer", meta: "~5 cr / turn", pct: 68 },
+                    { label: "GPT-6.2 Astra · Frontier architecture", meta: "~8 cr / turn", pct: 52 },
                   ]
                 : [
                     { label: "Claude Code OAuth", meta: "84% quota", pct: 84 },
@@ -416,7 +416,7 @@ export function FeatureChapters() {
           items={[
             {
               title: "Token-Weighted Real Models",
-              body: "Pick Claude Sonnet 4.5, Opus 4.5, GPT-5.2, or Gemini 2.5 directly—metered transparently from one non-expiring token balance.",
+              body: "Pick Claude Opus 5.5, GPT-6.2 Astra, Gemini 4 Neon, or Meta Muse directly—metered transparently from one non-expiring token balance.",
             },
             {
               title: "Local OAuth Sidecar",

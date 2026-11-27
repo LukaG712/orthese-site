@@ -135,7 +135,7 @@ export function ManifestSecurityPanel({ manifest }: ManifestSecurityPanelProps) 
             <div className="p-2.5">
               <span className="block text-[10px] text-[#52525b]">MODEL</span>
               <span className="truncate block text-[#fafafa]">
-                {manifest.defaultModel ?? "claude-sonnet-4.5"}
+                {manifest.defaultModel ?? "claude-sonnet-5.5"}
               </span>
             </div>
             <div className="p-2.5">
