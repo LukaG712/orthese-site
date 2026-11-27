@@ -9,8 +9,8 @@ interface SpotlightCellProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * Seamless hairline-divided cell with mouse-tracking monochrome radial spotlight sheen
- * (`--x` / `--y`) and top-edge specular bevel.
+ * BoardUI Dark Mode rounded-2xl card with mouse-tracking monochrome radial spotlight
+ * sheen (`--x` / `--y`) and subtle top-edge specular highlight.
  */
 export function SpotlightCell({
   featured = false,
@@ -43,16 +43,18 @@ export function SpotlightCell({
         } as React.CSSProperties
       }
       className={cn(
-        "group relative overflow-hidden",
-        featured ? "blueprint-cell-featured" : "blueprint-cell",
+        "group relative overflow-hidden rounded-2xl border transition-[border-color,background-color,box-shadow] duration-200",
+        featured
+          ? "border-white/[0.11] bg-gradient-to-b from-[#1c1c1c] to-[#171717] shadow-[inset_0_1px_0_rgba(255,255,255,0.11),0_14px_38px_-14px_rgba(0,0,0,0.75)] hover:border-white/[0.2]"
+          : "border-white/[0.08] bg-[#171717] shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_10px_30px_-14px_rgba(0,0,0,0.65)] hover:border-white/[0.16] hover:bg-[#1a1a1a]",
         className
       )}
       {...props}
     >
-      {/* Mouse-tracking radial border spotlight sheen */}
+      {/* Mouse-tracking radial border spotlight sheen following rounded-2xl corners */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300"
         style={{
           opacity: coords.active ? 1 : 0,
           padding: "1px",
@@ -67,7 +69,7 @@ export function SpotlightCell({
       {/* Faint interior cursor sheen */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300"
         style={{
           opacity: coords.active ? 1 : 0,
           background:
