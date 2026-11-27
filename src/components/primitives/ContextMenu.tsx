@@ -130,10 +130,13 @@ function SubmenuPanel({
     setPos({ left, top });
   }, [anchorRect]);
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <div
       ref={panelRef}
       role="menu"
+      data-orthese-ctx-submenu="true"
       aria-label={submenu.label}
       style={{ left: pos.left, top: pos.top }}
       className="fixed z-[110] min-w-[188px] rounded-xl border border-white/[0.13] bg-[#13151b]/98 p-1 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
@@ -182,7 +185,8 @@ function SubmenuPanel({
           </button>
         );
       })}
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -253,7 +257,9 @@ export function ContextMenuTrigger({
     if (!open) return;
 
     const handlePointerDown = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+      const target = e.target as HTMLElement | null;
+      if (target?.closest("[data-orthese-ctx-submenu]")) return;
+      if (menuRef.current && !menuRef.current.contains(target)) {
         closeMenu(false);
       }
     };
