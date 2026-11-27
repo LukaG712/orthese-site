@@ -1,6 +1,5 @@
 import { OrbitGradientText } from "@/components/ui/OrbitGradientText";
 import { HeroComposerPanel } from "@/components/landing/HeroComposerPanel";
-import { EcosystemAndPillars } from "@/components/landing/EcosystemAndPillars";
 import { FeatureChapters } from "@/components/landing/FeatureChapters";
 import { MarketplaceAndPricing } from "@/components/landing/MarketplaceAndPricing";
 
@@ -8,7 +7,7 @@ export default function HomePage() {
   return (
     <div className="bg-[#08090a]">
       {/* FOCUSED HERO: ARCHITECTURAL STAGE + EDITORIAL HEADLINE + COMPOSER PANEL */}
-      <section className="relative flex min-h-[calc(100svh-52px)] flex-col justify-center overflow-x-clip px-4 pb-16 pt-10 sm:px-6 sm:pb-24 sm:pt-12">
+      <section className="relative flex min-h-[calc(100svh-48px)] flex-col justify-center overflow-x-clip px-4 pb-16 pt-10 sm:px-6 sm:pb-24 sm:pt-12">
         {/* Subtle monochrome top-center radial glow + masked architectural grid */}
         <div
           aria-hidden="true"
@@ -49,13 +48,10 @@ export default function HomePage() {
         </a>
       </section>
 
-      {/* ECOSYSTEM STRIP + TWO-TONE STATEMENT + 3 BOXLESS WIREFRAME PILLARS */}
-      <EcosystemAndPillars />
-
-      {/* FOUR REPEATING FEATURE CHAPTERS */}
+      {/* INTERACTIVE FEATURE CHAPTERS */}
       <FeatureChapters />
 
-      {/* MARKETPLACE ROW + QUIET PRICING + DUAL EDITORIAL CARDS + CLOSING CTA */}
+      {/* COMPACT MARKETPLACE + PRICING + CLOSING CTA */}
       <MarketplaceAndPricing />
     </div>
   );

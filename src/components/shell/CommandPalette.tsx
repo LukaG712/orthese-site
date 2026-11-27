@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import {
+  BookOpen,
   CreditCard,
   Layers,
   LogIn,
@@ -113,6 +114,16 @@ export function CommandPalette() {
         shortcut: ["G", "M"],
         icon: <Layers className="h-3.5 w-3.5 text-[#a1a6b0]" />,
         onSelect: () => go("/marketplace"),
+      },
+      {
+        id: "nav-docs",
+        section: "Navigate",
+        title: "Documentation",
+        description: "Quickstart, Piece SDK (piece.json), SKILL.md & MCP Hub",
+        keywords: "docs documentation quickstart piece sdk manifest skill md mcp",
+        shortcut: ["G", "D"],
+        icon: <BookOpen className="h-3.5 w-3.5 text-emerald-400" />,
+        onSelect: () => go("/docs"),
       },
       {
         id: "nav-pricing",

@@ -248,7 +248,10 @@ export function FeatureChapters() {
   }
 
   return (
-    <div className="mx-auto max-w-[1080px] space-y-36 px-5 py-16 sm:px-6 sm:space-y-44">
+    <div
+      id="architecture"
+      className="scroll-mt-14 mx-auto max-w-[1024px] space-y-24 border-t border-white/[0.06] px-5 py-16 sm:px-6 sm:space-y-32 sm:py-24"
+    >
       {/* CHAPTER 1: Shared Context Bus */}
       <section id="shared-context" className="scroll-mt-20">
         <ChapterHeader
