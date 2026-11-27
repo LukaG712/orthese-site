@@ -9,6 +9,12 @@ import { AssetIcon } from "@/components/ui/Icon";
 import { OrbitGradientText } from "@/components/ui/OrbitGradientText";
 import { SlidingTabs } from "@/components/ui/SlidingTabs";
 import { SpotlightCell } from "@/components/ui/SpotlightCell";
+import {
+  InfoTooltip,
+  PERMISSION_TIER_TOOLTIPS,
+  RUNTIME_TOOLTIPS,
+  TooltipProvider,
+} from "@/components/primitives/Tooltip";
 import { cn } from "@/lib/cn";
 import { PieceDetailDrawer } from "./PieceDetailDrawer";
 
@@ -117,9 +123,10 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
   );
 
   return (
-    <div className="relative bg-[#121212]">
-      {/* Top Header Band */}
-      <div className="relative mx-auto max-w-[1080px] px-5 pb-12 pt-28 sm:px-6 sm:pt-32">
+    <TooltipProvider>
+      <div className="relative bg-[#121212]">
+        {/* Top Header Band */}
+        <div className="relative mx-auto max-w-[1080px] px-5 pb-12 pt-28 sm:px-6 sm:pt-32">
         <h1 className="text-4xl font-medium tracking-[-0.04em] leading-[1.06] text-[#fafafa] sm:text-5xl">
           <OrbitGradientText>Marketplace</OrbitGradientText>
         </h1>
@@ -198,7 +205,7 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
       <div className="mx-auto max-w-[1080px] border-t border-white/[0.06] px-5 py-12 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[220px_1fr]">
           {/* Sticky 220px Filter Rail (collapsible on <lg mobile) */}
-          <aside className="space-y-4 lg:sticky lg:top-20 lg:self-start lg:space-y-6">
+          <aside className="space-y-4 lg:sticky lg:top-28 lg:self-start lg:space-y-6">
             <div className="flex items-center justify-between px-1 lg:px-2">
               <button
                 type="button"
@@ -317,9 +324,25 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
                       <p className="mt-1 text-[13px] leading-relaxed text-[#a1a1aa]">
                         {pack.tagline}
                       </p>
-                      <div className="mt-4 font-mono text-[11px] text-[#52525b]">
-                        {pack.includedPieceIds?.length ?? 2} Pieces ·{" "}
-                        {pack.runtime === "wasm+desktop" ? "WASM + Desktop" : "Desktop Only"}
+                      <div className="mt-4 flex items-center gap-1.5 font-mono text-[11px] text-[#737373]">
+                        <span>{pack.includedPieceIds?.length ?? 2} Pieces</span>
+                        <span>·</span>
+                        <InfoTooltip
+                          title={
+                            pack.runtime === "wasm+desktop"
+                              ? RUNTIME_TOOLTIPS.wasm.title
+                              : RUNTIME_TOOLTIPS.desktop.title
+                          }
+                          content={
+                            pack.runtime === "wasm+desktop"
+                              ? RUNTIME_TOOLTIPS.wasm.description
+                              : RUNTIME_TOOLTIPS.desktop.description
+                          }
+                        >
+                          <span className="underline decoration-white/20 decoration-dotted underline-offset-4 hover:text-[#d4d4d4] transition-colors cursor-help">
+                            {pack.runtime === "wasm+desktop" ? "WASM + Desktop" : "Desktop Only"}
+                          </span>
+                        </InfoTooltip>
                       </div>
                     </SpotlightCell>
                   ))}
@@ -328,7 +351,7 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
             )}
 
             <div>
-              <div className="mb-3 flex items-center justify-between text-[12px] text-[#52525b]">
+              <div className="mb-3 flex items-center justify-between text-[12px] text-[#737373]">
                 <span className="tabular-nums">
                   Showing <span className="text-[#fafafa]">{filtered.length}</span>{" "}
                   {filtered.length === 1 ? "asset" : "assets"}
@@ -338,7 +361,7 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
 
               {filtered.length === 0 ? (
                 <div className="obsidian-surface border border-white/[0.08] py-16 text-center">
-                  <p className="text-[14px] text-[#a1a1aa]">No assets match those filters.</p>
+                  <p className="text-[14px] text-[#a3a3a3]">No assets match those filters.</p>
                   <button
                     type="button"
                     onClick={resetFilters}
@@ -353,6 +376,13 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
                     const isElevated =
                       (item.manifest?.permissions.elevated.length ?? 0) > 0 ||
                       item.runtime === "desktop-only";
+                    const tierTip = isElevated
+                      ? PERMISSION_TIER_TOOLTIPS.elevated
+                      : PERMISSION_TIER_TOOLTIPS.standard;
+                    const runtimeTip =
+                      item.runtime === "wasm+desktop"
+                        ? RUNTIME_TOOLTIPS.wasm
+                        : RUNTIME_TOOLTIPS.desktop;
 
                     return (
                       <SpotlightCell
@@ -370,8 +400,8 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
                                 className={cn(
                                   "font-mono text-[10px] uppercase tracking-wider",
                                   item.pricing === "paid"
-                                    ? "rounded bg-[#fafafa] px-2 py-0.5 font-medium text-[#060607]"
-                                    : "text-[#71717a]"
+                                    ? "rounded bg-[#fafafa] px-2 py-0.5 font-medium text-[#121212]"
+                                    : "text-[#8a8a8a]"
                                 )}
                               >
                                 {item.pricing === "paid"
@@ -385,27 +415,45 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
                             <h3 className="mt-4 text-[14px] font-medium text-[#fafafa]">
                               {item.name}
                             </h3>
-                            <p className="mt-1 line-clamp-2 text-[12.5px] leading-relaxed text-[#a1a1aa]">
+                            <p className="mt-1 line-clamp-2 text-[12.5px] leading-relaxed text-[#a3a3a3]">
                               {item.tagline}
                             </p>
                           </div>
 
                           <div className="mt-5 space-y-2.5 border-t border-white/[0.06] pt-3">
-                            <div className="flex items-center gap-2 font-mono text-[10px] text-[#71717a]">
-                              <span className="inline-flex items-center gap-1.5">
+                            <div className="flex items-center gap-2 font-mono text-[10px] text-[#8a8a8a]">
+                              <InfoTooltip
+                                title={tierTip.title}
+                                content={tierTip.description}
+                              >
                                 <span
-                                  className={`h-1.5 w-1.5 rounded-full ${
-                                    isElevated ? "bg-amber-400" : "bg-emerald-400"
-                                  }`}
-                                />
-                                {isElevated ? "Elevated" : "Standard"}
-                              </span>
-                              <span>·</span>
-                              <span>{item.runtime === "wasm+desktop" ? "WASM" : "Desktop"}</span>
+                                  data-testid={`badge-perm-${item.id}`}
+                                  className="inline-flex items-center gap-1.5 rounded border border-white/[0.08] bg-white/[0.03] px-1.5 py-0.5 hover:border-white/[0.2] hover:text-[#fafafa] transition-colors cursor-help"
+                                >
+                                  <span
+                                    className={`h-1.5 w-1.5 rounded-full ${
+                                      isElevated ? "bg-amber-400" : "bg-emerald-400"
+                                    }`}
+                                  />
+                                  {isElevated ? "Elevated" : "Std"}
+                                </span>
+                              </InfoTooltip>
+
+                              <InfoTooltip
+                                title={runtimeTip.title}
+                                content={runtimeTip.description}
+                              >
+                                <span
+                                  data-testid={`badge-runtime-${item.id}`}
+                                  className="inline-flex items-center rounded border border-white/[0.08] bg-white/[0.03] px-1.5 py-0.5 hover:border-white/[0.2] hover:text-[#fafafa] transition-colors cursor-help"
+                                >
+                                  {item.runtime === "wasm+desktop" ? "WASM" : "Desktop"}
+                                </span>
+                              </InfoTooltip>
                             </div>
 
-                            <div className="flex items-center justify-between text-[11px] text-[#52525b]">
-                              <span className="inline-flex items-center gap-1 text-[#a1a1aa]">
+                            <div className="flex items-center justify-between text-[11px] text-[#737373]">
+                              <span className="inline-flex items-center gap-1 text-[#a3a3a3]">
                                 <span>{item.authorHandle}</span>
                                 {item.official && <CheckCircle2 className="h-3 w-3 text-[#fafafa]" />}
                               </span>
@@ -427,5 +475,6 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
 
       <PieceDetailDrawer item={activeItem} onClose={() => setActiveItem(null)} />
     </div>
+    </TooltipProvider>
   );
 }
