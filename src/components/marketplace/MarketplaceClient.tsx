@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { MarketplaceAssetKind, MarketplaceItem, PricingFilter, RuntimeTarget } from "@/types/piece-sdk";
+import NumberFlow from "@number-flow/react";
 import { Checkbox } from "@base-ui/react/checkbox";
 import { ArrowUpRight, Check, CheckCircle2, RotateCcw, Search } from "lucide-react";
 import { MARKETPLACE_ITEMS } from "@/data/catalog";
@@ -23,6 +24,7 @@ type SortMode = "popular" | "newest" | "price";
 type PermissionTier = "standard" | "elevated";
 
 const VALID_TABS = new Set<TabFilter>(["all", "piece", "skill", "starter-pack"]);
+const VALID_SORTS = new Set<SortMode>(["popular", "newest", "price"]);
 
 function FilterCheckbox({
   checked,
@@ -60,6 +62,7 @@ function FilterCheckbox({
 }
 
 export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilter }) {
+  const searchRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [tab, setTab] = useState<TabFilter>(initialTab);
   const [sort, setSort] = useState<SortMode>("popular");
@@ -70,10 +73,44 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   useEffect(() => {
-    const param = new URLSearchParams(window.location.search).get("tab") as TabFilter | null;
-    if (param && VALID_TABS.has(param)) {
-      setTab(param);
-    }
+    const params = new URLSearchParams(window.location.search);
+    const paramTab = params.get("tab") as TabFilter | null;
+    const paramQ = params.get("q");
+    const paramSort = params.get("sort") as SortMode | null;
+    if (paramTab && VALID_TABS.has(paramTab)) setTab(paramTab);
+    if (paramQ) setQuery(paramQ);
+    if (paramSort && VALID_SORTS.has(paramSort)) setSort(paramSort);
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (tab !== "all") params.set("tab", tab);
+    else params.delete("tab");
+    if (query.trim()) params.set("q", query.trim());
+    else params.delete("q");
+    if (sort !== "popular") params.set("sort", sort);
+    else params.delete("sort");
+    const qs = params.toString();
+    const nextUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+    window.history.replaceState(null, "", nextUrl);
+  }, [tab, query, sort]);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.key === "/" &&
+        !e.metaKey &&
+        !e.ctrlKey &&
+        !e.altKey &&
+        document.activeElement?.tagName !== "INPUT" &&
+        document.activeElement?.tagName !== "TEXTAREA"
+      ) {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
   const toggle = <T,>(arr: T[], val: T, setter: (next: T[]) => void) => {
@@ -141,12 +178,18 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
           <div className="relative max-w-md flex-1">
             <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#737373]" />
             <input
+              ref={searchRef}
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search Pieces, Skills, or @creators..."
-              className="h-9 w-full rounded-lg border border-white/[0.08] bg-[#0e0f12] pl-10 pr-3 text-[13px] text-[#fafafa] placeholder:text-[#737373] focus:border-white/25 focus:outline-none"
+              className="h-9 w-full rounded-lg border border-white/[0.08] bg-[#0e0f12] pl-10 pr-9 text-[13px] text-[#fafafa] placeholder:text-[#737373] focus:border-white/25 focus:outline-none"
             />
+            {!query && (
+              <kbd className="pointer-events-none absolute right-2.5 top-1/2 inline-flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded border border-white/[0.08] bg-white/[0.03] font-mono text-[10px] text-[#737373]">
+                /
+              </kbd>
+            )}
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
@@ -353,7 +396,8 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
             <div>
               <div className="mb-3 flex items-center justify-between text-[12px] text-[#737373]">
                 <span className="tabular-nums">
-                  Showing <span className="text-[#fafafa]">{filtered.length}</span>{" "}
+                  Showing{" "}
+                  <NumberFlow value={filtered.length} className="text-[#fafafa]" />{" "}
                   {filtered.length === 1 ? "asset" : "assets"}
                 </span>
                 <span className="font-mono text-[11px]">Click cell for piece.json</span>
@@ -453,10 +497,17 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
                             </div>
 
                             <div className="flex items-center justify-between text-[11px] text-[#737373]">
-                              <span className="inline-flex items-center gap-1 text-[#a3a3a3]">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setQuery(item.authorHandle);
+                                }}
+                                className="inline-flex items-center gap-1 text-[#a3a3a3] hover:text-[#fafafa] transition-colors cursor-pointer"
+                              >
                                 <span>{item.authorHandle}</span>
                                 {item.official && <CheckCircle2 className="h-3 w-3 text-[#fafafa]" />}
-                              </span>
+                              </button>
                               <span className="font-mono tabular-nums">
                                 {item.installs.toLocaleString()}
                               </span>

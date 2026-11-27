@@ -315,7 +315,7 @@ export function CommandPalette() {
             exit={{ opacity: 0, scale: 0.97, y: -6, filter: "blur(3px)" }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-[580px] overflow-hidden rounded-2xl border border-white/[0.13] bg-[#1f1f1f]/98 shadow-[0_32px_96px_-18px_rgba(0,0,0,0.96),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl"
+            className="w-full max-w-[580px] overflow-hidden rounded-2xl border border-white/[0.11] bg-[#141416]/94 shadow-[0_32px_96px_-18px_rgba(0,0,0,0.96),inset_0_1px_0_rgba(255,255,255,0.14)] ring-1 ring-inset ring-white/[0.04] backdrop-blur-2xl"
           >
             {/* Search Row */}
             <div className="flex items-center gap-3 border-b border-white/[0.08] px-4">
@@ -354,7 +354,7 @@ export function CommandPalette() {
                 <button
                   type="button"
                   onClick={closePalette}
-                  className="shrink-0 rounded-md border border-white/[0.1] bg-white/[0.03] px-1.5 py-0.5 font-mono text-[10px] text-[#8a8a8a] hover:text-[#fafafa] transition-colors cursor-pointer"
+                  className="shrink-0 rounded-md border border-white/[0.1] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-[#a3a3a3] hover:border-white/20 hover:text-[#fafafa] transition-colors cursor-pointer"
                 >
                   Esc
                 </button>
@@ -367,7 +367,7 @@ export function CommandPalette() {
               ref={listRef}
               role="listbox"
               aria-label="Commands"
-              className="max-h-[380px] overflow-y-auto p-2"
+              className="max-h-[380px] overflow-y-auto p-2 [mask-image:linear-gradient(to_bottom,black_88%,transparent)] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/[0.1] hover:[&::-webkit-scrollbar-thumb]:bg-white/[0.18]"
             >
               {grouped.length === 0 ? (
                 <div className="py-12 text-center">
@@ -379,7 +379,7 @@ export function CommandPalette() {
                   </p>
                 </div>
               ) : (
-                <div className="space-y-2.5">
+                <div className="space-y-2.5 pb-2">
                   {grouped.map(([section, items]) => (
                     <div key={section} role="group" aria-label={section}>
                       <div className="px-2.5 pb-1 pt-1 text-[11px] font-medium text-[#737373]">
@@ -400,18 +400,23 @@ export function CommandPalette() {
                               onMouseEnter={() => setActiveIndex(idx)}
                               onClick={() => item.onSelect()}
                               className={cn(
-                                "flex w-full items-center justify-between gap-3 rounded-xl px-2.5 py-2 text-left transition-colors cursor-pointer",
-                                isActive
-                                  ? "bg-white/[0.08] text-[#fafafa]"
-                                  : "text-[#d4d4d4] hover:bg-white/[0.05]"
+                                "relative flex w-full items-center justify-between gap-3 rounded-xl px-2.5 py-2 text-left transition-colors cursor-pointer",
+                                isActive ? "text-[#fafafa]" : "text-[#d4d4d4]"
                               )}
                             >
-                              <span className="flex items-center gap-2.5 min-w-0">
+                              {isActive && (
+                                <motion.span
+                                  layoutId="palette-active-pill"
+                                  transition={{ type: "spring", stiffness: 520, damping: 38 }}
+                                  className="pointer-events-none absolute inset-0 rounded-xl bg-white/[0.08] ring-1 ring-inset ring-white/[0.08]"
+                                />
+                              )}
+                              <span className="relative z-10 flex items-center gap-2.5 min-w-0">
                                 <span
                                   className={cn(
                                     "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-colors",
                                     isActive
-                                      ? "border-white/[0.14] bg-white/[0.07]"
+                                      ? "border-white/[0.15] bg-white/[0.07]"
                                       : "border-white/[0.06] bg-white/[0.025]"
                                   )}
                                 >
@@ -429,7 +434,7 @@ export function CommandPalette() {
                                 </span>
                               </span>
 
-                              <span className="flex shrink-0 items-center gap-1.5">
+                              <span className="relative z-10 flex shrink-0 items-center gap-1.5">
                                 {item.badge && (
                                   <span className="rounded-md border border-white/[0.08] bg-white/[0.03] px-1.5 py-0.5 text-[10.5px] capitalize text-[#a3a3a3]">
                                     {item.badge}
