@@ -103,15 +103,9 @@ const TRIGGER_SUGGESTIONS = {
     { token: "/build-site", desc: "Generate a responsive landing page" },
     { token: "/pipe-spec", desc: "Emit orthese/spec across panes" },
     { token: "/audit-permissions", desc: "Inspect standard vs elevated scopes" },
-    { token: "/switch-cliproxy", desc: "Route via local Desktop OAuth (€0)" },
+    { token: "/switch-cliproxy", desc: "Route via local Desktop OAuth (Free)" },
   ],
 } as const;
-
-const QUICK_PROMPTS = [
-  "Build a monochrome hero with @orthese.website-builder",
-  "/audit-permissions on piece.json",
-  "Pipe orthese/spec to Software Engineer",
-];
 
 function buildRunResult(
   prompt: string,
@@ -724,22 +718,8 @@ export function HeroComposerPanel() {
         </motion.div>
       )}
 
-      {/* Quiet Quick-Prompt Chips */}
-      <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-        {QUICK_PROMPTS.map((q) => (
-          <button
-            key={q}
-            type="button"
-            onClick={() => submitPrompt(q)}
-            className="rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-1 text-[12px] text-[#8a8f98] hover:border-white/[0.16] hover:bg-white/[0.05] hover:text-[#f7f8f8] transition-colors cursor-pointer"
-          >
-            {q}
-          </button>
-        ))}
-      </div>
-
       {/* Primary Hero Links */}
-      <div className="mt-7 flex flex-wrap items-center justify-center gap-4 text-[12px]">
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-[12px]">
         <Link
           href={appUrl}
           className="btn-pill-white inline-flex h-8 items-center rounded-full px-4 text-[12.5px] font-medium"

@@ -1,37 +1,9 @@
-import { Cpu, Globe, Layers, Radio, Shield, Terminal } from "lucide-react";
 import { OrbitGradientText } from "@/components/ui/OrbitGradientText";
-
-const ECOSYSTEM_MARKS = [
-  { label: "Rust + GPUI", icon: Cpu },
-  { label: "WebAssembly", icon: Globe },
-  { label: "MCP Hub", icon: Radio },
-  { label: "Cloudflare Edge", icon: Layers },
-  { label: "CLIProxyAPI", icon: Terminal },
-  { label: "Polar", icon: Shield },
-];
 
 export function EcosystemAndPillars() {
   return (
     <div className="mx-auto max-w-[1080px] px-5 sm:px-6">
-      {/* 3. Quiet Monochrome Ecosystem Strip */}
-      <section aria-label="Technology ecosystem" className="py-16">
-        <div className="grid grid-cols-2 items-center justify-items-start gap-y-6 sm:grid-cols-3 md:flex md:items-center md:justify-between">
-          {ECOSYSTEM_MARKS.map((mark) => {
-            const Icon = mark.icon;
-            return (
-              <div
-                key={mark.label}
-                className="inline-flex items-center gap-2 text-[13px] font-medium tracking-[-0.01em] text-[#f7f8f8] opacity-50 transition-opacity duration-200 hover:opacity-90"
-              >
-                <Icon className="h-4 w-4 stroke-[1.6]" />
-                <span>{mark.label}</span>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* 4. Two-Tone Editorial Statement + 3 Boxless Wireframe Pillars */}
+      {/* Two-Tone Editorial Statement + 3 Boxless Wireframe Pillars */}
       <section id="architecture" className="scroll-mt-16 py-24 sm:py-32">
         <p className="max-w-[780px] text-2xl font-medium tracking-[-0.03em] leading-[1.25] text-[#8a8f98] md:text-[32px]">
           <span className="text-[#f7f8f8]">
