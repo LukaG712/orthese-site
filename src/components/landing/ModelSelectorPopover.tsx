@@ -758,11 +758,11 @@ export function ModelSelectorPopover({
         />
       </button>
 
-      {/* Two-Pane Provider Rail + Models List Popover */}
+      {/* Two-Pane Provider Rail + Models List Popover (opens upward into Hero space) */}
       {open && (
         <div
           data-testid="composer-model-menu"
-          className="absolute left-2 right-2 top-full mt-2 sm:left-auto sm:right-0 sm:top-10 sm:mt-0 z-40 flex h-[308px] sm:w-[366px] overflow-visible rounded-2xl border border-white/[0.11] bg-[#141518] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_70px_-14px_rgba(0,0,0,0.92)]"
+          className="absolute left-2 right-2 bottom-full mb-2 sm:left-auto sm:right-0 sm:bottom-11 sm:top-auto sm:mb-0 z-40 flex h-[308px] sm:w-[366px] overflow-visible rounded-2xl border border-white/[0.11] bg-[#141518] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_70px_-14px_rgba(0,0,0,0.92)]"
         >
           {/* Left Scrollable Vertical Provider Icon Rail (13 Providers) */}
           <div
