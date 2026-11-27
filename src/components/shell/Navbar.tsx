@@ -16,13 +16,20 @@ import {
 import { toast } from "sonner";
 import { Avatar } from "@/components/primitives/Avatar";
 import { Skeleton } from "@/components/primitives/Skeleton";
+import { RandomLetterSwap } from "@/components/ui/RandomLetterSwap";
 import { cn } from "@/lib/cn";
 import { useStorefront } from "./StorefrontContext";
+
+interface CurtainLinkItem {
+  label: string;
+  href: string;
+  meta?: string;
+}
 
 interface CurtainColumn {
   heading: string;
   primary?: boolean;
-  links: { label: string; href: string; meta?: string }[];
+  links: CurtainLinkItem[];
 }
 
 interface NavMenuSection {
@@ -31,6 +38,46 @@ interface NavMenuSection {
   href: string;
   matchPrefix?: string;
   columns: CurtainColumn[];
+}
+
+function CurtainNavLink({
+  item,
+  primary,
+  onSelect,
+}: {
+  item: CurtainLinkItem;
+  primary?: boolean;
+  onSelect: () => void;
+}) {
+  const [trigger, setTrigger] = useState(0);
+  const bump = () => setTrigger((c) => c + 1);
+
+  return (
+    <Link
+      href={item.href}
+      onClick={onSelect}
+      onMouseEnter={bump}
+      onFocus={bump}
+      className={cn(
+        "group inline-flex items-baseline gap-2.5 transition-colors",
+        primary
+          ? "text-[22px] font-medium tracking-[-0.03em] leading-[1.3] text-[#e5e5e5] hover:text-white"
+          : "text-[13.5px] font-medium text-[#b5b5b5] hover:text-[#fafafa]"
+      )}
+    >
+      <RandomLetterSwap
+        label={item.label}
+        triggerCount={trigger}
+        staggerDuration={primary ? 0.018 : 0.015}
+        secondaryClassName="text-white"
+      />
+      {item.meta && (
+        <span className="font-mono text-[11px] font-normal text-[#737373] group-hover:text-[#a3a3a3]">
+          {item.meta}
+        </span>
+      )}
+    </Link>
+  );
 }
 
 const NAV_SECTIONS: NavMenuSection[] = [
@@ -149,6 +196,7 @@ export function Navbar() {
   const { setCommandOpen, user, authReady, signOut } = useStorefront();
 
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
+  const [tabTriggers, setTabTriggers] = useState<Record<string, number>>({});
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSectionId, setMobileSectionId] = useState<string | null>(null);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
@@ -171,6 +219,7 @@ export function Navbar() {
     cancelCloseTimer();
     setAccountMenuOpen(false);
     setActiveMenuId(id);
+    setTabTriggers((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
   };
 
   const scheduleClose = () => {
@@ -276,7 +325,12 @@ export function Navbar() {
                       : "text-[#a3a3a3] hover:text-[#fafafa]"
                   )}
                 >
-                  <span>{section.label}</span>
+                  <RandomLetterSwap
+                    label={section.label}
+                    triggerCount={tabTriggers[section.id] ?? 0}
+                    staggerDuration={0.024}
+                    secondaryClassName="text-[#fafafa]"
+                  />
                   {isOpen && (
                     <motion.span
                       layoutId="nav-active-underline"
@@ -490,23 +544,11 @@ export function Navbar() {
                             ease: [0.22, 1, 0.36, 1],
                           }}
                         >
-                          <Link
-                            href={item.href}
-                            onClick={closeAll}
-                            className={cn(
-                              "group inline-flex items-baseline gap-2.5 transition-colors",
-                              col.primary
-                                ? "text-[22px] font-medium tracking-[-0.03em] leading-[1.3] text-[#e5e5e5] hover:text-white"
-                                : "text-[13.5px] font-medium text-[#b5b5b5] hover:text-[#fafafa]"
-                            )}
-                          >
-                            <span>{item.label}</span>
-                            {item.meta && (
-                              <span className="font-mono text-[11px] font-normal text-[#737373] group-hover:text-[#a3a3a3]">
-                                {item.meta}
-                              </span>
-                            )}
-                          </Link>
+                          <CurtainNavLink
+                            item={item}
+                            primary={col.primary}
+                            onSelect={closeAll}
+                          />
                         </motion.li>
                       ))}
                     </ul>
