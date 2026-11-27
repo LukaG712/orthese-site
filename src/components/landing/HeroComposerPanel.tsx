@@ -135,7 +135,7 @@ function buildRunResult(
       contextType: "orthese/audit-report",
       summary:
         "Verified piece.json: ai:generate, context:send, and context:receive stay inside standard WASM bounds with zero unprompted shell calls.",
-      modelLabel: isAuto ? "Claude Opus 5.5" : model.name,
+      modelLabel: isAuto ? "Claude Opus 5.5" : model.fullName,
       routedByAuto: isAuto,
       permissionLabel: perm.label,
       cost: isAuto ? 5 : scaledCost,
@@ -148,7 +148,7 @@ function buildRunResult(
       contextType: "orthese/git-diff",
       summary:
         "Received orthese/spec on bus://workspace.default, staged typed changes across 2 files, and verified zero TypeScript errors.",
-      modelLabel: isAuto ? "Gemini 4 Neon" : model.name,
+      modelLabel: isAuto ? "Gemini 4 Neon" : model.fullName,
       routedByAuto: isAuto,
       permissionLabel: perm.label,
       cost: isAuto ? 4 : scaledCost,
@@ -160,7 +160,7 @@ function buildRunResult(
     contextType: "orthese/html-bundle",
     summary:
       "Drafted an obsidian #08090A layout bundle with hairline surfaces, tabular counters, and instant zero-install WASM preview.",
-    modelLabel: isAuto ? "GPT-6.2 Sol" : model.name,
+    modelLabel: isAuto ? "GPT-6.2 Sol" : model.fullName,
     routedByAuto: isAuto,
     permissionLabel: perm.label,
     cost: isAuto ? 3 : scaledCost,

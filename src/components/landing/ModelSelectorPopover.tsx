@@ -25,6 +25,7 @@ export type EffortLevel = "Low" | "Medium" | "High" | "Max";
 export interface RealModelSpec {
   id: string;
   name: string;
+  fullName: string;
   provider: ProviderId;
   providerLabel: string;
   baseCostCr: number;
@@ -46,47 +47,49 @@ export const EFFORT_LEVELS: {
 
 export const PROVIDERS: { id: ProviderId; label: string }[] = [
   { id: "router", label: "Orthese Router" },
-  { id: "anthropic", label: "Anthropic (Claude)" },
-  { id: "openai", label: "OpenAI" },
-  { id: "google", label: "Google Gemini" },
-  { id: "xai", label: "xAI (Grok)" },
+  { id: "anthropic", label: "Anthropic · Claude" },
+  { id: "openai", label: "OpenAI · GPT" },
+  { id: "google", label: "Google · Gemini" },
+  { id: "xai", label: "xAI · Grok" },
   { id: "deepseek", label: "DeepSeek" },
   { id: "qwen", label: "Qwen" },
   { id: "mistral", label: "Mistral" },
-  { id: "meta", label: "Meta (Muse)" },
-  { id: "kimi", label: "Moonshot Kimi" },
-  { id: "zhipu", label: "Zhipu GLM" },
+  { id: "meta", label: "Meta · Muse" },
+  { id: "kimi", label: "Moonshot · Kimi" },
+  { id: "zhipu", label: "Zhipu · GLM" },
   { id: "ollama", label: "Ollama (Local)" },
-  { id: "cliproxy", label: "CLIProxyAPI Local" },
+  { id: "cliproxy", label: "CLIProxyAPI (Local)" },
 ];
 
 export const REAL_MODELS: RealModelSpec[] = [
   // Orthese Router
   {
     id: "orthese-router",
-    name: "Orthese Router",
+    name: "Auto",
+    fullName: "Orthese Router · Auto",
     provider: "router",
-    providerLabel: "Orthese Auto",
+    providerLabel: "Orthese Router",
     baseCostCr: 2,
     supportsEffort: true,
     defaultEffort: "Medium",
-    badge: "Auto",
   },
   {
     id: "orthese-router-frontier",
-    name: "Orthese Router Max",
+    name: "Max",
+    fullName: "Orthese Router · Max",
     provider: "router",
-    providerLabel: "Orthese Auto",
+    providerLabel: "Orthese Router",
     baseCostCr: 4,
     supportsEffort: true,
     defaultEffort: "High",
   },
-  // Anthropic (Claude)
+  // Anthropic · Claude
   {
     id: "claude-opus-5.5",
-    name: "Claude Opus 5.5",
+    name: "Opus 5.5",
+    fullName: "Claude Opus 5.5",
     provider: "anthropic",
-    providerLabel: "Anthropic",
+    providerLabel: "Anthropic Claude",
     baseCostCr: 5,
     supportsEffort: true,
     defaultEffort: "High",
@@ -94,9 +97,10 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "claude-fable-5.2",
-    name: "Claude Fable 5.2",
+    name: "Fable 5.2",
+    fullName: "Claude Fable 5.2",
     provider: "anthropic",
-    providerLabel: "Anthropic",
+    providerLabel: "Anthropic Claude",
     baseCostCr: 8,
     supportsEffort: true,
     defaultEffort: "High",
@@ -104,28 +108,31 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "claude-sonnet-5.5",
-    name: "Claude Sonnet 5.5",
+    name: "Sonnet 5.5",
+    fullName: "Claude Sonnet 5.5",
     provider: "anthropic",
-    providerLabel: "Anthropic",
+    providerLabel: "Anthropic Claude",
     baseCostCr: 3,
     supportsEffort: true,
     defaultEffort: "Medium",
   },
   {
     id: "claude-haiku-5.5",
-    name: "Claude Haiku 5.5",
+    name: "Haiku 5.5",
+    fullName: "Claude Haiku 5.5",
     provider: "anthropic",
-    providerLabel: "Anthropic",
+    providerLabel: "Anthropic Claude",
     baseCostCr: 1,
     supportsEffort: false,
     defaultEffort: "Low",
   },
-  // OpenAI
+  // OpenAI · GPT
   {
     id: "gpt-6.2-astra",
-    name: "GPT-6.2 Astra",
+    name: "6.2 Astra",
+    fullName: "GPT-6.2 Astra",
     provider: "openai",
-    providerLabel: "OpenAI",
+    providerLabel: "OpenAI GPT",
     baseCostCr: 8,
     supportsEffort: true,
     defaultEffort: "High",
@@ -133,9 +140,10 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "gpt-6.2-sol",
-    name: "GPT-6.2 Sol",
+    name: "6.2 Sol",
+    fullName: "GPT-6.2 Sol",
     provider: "openai",
-    providerLabel: "OpenAI",
+    providerLabel: "OpenAI GPT",
     baseCostCr: 3,
     supportsEffort: true,
     defaultEffort: "Medium",
@@ -143,28 +151,31 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "gpt-6.1-sol",
-    name: "GPT-6.1 Sol",
+    name: "6.1 Sol",
+    fullName: "GPT-6.1 Sol",
     provider: "openai",
-    providerLabel: "OpenAI",
+    providerLabel: "OpenAI GPT",
     baseCostCr: 2,
     supportsEffort: true,
     defaultEffort: "Medium",
   },
   {
     id: "gpt-6-luna",
-    name: "GPT-6 Luna",
+    name: "6 Luna",
+    fullName: "GPT-6 Luna",
     provider: "openai",
-    providerLabel: "OpenAI",
+    providerLabel: "OpenAI GPT",
     baseCostCr: 1,
     supportsEffort: false,
     defaultEffort: "Low",
   },
-  // Google Gemini
+  // Google · Gemini
   {
     id: "gemini-4-neon",
-    name: "Gemini 4 Neon",
+    name: "4 Neon",
+    fullName: "Gemini 4 Neon",
     provider: "google",
-    providerLabel: "Google",
+    providerLabel: "Google Gemini",
     baseCostCr: 4,
     supportsEffort: true,
     defaultEffort: "Medium",
@@ -172,37 +183,41 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "gemini-4-carbon",
-    name: "Gemini 4 Carbon",
+    name: "4 Carbon",
+    fullName: "Gemini 4 Carbon",
     provider: "google",
-    providerLabel: "Google",
+    providerLabel: "Google Gemini",
     baseCostCr: 7,
     supportsEffort: true,
     defaultEffort: "High",
   },
   {
     id: "gemini-4-argon",
-    name: "Gemini 4 Argon",
+    name: "4 Argon",
+    fullName: "Gemini 4 Argon",
     provider: "google",
-    providerLabel: "Google",
+    providerLabel: "Google Gemini",
     baseCostCr: 3,
     supportsEffort: true,
     defaultEffort: "Medium",
   },
   {
     id: "gemini-4-hydrogen",
-    name: "Gemini 4 Hydrogen",
+    name: "4 Hydrogen",
+    fullName: "Gemini 4 Hydrogen",
     provider: "google",
-    providerLabel: "Google",
+    providerLabel: "Google Gemini",
     baseCostCr: 1,
     supportsEffort: true,
     defaultEffort: "Low",
   },
-  // xAI (Grok)
+  // xAI · Grok
   {
     id: "grok-4.7",
-    name: "Grok 4.7",
+    name: "4.7",
+    fullName: "Grok 4.7",
     provider: "xai",
-    providerLabel: "xAI",
+    providerLabel: "xAI Grok",
     baseCostCr: 4,
     supportsEffort: true,
     defaultEffort: "High",
@@ -210,27 +225,30 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "grok-4.6",
-    name: "Grok 4.6",
+    name: "4.6",
+    fullName: "Grok 4.6",
     provider: "xai",
-    providerLabel: "xAI",
+    providerLabel: "xAI Grok",
     baseCostCr: 3,
     supportsEffort: true,
     defaultEffort: "Medium",
   },
   {
     id: "grok-4.3",
-    name: "Grok 4.3",
+    name: "4.3",
+    fullName: "Grok 4.3",
     provider: "xai",
-    providerLabel: "xAI",
+    providerLabel: "xAI Grok",
     baseCostCr: 2,
     supportsEffort: true,
     defaultEffort: "Low",
   },
   {
     id: "grok-4.20-agentic",
-    name: "Grok 4.20 Agentic",
+    name: "4.20 Agentic",
+    fullName: "Grok 4.20 Agentic",
     provider: "xai",
-    providerLabel: "xAI",
+    providerLabel: "xAI Grok",
     baseCostCr: 3,
     supportsEffort: true,
     defaultEffort: "High",
@@ -238,7 +256,8 @@ export const REAL_MODELS: RealModelSpec[] = [
   // DeepSeek
   {
     id: "deepseek-v4.1-flash",
-    name: "DeepSeek V4.1 Flash",
+    name: "V4.1 Flash",
+    fullName: "DeepSeek V4.1 Flash",
     provider: "deepseek",
     providerLabel: "DeepSeek",
     baseCostCr: 1,
@@ -248,7 +267,8 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "deepseek-v4-pro",
-    name: "DeepSeek V4 Pro",
+    name: "V4 Pro",
+    fullName: "DeepSeek V4 Pro",
     provider: "deepseek",
     providerLabel: "DeepSeek",
     baseCostCr: 2,
@@ -257,7 +277,8 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "deepseek-r1",
-    name: "DeepSeek R1",
+    name: "R1",
+    fullName: "DeepSeek R1",
     provider: "deepseek",
     providerLabel: "DeepSeek",
     baseCostCr: 2,
@@ -267,7 +288,8 @@ export const REAL_MODELS: RealModelSpec[] = [
   // Qwen
   {
     id: "qwen4-max",
-    name: "Qwen4 Max",
+    name: "4 Max",
+    fullName: "Qwen4 Max",
     provider: "qwen",
     providerLabel: "Qwen",
     baseCostCr: 3,
@@ -277,7 +299,8 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "qwen-3.8-max",
-    name: "Qwen 3.8 Max",
+    name: "3.8 Max",
+    fullName: "Qwen 3.8 Max",
     provider: "qwen",
     providerLabel: "Qwen",
     baseCostCr: 2,
@@ -286,7 +309,8 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "qwen-3.8-flash",
-    name: "Qwen 3.8 Flash",
+    name: "3.8 Flash",
+    fullName: "Qwen 3.8 Flash",
     provider: "qwen",
     providerLabel: "Qwen",
     baseCostCr: 1,
@@ -296,7 +320,8 @@ export const REAL_MODELS: RealModelSpec[] = [
   // Mistral
   {
     id: "mistral-large-4",
-    name: "Mistral Large 4",
+    name: "Large 4",
+    fullName: "Mistral Large 4",
     provider: "mistral",
     providerLabel: "Mistral",
     baseCostCr: 3,
@@ -306,7 +331,8 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "mistral-medium-3.5",
-    name: "Mistral Medium 3.5",
+    name: "Medium 3.5",
+    fullName: "Mistral Medium 3.5",
     provider: "mistral",
     providerLabel: "Mistral",
     baseCostCr: 2,
@@ -316,16 +342,18 @@ export const REAL_MODELS: RealModelSpec[] = [
   {
     id: "devstral-2",
     name: "Devstral 2",
+    fullName: "Mistral Devstral 2",
     provider: "mistral",
     providerLabel: "Mistral",
     baseCostCr: 2,
     supportsEffort: true,
     defaultEffort: "Medium",
   },
-  // Meta (Muse)
+  // Meta · Muse
   {
     id: "muse-wonder-full",
-    name: "Muse Wonder Full",
+    name: "Wonder Full",
+    fullName: "Muse Wonder Full",
     provider: "meta",
     providerLabel: "Meta Muse",
     baseCostCr: 5,
@@ -335,7 +363,8 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "muse-wonder",
-    name: "Muse Wonder",
+    name: "Wonder",
+    fullName: "Muse Wonder",
     provider: "meta",
     providerLabel: "Meta Muse",
     baseCostCr: 3,
@@ -344,7 +373,8 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "muse-ember",
-    name: "Muse Ember",
+    name: "Ember",
+    fullName: "Muse Ember",
     provider: "meta",
     providerLabel: "Meta Muse",
     baseCostCr: 1,
@@ -354,19 +384,21 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "muse-glimmer-30b",
-    name: "Muse Glimmer 30B",
+    name: "Glimmer 30B",
+    fullName: "Muse Glimmer 30B",
     provider: "meta",
     providerLabel: "Meta Muse",
     baseCostCr: 1,
     supportsEffort: false,
     defaultEffort: "Low",
   },
-  // Moonshot Kimi
+  // Moonshot · Kimi
   {
     id: "kimi-k3.1-pro",
-    name: "Kimi K3.1 Pro",
+    name: "K3.1 Pro",
+    fullName: "Kimi K3.1 Pro",
     provider: "kimi",
-    providerLabel: "Moonshot",
+    providerLabel: "Moonshot Kimi",
     baseCostCr: 2,
     supportsEffort: true,
     defaultEffort: "High",
@@ -374,28 +406,31 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "kimi-k3",
-    name: "Kimi K3",
+    name: "K3",
+    fullName: "Kimi K3",
     provider: "kimi",
-    providerLabel: "Moonshot",
+    providerLabel: "Moonshot Kimi",
     baseCostCr: 2,
     supportsEffort: true,
     defaultEffort: "Medium",
   },
   {
     id: "kimi-k2.5",
-    name: "Kimi K2.5",
+    name: "K2.5",
+    fullName: "Kimi K2.5",
     provider: "kimi",
-    providerLabel: "Moonshot",
+    providerLabel: "Moonshot Kimi",
     baseCostCr: 1,
     supportsEffort: true,
     defaultEffort: "Low",
   },
-  // Zhipu GLM (Z.ai)
+  // Zhipu · GLM
   {
     id: "glm-5.4",
-    name: "GLM-5.4",
+    name: "5.4",
+    fullName: "GLM-5.4",
     provider: "zhipu",
-    providerLabel: "Zhipu",
+    providerLabel: "Zhipu GLM",
     baseCostCr: 3,
     supportsEffort: true,
     defaultEffort: "High",
@@ -403,18 +438,20 @@ export const REAL_MODELS: RealModelSpec[] = [
   },
   {
     id: "glm-5.3",
-    name: "GLM-5.3",
+    name: "5.3",
+    fullName: "GLM-5.3",
     provider: "zhipu",
-    providerLabel: "Zhipu",
+    providerLabel: "Zhipu GLM",
     baseCostCr: 2,
     supportsEffort: true,
     defaultEffort: "Medium",
   },
   {
     id: "glm-5.3-flash",
-    name: "GLM-5.3 Flash",
+    name: "5.3 Flash",
+    fullName: "GLM-5.3 Flash",
     provider: "zhipu",
-    providerLabel: "Zhipu",
+    providerLabel: "Zhipu GLM",
     baseCostCr: 1,
     supportsEffort: false,
     defaultEffort: "Low",
@@ -422,46 +459,51 @@ export const REAL_MODELS: RealModelSpec[] = [
   // Ollama (Local)
   {
     id: "ollama-deepseek-v4.1-flash",
-    name: "DeepSeek V4.1 Flash (Local)",
+    name: "DeepSeek V4.1 Flash",
+    fullName: "DeepSeek V4.1 Flash (Local)",
     provider: "ollama",
-    providerLabel: "Ollama · €0",
+    providerLabel: "Ollama · Free",
     baseCostCr: 0,
     supportsEffort: true,
     defaultEffort: "Medium",
   },
   {
     id: "ollama-muse-glimmer-30b",
-    name: "Muse Glimmer 30B (Local)",
+    name: "Muse Glimmer 30B",
+    fullName: "Muse Glimmer 30B (Local)",
     provider: "ollama",
-    providerLabel: "Ollama · €0",
+    providerLabel: "Ollama · Free",
     baseCostCr: 0,
     supportsEffort: false,
     defaultEffort: "Medium",
   },
   {
     id: "ollama-qwen3.8-27b",
-    name: "Qwen 3.8 27B (Local)",
+    name: "Qwen 3.8 27B",
+    fullName: "Qwen 3.8 27B (Local)",
     provider: "ollama",
-    providerLabel: "Ollama · €0",
+    providerLabel: "Ollama · Free",
     baseCostCr: 0,
     supportsEffort: false,
     defaultEffort: "Low",
   },
   {
     id: "ollama-mistral-large-4",
-    name: "Mistral Large 4 (Local)",
+    name: "Mistral Large 4",
+    fullName: "Mistral Large 4 (Local)",
     provider: "ollama",
-    providerLabel: "Ollama · €0",
+    providerLabel: "Ollama · Free",
     baseCostCr: 0,
     supportsEffort: true,
     defaultEffort: "Medium",
   },
-  // Local CLIProxyAPI
+  // CLIProxyAPI (Local)
   {
     id: "cliproxy-claude",
     name: "Claude Code OAuth",
+    fullName: "Claude Code OAuth (Local)",
     provider: "cliproxy",
-    providerLabel: "CLIProxyAPI · €0",
+    providerLabel: "CLIProxyAPI · Free",
     baseCostCr: 0,
     supportsEffort: true,
     defaultEffort: "Medium",
@@ -469,8 +511,9 @@ export const REAL_MODELS: RealModelSpec[] = [
   {
     id: "cliproxy-codex",
     name: "Codex CLI OAuth",
+    fullName: "Codex CLI OAuth (Local)",
     provider: "cliproxy",
-    providerLabel: "CLIProxyAPI · €0",
+    providerLabel: "CLIProxyAPI · Free",
     baseCostCr: 0,
     supportsEffort: true,
     defaultEffort: "Medium",
@@ -478,8 +521,9 @@ export const REAL_MODELS: RealModelSpec[] = [
   {
     id: "cliproxy-gemini",
     name: "Gemini CLI OAuth",
+    fullName: "Gemini CLI OAuth (Local)",
     provider: "cliproxy",
-    providerLabel: "CLIProxyAPI · €0",
+    providerLabel: "CLIProxyAPI · Free",
     baseCostCr: 0,
     supportsEffort: false,
     defaultEffort: "Medium",
@@ -668,12 +712,11 @@ export function ModelSelectorPopover({
   const visibleModels = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     if (q) {
-      return REAL_MODELS.filter(
-        (m) =>
-          m.name.toLowerCase().includes(q) ||
-          m.providerLabel.toLowerCase().includes(q) ||
-          m.id.toLowerCase().includes(q)
-      );
+      const tokens = q.split(/\s+/);
+      return REAL_MODELS.filter((m) => {
+        const haystack = `${m.name} ${m.fullName} ${m.providerLabel} ${m.id}`.toLowerCase();
+        return tokens.every((t) => haystack.includes(t));
+      });
     }
     return REAL_MODELS.filter((m) => m.provider === activeProvider);
   }, [activeProvider, searchQuery]);
@@ -856,7 +899,7 @@ export function ModelSelectorPopover({
                                 isSelected ? "text-[#f7f8f8]" : "text-[#d4d6dc]"
                               )}
                             >
-                              {model.name}
+                              {searchQuery.trim() ? model.fullName : model.name}
                             </span>
                             {model.badge && !isSelected && (
                               <span className="rounded bg-[#818cf8]/15 px-1 py-0.5 font-mono text-[9.5px] text-[#a5b4fc]">
@@ -884,7 +927,7 @@ export function ModelSelectorPopover({
                           </button>
                         ) : (
                           <span className="font-mono text-[10.5px] tabular-nums text-[#5e626a]">
-                            {model.baseCostCr === 0 ? "€0" : `${model.baseCostCr} cr`}
+                            {model.baseCostCr === 0 ? "Free" : `${model.baseCostCr} cr`}
                           </span>
                         )}
 
@@ -969,7 +1012,7 @@ export function ModelSelectorPopover({
             <div className="mt-auto flex shrink-0 items-center justify-between border-t border-white/[0.07] px-2 pt-2 text-[11px] text-[#6b707a]">
               <span className="font-mono tabular-nums">
                 {activeModel.baseCostCr === 0
-                  ? "Local · €0"
+                  ? "Local · Free"
                   : `~${Math.max(1, Math.round(activeModel.baseCostCr * (EFFORT_LEVELS.find((e) => e.id === effort)?.multiplier ?? 1)))} cr / turn`}
               </span>
               <Link
