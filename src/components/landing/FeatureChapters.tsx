@@ -77,7 +77,7 @@ const HARNESS_FILES = {
   "id": "orthese.website-builder",
   "version": "0.1.0",
   "extends": "orthese.base-harness",
-  "defaultModel": "claude-sonnet-4.5",
+  "defaultModel": "gemini-4-neon",
   "permissions": {
     "standard": ["ai:generate", "context:send", "context:receive"],
     "elevated": []
@@ -101,7 +101,7 @@ pub fn manifest() -> PieceManifest {
     PieceManifest {
         id: "orthese.website-builder".into(),
         extends: Some("orthese.base-harness".into()),
-        default_model: Some("claude-sonnet-4.5".into()),
+        default_model: Some("gemini-4-neon".into()),
         // Zero elevated permissions -> instant wasm32
         ..Default::default()
     }
