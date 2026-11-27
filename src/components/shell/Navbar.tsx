@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import {
+  ArrowRight,
   ChevronRight,
   Layers,
   LogOut,
@@ -63,7 +64,7 @@ function CurtainNavLink({
       className={cn(
         "group inline-flex items-baseline gap-2.5 transition-colors",
         primary
-          ? "text-[19px] font-medium tracking-[-0.025em] leading-[1.32] text-[#e5e5e5] hover:text-white"
+          ? "text-[18.5px] font-medium tracking-[-0.025em] leading-[1.32] text-[#e5e5e5] hover:text-white"
           : "text-[13px] font-medium text-[#b5b5b5] hover:text-[#fafafa]"
       )}
     >
@@ -85,7 +86,7 @@ function CurtainNavLink({
 const NAV_SECTIONS: NavMenuSection[] = [
   {
     id: "product",
-    label: "PRODUCT",
+    label: "Product",
     href: "/#architecture",
     columns: [
       {
@@ -112,7 +113,7 @@ const NAV_SECTIONS: NavMenuSection[] = [
   },
   {
     id: "marketplace",
-    label: "MARKETPLACE",
+    label: "Marketplace",
     href: "/marketplace",
     matchPrefix: "/marketplace",
     badgeDot: true,
@@ -140,7 +141,7 @@ const NAV_SECTIONS: NavMenuSection[] = [
   },
   {
     id: "router",
-    label: "ROUTER",
+    label: "Router",
     href: "/router",
     matchPrefix: "/router",
     columns: [
@@ -167,7 +168,7 @@ const NAV_SECTIONS: NavMenuSection[] = [
   },
   {
     id: "docs",
-    label: "DOCS",
+    label: "Docs",
     href: "/docs",
     matchPrefix: "/docs",
     columns: [
@@ -279,36 +280,33 @@ export function Navbar() {
   return (
     <>
       <header className="pointer-events-none sticky top-0 z-50 w-full px-3 pt-3 pb-1 sm:px-4">
-        {/* Floating Centered Tactile Dithered Bezel Dock */}
+        {/* Floating Centered Dock Matching Orthese BoardUI Dark Mode & Composer Geometry */}
         <div
           onMouseLeave={scheduleClose}
           onMouseEnter={cancelCloseTimer}
-          className="nav-dither-bezel pointer-events-auto mx-auto w-full max-w-[740px] rounded-[13px] border border-white/[0.14] p-[5px]"
+          className="nav-dither-bezel pointer-events-auto mx-auto w-full max-w-[720px] rounded-[20px] border border-white/[0.09] p-[4px]"
         >
-          <div className="rounded-[8px] border border-white/[0.07] bg-[#171717]/98 backdrop-blur-xl">
-            {/* Top Hardware Row */}
-            <div className="flex h-[42px] items-center justify-between gap-2 px-2 sm:px-2.5">
-              {/* Left: Compact Machined Square Orthese Emblem */}
+          <div className="rounded-[16px] border border-white/[0.06] bg-[#171717]/95 backdrop-blur-xl">
+            {/* Primary Row */}
+            <div className="flex h-[44px] items-center justify-between gap-2 px-2.5 sm:px-3">
+              {/* Left: Orthese Mark + Wordmark (Geist Sans) */}
               <Link
                 href="/"
                 onClick={closeAll}
-                aria-label="Orthese Home"
-                className="group flex items-center gap-2 rounded-[6px] pr-1.5 transition-opacity"
+                className="group flex items-center gap-2 rounded-full pl-0.5 pr-2 text-[13.5px] font-medium tracking-[-0.02em] text-[#fafafa] hover:opacity-90 transition-opacity"
               >
-                <span className="flex h-7 w-7 items-center justify-center rounded-[6px] border border-white/[0.1] bg-[#202020] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] group-hover:border-white/[0.22] transition-colors">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.15" fill="#FAFAFA" />
-                    <rect x="9" y="1.5" width="5.5" height="5.5" rx="1.15" stroke="#FAFAFA" strokeWidth="1.35" />
-                    <rect x="1.5" y="9" width="5.5" height="5.5" rx="1.15" stroke="#FAFAFA" strokeWidth="1.35" />
-                    <rect x="9" y="9" width="5.5" height="5.5" rx="1.15" fill="#FAFAFA" fillOpacity="0.38" />
+                <span className="flex h-7 w-7 items-center justify-center rounded-[9px] border border-white/[0.09] bg-[#1f1f1f] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] group-hover:border-white/[0.18] transition-colors">
+                  <svg width="13.5" height="13.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.2" fill="#FAFAFA" />
+                    <rect x="9" y="1.5" width="5.5" height="5.5" rx="1.2" stroke="#FAFAFA" strokeWidth="1.35" />
+                    <rect x="1.5" y="9" width="5.5" height="5.5" rx="1.2" stroke="#FAFAFA" strokeWidth="1.35" />
+                    <rect x="9" y="9" width="5.5" height="5.5" rx="1.2" fill="#FAFAFA" fillOpacity="0.38" />
                   </svg>
                 </span>
-                <span className="font-mono text-[11.5px] font-medium uppercase tracking-[0.07em] text-[#fafafa] md:hidden">
-                  Orthese
-                </span>
+                <span>Orthese</span>
               </Link>
 
-              {/* Center: Uppercase Geist Mono Hover Tabs with RandomLetterSwap */}
+              {/* Center: Geist Sans Sentence-Case Tabs with RandomLetterSwap */}
               <nav
                 className="hidden h-full items-center gap-0.5 md:flex"
                 aria-label="Primary"
@@ -327,9 +325,9 @@ export function Navbar() {
                       onFocus={() => openMenu(section.id)}
                       onClick={closeAll}
                       className={cn(
-                        "relative inline-flex h-[32px] items-center rounded-[6px] px-2.5 font-mono text-[11.5px] tracking-[0.065em] uppercase transition-colors",
+                        "relative inline-flex h-[30px] items-center rounded-full px-3 text-[12.5px] font-medium tracking-[-0.01em] transition-colors",
                         isOpen
-                          ? "bg-white/[0.06] text-[#fafafa]"
+                          ? "bg-white/[0.07] text-[#fafafa]"
                           : isCurrent
                             ? "text-[#fafafa]"
                             : "text-[#a3a3a3] hover:text-[#fafafa]"
@@ -338,13 +336,13 @@ export function Navbar() {
                       <RandomLetterSwap
                         label={section.label}
                         triggerCount={tabTriggers[section.id] ?? 0}
-                        staggerDuration={0.024}
+                        staggerDuration={0.022}
                         secondaryClassName="text-[#fafafa]"
                       />
                       {section.badgeDot && (
                         <span
                           aria-hidden="true"
-                          className="ml-1 -mt-2 h-[5px] w-[5px] rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]"
+                          className="ml-1 -mt-2 h-[5px] w-[5px] rounded-full bg-[#818cf8] shadow-[0_0_8px_rgba(129,140,248,0.85)]"
                         />
                       )}
                     </Link>
@@ -352,7 +350,7 @@ export function Navbar() {
                 })}
               </nav>
 
-              {/* Right: Search + Auth / Launch Orthese + Avatar + Mobile Toggle */}
+              {/* Right: Search + Pill Auth / Launch Orthese + Avatar + Mobile Toggle */}
               <div className="flex items-center gap-1.5">
                 <button
                   type="button"
@@ -363,20 +361,20 @@ export function Navbar() {
                   }}
                   aria-label="Open command palette (⌘K)"
                   title="Search (⌘K)"
-                  className="hidden sm:inline-flex h-7 w-7 items-center justify-center rounded-[6px] border border-transparent text-[#a3a3a3] hover:border-white/[0.09] hover:bg-white/[0.05] hover:text-[#fafafa] transition-colors cursor-pointer"
+                  className="hidden sm:inline-flex h-7 w-7 items-center justify-center rounded-full text-[#a3a3a3] hover:bg-white/[0.07] hover:text-[#fafafa] transition-colors cursor-pointer"
                 >
                   <Search className="h-3.5 w-3.5" />
                 </button>
 
                 {!authReady ? (
-                  <Skeleton rounded="md" className="h-7 w-24" />
+                  <Skeleton rounded="full" className="h-7 w-24" />
                 ) : user ? (
                   <div className="flex items-center gap-1.5">
                     <Link
                       href={appUrl}
                       data-testid="navbar-launch-orthese"
                       onClick={closeAll}
-                      className="btn-pill-white inline-flex h-7 items-center rounded-[6px] px-2.5 font-mono text-[10.5px] font-medium uppercase tracking-[0.04em] whitespace-nowrap"
+                      className="btn-pill-white inline-flex h-7 items-center rounded-full px-3 text-[12px] font-medium whitespace-nowrap"
                     >
                       Launch Orthese
                     </Link>
@@ -481,7 +479,7 @@ export function Navbar() {
                     href="/auth"
                     data-testid="navbar-login-btn"
                     onClick={closeAll}
-                    className="btn-pill-white inline-flex h-7 items-center rounded-[6px] px-2.5 font-mono text-[10.5px] font-medium uppercase tracking-[0.04em] whitespace-nowrap"
+                    className="btn-pill-white inline-flex h-7 items-center rounded-full px-3 text-[12px] font-medium whitespace-nowrap"
                   >
                     <span className="sm:hidden">Log in</span>
                     <span className="hidden sm:inline">Log in / Sign up</span>
@@ -498,7 +496,7 @@ export function Navbar() {
                     setMobileOpen((prev) => !prev);
                     setMobileSectionId(null);
                   }}
-                  className="relative flex h-7 w-7 items-center justify-center rounded-[6px] border border-white/[0.08] bg-[#202020] text-[#d4d4d4] hover:text-[#fafafa] md:hidden cursor-pointer"
+                  className="relative flex h-7 w-7 items-center justify-center rounded-full border border-white/[0.08] bg-[#1f1f1f] text-[#d4d4d4] hover:text-[#fafafa] md:hidden cursor-pointer"
                 >
                   <span
                     className={cn(
@@ -516,7 +514,7 @@ export function Navbar() {
               </div>
             </div>
 
-            {/* Desktop Expanding Curtain Mega-Menu Inside the Floating Hardware Bezel */}
+            {/* Desktop Expanding Curtain Mega-Menu Inside the Floating Dock */}
             <AnimatePresence>
               {activeSection && (
                 <motion.div
@@ -527,7 +525,7 @@ export function Navbar() {
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                   onMouseEnter={cancelCloseTimer}
-                  className="hidden overflow-hidden border-t border-white/[0.07] md:block"
+                  className="hidden overflow-hidden border-t border-white/[0.06] md:block"
                 >
                   <motion.div
                     key={activeSection.id}
@@ -538,7 +536,7 @@ export function Navbar() {
                   >
                     {activeSection.columns.map((col, colIdx) => (
                       <div key={col.heading}>
-                        <div className="mb-3 font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-[#737373]">
+                        <div className="mb-3 text-[11px] font-medium text-[#737373]">
                           {col.heading}
                         </div>
                         <ul className={cn(col.primary ? "space-y-1.5" : "space-y-2")}>
@@ -568,7 +566,7 @@ export function Navbar() {
               )}
             </AnimatePresence>
 
-            {/* Mobile Expanding Drawer Inside the Floating Bezel */}
+            {/* Mobile Expanding Drawer Inside the Floating Dock */}
             <AnimatePresence>
               {mobileOpen && (
                 <motion.nav
@@ -579,7 +577,7 @@ export function Navbar() {
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                  className="max-h-[calc(100svh-120px)] overflow-y-auto border-t border-white/[0.07] px-3.5 py-4 md:hidden"
+                  className="max-h-[calc(100svh-120px)] overflow-y-auto border-t border-white/[0.06] px-3.5 py-4 md:hidden"
                 >
                   <button
                     type="button"
@@ -587,7 +585,7 @@ export function Navbar() {
                       setMobileOpen(false);
                       setCommandOpen(true);
                     }}
-                    className="mb-4 flex w-full items-center justify-between rounded-lg border border-white/[0.09] bg-white/[0.03] px-3 py-2 text-left text-[12.5px] text-[#a3a3a3] hover:text-[#fafafa] cursor-pointer"
+                    className="mb-4 flex w-full items-center justify-between rounded-xl border border-white/[0.09] bg-white/[0.03] px-3 py-2 text-left text-[12.5px] text-[#a3a3a3] hover:text-[#fafafa] cursor-pointer"
                   >
                     <span className="inline-flex items-center gap-2">
                       <Search className="h-3.5 w-3.5" />
@@ -613,12 +611,12 @@ export function Navbar() {
                               setMobileSectionId(isExpanded ? null : section.id)
                             }
                             aria-expanded={isExpanded}
-                            className="flex w-full items-center justify-between py-2 text-left font-mono text-[14px] font-medium uppercase tracking-[0.06em] text-[#fafafa] cursor-pointer"
+                            className="flex w-full items-center justify-between py-2 text-left text-[16px] font-medium tracking-[-0.02em] text-[#fafafa] cursor-pointer"
                           >
                             <span className="inline-flex items-center gap-1.5">
                               <span>{section.label}</span>
                               {section.badgeDot && (
-                                <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                                <span className="h-1.5 w-1.5 rounded-full bg-[#818cf8]" />
                               )}
                             </span>
                             <ChevronRight
@@ -633,7 +631,7 @@ export function Navbar() {
                             <div className="pb-2.5 pt-1 space-y-3.5">
                               {section.columns.map((col) => (
                                 <div key={col.heading}>
-                                  <div className="mb-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-[#737373]">
+                                  <div className="mb-1.5 text-[11px] font-medium text-[#737373]">
                                     {col.heading}
                                   </div>
                                   <div className="flex flex-col space-y-1">
@@ -665,29 +663,40 @@ export function Navbar() {
               )}
             </AnimatePresence>
 
-            {/* Bottom Machined LCD Monospace Announcement Strip */}
+            {/* Recessed BoardUI Dark-Mode Status Strip Nestled Inside the Floating Dock */}
             {!tickerDismissed && (
-              <div className="px-1.5 pb-1.5 pt-0.5">
-                <div className="flex items-center justify-between gap-2 rounded-[5px] bg-[#dcdcdc] px-2.5 py-[3.5px] text-[#222222]">
+              <div className="px-1.5 pb-1.5">
+                <div className="flex items-center justify-between gap-2 rounded-[11px] border border-white/[0.06] bg-[#1f1f1f]/85 px-3 py-1">
                   <Link
                     href="/#workspace-demo"
                     onClick={closeAll}
-                    className="min-w-0 flex-1 truncate text-center font-mono text-[10px] font-medium uppercase tracking-[0.055em] text-[#262626] hover:text-black transition-colors sm:text-[10.5px]"
+                    className="group flex min-w-0 flex-1 items-center justify-center gap-2 truncate text-[11.5px] text-[#a3a3a3] hover:text-[#fafafa] transition-colors"
                   >
-                    <span className="hidden sm:inline">
-                      ORTHESE v0.1 · BROWSER WASM + DESKTOP GPUI · €2 FREE STARTER CREDITS
+                    <span
+                      aria-hidden="true"
+                      className="h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-tr from-[#818cf8] to-[#38bdf8]"
+                    />
+                    <span className="hidden truncate sm:inline">
+                      <span className="font-medium text-[#e5e5e5]">Orthese v0.1</span>
+                      <span className="mx-1.5 text-[#525252]">·</span>
+                      <span>Browser WASM &amp; Desktop GPUI</span>
+                      <span className="mx-1.5 text-[#525252]">·</span>
+                      <span className="text-[#d4d4d4]">€2 free starter credits</span>
                     </span>
-                    <span className="sm:hidden">
-                      ORTHESE v0.1 · €2 FREE STARTER CREDITS
+                    <span className="truncate sm:hidden">
+                      <span className="font-medium text-[#e5e5e5]">Orthese v0.1</span>
+                      <span className="mx-1.5 text-[#525252]">·</span>
+                      <span>€2 free credits</span>
                     </span>
+                    <ArrowRight className="h-3 w-3 shrink-0 text-[#737373] transition-transform group-hover:translate-x-0.5 group-hover:text-[#fafafa]" />
                   </Link>
                   <button
                     type="button"
                     onClick={() => setTickerDismissed(true)}
                     aria-label="Dismiss announcement"
-                    className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded text-[#525252] hover:bg-black/10 hover:text-black transition-colors cursor-pointer"
+                    className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[#737373] hover:bg-white/[0.08] hover:text-[#fafafa] transition-colors cursor-pointer"
                   >
-                    <X className="h-3 w-3" />
+                    <X className="h-2.5 w-2.5" />
                   </button>
                 </div>
               </div>
