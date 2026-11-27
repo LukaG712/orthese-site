@@ -389,6 +389,20 @@
   animation: skeleton-shimmer 1.65s ease-in-out infinite;
 }
 
+/* Floating tactile hardware bezel with 2px pixel-dithered carbon texture */
+.nav-dither-bezel {
+  background-color: #0e0e0e;
+  background-image: repeating-conic-gradient(
+    rgba(255, 255, 255, 0.11) 0% 25%,
+    rgba(12, 12, 12, 0.96) 0% 50%
+  );
+  background-size: 4px 4px;
+  box-shadow:
+    0 20px 52px -12px rgba(0, 0, 0, 0.88),
+    0 4px 16px -4px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

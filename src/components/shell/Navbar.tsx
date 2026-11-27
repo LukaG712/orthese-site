@@ -12,6 +12,7 @@ import {
   Route,
   Search,
   Sparkles,
+  X,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Avatar } from "@/components/primitives/Avatar";
@@ -37,6 +38,7 @@ interface NavMenuSection {
   label: string;
   href: string;
   matchPrefix?: string;
+  badgeDot?: boolean;
   columns: CurtainColumn[];
 }
 
@@ -61,8 +63,8 @@ function CurtainNavLink({
       className={cn(
         "group inline-flex items-baseline gap-2.5 transition-colors",
         primary
-          ? "text-[22px] font-medium tracking-[-0.03em] leading-[1.3] text-[#e5e5e5] hover:text-white"
-          : "text-[13.5px] font-medium text-[#b5b5b5] hover:text-[#fafafa]"
+          ? "text-[19px] font-medium tracking-[-0.025em] leading-[1.32] text-[#e5e5e5] hover:text-white"
+          : "text-[13px] font-medium text-[#b5b5b5] hover:text-[#fafafa]"
       )}
     >
       <RandomLetterSwap
@@ -72,7 +74,7 @@ function CurtainNavLink({
         secondaryClassName="text-white"
       />
       {item.meta && (
-        <span className="font-mono text-[11px] font-normal text-[#737373] group-hover:text-[#a3a3a3]">
+        <span className="font-mono text-[10.5px] font-normal text-[#737373] group-hover:text-[#a3a3a3]">
           {item.meta}
         </span>
       )}
@@ -83,7 +85,7 @@ function CurtainNavLink({
 const NAV_SECTIONS: NavMenuSection[] = [
   {
     id: "product",
-    label: "Product",
+    label: "PRODUCT",
     href: "/#architecture",
     columns: [
       {
@@ -110,9 +112,10 @@ const NAV_SECTIONS: NavMenuSection[] = [
   },
   {
     id: "marketplace",
-    label: "Marketplace",
+    label: "MARKETPLACE",
     href: "/marketplace",
     matchPrefix: "/marketplace",
+    badgeDot: true,
     columns: [
       {
         heading: "Registry & Pricing",
@@ -137,7 +140,7 @@ const NAV_SECTIONS: NavMenuSection[] = [
   },
   {
     id: "router",
-    label: "Router",
+    label: "ROUTER",
     href: "/router",
     matchPrefix: "/router",
     columns: [
@@ -164,7 +167,7 @@ const NAV_SECTIONS: NavMenuSection[] = [
   },
   {
     id: "docs",
-    label: "Docs",
+    label: "DOCS",
     href: "/docs",
     matchPrefix: "/docs",
     columns: [
@@ -200,6 +203,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSectionId, setMobileSectionId] = useState<string | null>(null);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const [tickerDismissed, setTickerDismissed] = useState(false);
 
   const closeTimerRef = useRef<number | null>(null);
   const accountMenuRef = useRef<HTMLDivElement | null>(null);
@@ -274,388 +278,427 @@ export function Navbar() {
 
   return (
     <>
-      <header
-        onMouseLeave={scheduleClose}
-        onMouseEnter={cancelCloseTimer}
-        className={cn(
-          "sticky top-0 z-50 w-full transition-colors duration-200",
-          activeSection || mobileOpen
-            ? "bg-[#171717]/98 border-b border-white/[0.07]"
-            : "bg-[#121212]/80 border-b border-white/[0.06] backdrop-blur-xl"
-        )}
-      >
-        <div className="mx-auto flex h-[48px] max-w-[1024px] items-center justify-between px-4 sm:px-6">
-          {/* Left: Minimal Orthese Mark + Wordmark */}
-          <Link
-            href="/"
-            onClick={closeAll}
-            className="flex items-center gap-2 text-[13.5px] font-medium tracking-[-0.02em] text-[#fafafa] hover:opacity-90 transition-opacity"
-          >
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.2" fill="#F7F8F8" />
-              <rect x="9" y="1.5" width="5.5" height="5.5" rx="1.2" stroke="#F7F8F8" strokeWidth="1.35" />
-              <rect x="1.5" y="9" width="5.5" height="5.5" rx="1.2" stroke="#F7F8F8" strokeWidth="1.35" />
-              <rect x="9" y="9" width="5.5" height="5.5" rx="1.2" fill="#F7F8F8" fillOpacity="0.38" />
-            </svg>
-            <span>Orthese</span>
-          </Link>
-
-          {/* Center: Minimal Apple-Style Hover Tabs (Desktop) */}
-          <nav
-            className="hidden h-full items-center gap-1 md:flex"
-            aria-label="Primary"
-          >
-            {NAV_SECTIONS.map((section) => {
-              const isOpen = activeMenuId === section.id;
-              const isCurrent =
-                section.matchPrefix && pathname?.startsWith(section.matchPrefix);
-
-              return (
-                <Link
-                  key={section.id}
-                  href={section.href}
-                  data-testid={`nav-tab-${section.id}`}
-                  onMouseEnter={() => openMenu(section.id)}
-                  onFocus={() => openMenu(section.id)}
-                  onClick={closeAll}
-                  className={cn(
-                    "relative inline-flex h-full items-center px-3.5 text-[12.5px] transition-colors",
-                    isOpen || isCurrent
-                      ? "text-[#fafafa]"
-                      : "text-[#a3a3a3] hover:text-[#fafafa]"
-                  )}
-                >
-                  <RandomLetterSwap
-                    label={section.label}
-                    triggerCount={tabTriggers[section.id] ?? 0}
-                    staggerDuration={0.024}
-                    secondaryClassName="text-[#fafafa]"
-                  />
-                  {isOpen && (
-                    <motion.span
-                      layoutId="nav-active-underline"
-                      transition={{ type: "spring", stiffness: 460, damping: 36 }}
-                      className="absolute inset-x-3 bottom-0 h-[1.5px] bg-[#fafafa]/80"
-                    />
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Right: Search + Auth / Launch Orthese + Avatar + Apple Mobile Toggle */}
-          <div className="flex items-center gap-2 sm:gap-2.5">
-            <button
-              type="button"
-              data-testid="navbar-cmd-btn"
-              onClick={() => {
-                setActiveMenuId(null);
-                setCommandOpen(true);
-              }}
-              aria-label="Open command palette (⌘K)"
-              title="Search (⌘K)"
-              className="hidden sm:inline-flex h-7 w-7 items-center justify-center rounded-full text-[#a3a3a3] hover:bg-white/[0.06] hover:text-[#fafafa] transition-colors cursor-pointer"
-            >
-              <Search className="h-3.5 w-3.5" />
-            </button>
-
-            {!authReady ? (
-              <Skeleton rounded="full" className="h-7 w-28" />
-            ) : user ? (
-              <div className="flex items-center gap-2">
-                <Link
-                  href={appUrl}
-                  data-testid="navbar-launch-orthese"
-                  onClick={closeAll}
-                  className="btn-pill-white inline-flex h-7 items-center rounded-full px-3 text-[12px] font-medium whitespace-nowrap"
-                >
-                  Launch Orthese
-                </Link>
-
-                <div ref={accountMenuRef} className="relative flex items-center">
-                  <button
-                    type="button"
-                    data-testid="navbar-avatar-btn"
-                    onClick={() => {
-                      setActiveMenuId(null);
-                      setAccountMenuOpen((prev) => !prev);
-                    }}
-                    aria-haspopup="menu"
-                    aria-expanded={accountMenuOpen}
-                    aria-label={`Account menu for ${user.name}`}
-                    className="rounded-full p-0.5 ring-1 ring-transparent hover:ring-white/25 transition-all cursor-pointer"
-                  >
-                    <Avatar
-                      name={user.name}
-                      src={user.avatarUrl}
-                      size="sm"
-                      status="online"
-                    />
-                  </button>
-
-                  {accountMenuOpen && (
-                    <div
-                      role="menu"
-                      data-testid="navbar-account-menu"
-                      className="absolute right-0 top-full z-50 mt-2 w-60 overflow-hidden rounded-xl border border-white/[0.13] bg-[#1f1f1f]/98 p-1.5 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
-                    >
-                      <div className="flex items-center gap-2.5 px-2.5 py-2 border-b border-white/[0.07]">
-                        <Avatar name={user.name} src={user.avatarUrl} size="md" status="online" />
-                        <div className="min-w-0">
-                          <div className="truncate text-[13px] font-medium text-[#fafafa]">
-                            {user.name}
-                          </div>
-                          <div className="truncate text-[11.5px] text-[#8a8a8a]">
-                            {user.email}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between px-2.5 py-2 text-[11.5px] border-b border-white/[0.07]">
-                        <span className="inline-flex items-center gap-1.5 text-[#a3a3a3]">
-                          <Sparkles className="h-3 w-3 text-[#818cf8]" />
-                          <span>{user.plan}</span>
-                        </span>
-                        <span className="font-mono text-[11.5px] font-medium tabular-nums text-[#fafafa]">
-                          {user.credits.toLocaleString()} cr
-                        </span>
-                      </div>
-
-                      <div className="py-1 space-y-0.5">
-                        <Link
-                          href={appUrl}
-                          onClick={closeAll}
-                          className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] text-[#d4d4d4] hover:bg-white/[0.07] hover:text-[#fafafa] transition-colors"
-                        >
-                          <Rocket className="h-3.5 w-3.5 text-[#a3a3a3]" />
-                          <span>Launch Orthese</span>
-                        </Link>
-                        <Link
-                          href="/router"
-                          onClick={closeAll}
-                          className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] text-[#d4d4d4] hover:bg-white/[0.07] hover:text-[#fafafa] transition-colors"
-                        >
-                          <Route className="h-3.5 w-3.5 text-[#a3a3a3]" />
-                          <span>Orthese Router</span>
-                        </Link>
-                        <Link
-                          href="/marketplace"
-                          onClick={closeAll}
-                          className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] text-[#d4d4d4] hover:bg-white/[0.07] hover:text-[#fafafa] transition-colors"
-                        >
-                          <Layers className="h-3.5 w-3.5 text-[#a3a3a3]" />
-                          <span>Marketplace</span>
-                        </Link>
-                      </div>
-
-                      <div className="border-t border-white/[0.07] pt-1">
-                        <button
-                          type="button"
-                          data-testid="navbar-signout-btn"
-                          onClick={() => {
-                            closeAll();
-                            signOut();
-                            toast.info("Signed out of Orthese");
-                          }}
-                          className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-[12.5px] text-rose-300 hover:bg-rose-500/15 hover:text-rose-200 transition-colors cursor-pointer"
-                        >
-                          <LogOut className="h-3.5 w-3.5" />
-                          <span>Sign out</span>
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ) : (
+      <header className="pointer-events-none sticky top-0 z-50 w-full px-3 pt-3 pb-1 sm:px-4">
+        {/* Floating Centered Tactile Dithered Bezel Dock */}
+        <div
+          onMouseLeave={scheduleClose}
+          onMouseEnter={cancelCloseTimer}
+          className="nav-dither-bezel pointer-events-auto mx-auto w-full max-w-[740px] rounded-[13px] border border-white/[0.14] p-[5px]"
+        >
+          <div className="rounded-[8px] border border-white/[0.07] bg-[#171717]/98 backdrop-blur-xl">
+            {/* Top Hardware Row */}
+            <div className="flex h-[42px] items-center justify-between gap-2 px-2 sm:px-2.5">
+              {/* Left: Compact Machined Square Orthese Emblem */}
               <Link
-                href="/auth"
-                data-testid="navbar-login-btn"
+                href="/"
                 onClick={closeAll}
-                className="btn-pill-white inline-flex h-7 items-center rounded-full px-3 text-[12px] font-medium whitespace-nowrap"
+                aria-label="Orthese Home"
+                className="group flex items-center gap-2 rounded-[6px] pr-1.5 transition-opacity"
               >
-                <span className="sm:hidden">Log in</span>
-                <span className="hidden sm:inline">Log in / Sign up</span>
-              </Link>
-            )}
-
-            {/* Apple-Style Two-Line Morphing Mobile Menu Button */}
-            <button
-              type="button"
-              data-testid="mobile-menu-btn"
-              aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
-              aria-expanded={mobileOpen}
-              onClick={() => {
-                setMobileOpen((prev) => !prev);
-                setMobileSectionId(null);
-              }}
-              className="relative flex h-8 w-8 items-center justify-center rounded-full text-[#d4d4d4] hover:bg-white/[0.06] hover:text-[#fafafa] md:hidden cursor-pointer"
-            >
-              <span
-                className={cn(
-                  "absolute h-[1.5px] w-4 rounded-full bg-current transition-transform duration-200",
-                  mobileOpen ? "translate-y-0 rotate-45" : "-translate-y-[3.5px]"
-                )}
-              />
-              <span
-                className={cn(
-                  "absolute h-[1.5px] w-4 rounded-full bg-current transition-transform duration-200",
-                  mobileOpen ? "translate-y-0 -rotate-45" : "translate-y-[3.5px]"
-                )}
-              />
-            </button>
-          </div>
-        </div>
-
-        {/* Desktop Full-Width Apple V002 Curtain Mega-Menu */}
-        <AnimatePresence>
-          {activeSection && (
-            <motion.div
-              key="apple-curtain"
-              data-testid="nav-curtain"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              onMouseEnter={cancelCloseTimer}
-              className="hidden overflow-hidden border-t border-white/[0.06] bg-[#171717]/98 backdrop-blur-2xl md:block"
-            >
-              <motion.div
-                key={activeSection.id}
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                className="mx-auto grid max-w-[1024px] grid-cols-[1.15fr_0.85fr] gap-12 px-6 py-10"
-              >
-                {activeSection.columns.map((col, colIdx) => (
-                  <div key={col.heading}>
-                    <div className="mb-3.5 text-[11px] font-medium text-[#737373]">
-                      {col.heading}
-                    </div>
-                    <ul className={cn(col.primary ? "space-y-1.5" : "space-y-2")}>
-                      {col.links.map((item, idx) => (
-                        <motion.li
-                          key={`${col.heading}-${item.label}`}
-                          initial={{ opacity: 0, y: -4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{
-                            duration: 0.18,
-                            delay: colIdx * 0.04 + idx * 0.025,
-                            ease: [0.22, 1, 0.36, 1],
-                          }}
-                        >
-                          <CurtainNavLink
-                            item={item}
-                            primary={col.primary}
-                            onSelect={closeAll}
-                          />
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Mobile Full-Height Apple-Style Overlay Menu */}
-        <AnimatePresence>
-          {mobileOpen && (
-            <motion.nav
-              key="mobile-apple-drawer"
-              data-testid="mobile-nav-drawer"
-              aria-label="Mobile navigation"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "calc(100svh - 48px)" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-y-auto border-t border-white/[0.06] bg-[#171717]/98 px-6 py-6 backdrop-blur-2xl md:hidden"
-            >
-              {/* Search trigger inside mobile overlay */}
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileOpen(false);
-                  setCommandOpen(true);
-                }}
-                className="mb-6 flex w-full items-center justify-between rounded-xl border border-white/[0.09] bg-white/[0.03] px-3.5 py-2.5 text-left text-[13px] text-[#a3a3a3] hover:text-[#fafafa] cursor-pointer"
-              >
-                <span className="inline-flex items-center gap-2">
-                  <Search className="h-3.5 w-3.5" />
-                  <span>Search Pieces, Docs, commands…</span>
+                <span className="flex h-7 w-7 items-center justify-center rounded-[6px] border border-white/[0.1] bg-[#202020] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] group-hover:border-white/[0.22] transition-colors">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.15" fill="#FAFAFA" />
+                    <rect x="9" y="1.5" width="5.5" height="5.5" rx="1.15" stroke="#FAFAFA" strokeWidth="1.35" />
+                    <rect x="1.5" y="9" width="5.5" height="5.5" rx="1.15" stroke="#FAFAFA" strokeWidth="1.35" />
+                    <rect x="9" y="9" width="5.5" height="5.5" rx="1.15" fill="#FAFAFA" fillOpacity="0.38" />
+                  </svg>
                 </span>
-                <kbd className="font-mono text-[10.5px] text-[#737373]">⌘K</kbd>
-              </button>
+                <span className="font-mono text-[11.5px] font-medium uppercase tracking-[0.07em] text-[#fafafa] md:hidden">
+                  Orthese
+                </span>
+              </Link>
 
-              <div className="space-y-1">
-                {NAV_SECTIONS.map((section, idx) => {
-                  const isExpanded = mobileSectionId === section.id;
+              {/* Center: Uppercase Geist Mono Hover Tabs with RandomLetterSwap */}
+              <nav
+                className="hidden h-full items-center gap-0.5 md:flex"
+                aria-label="Primary"
+              >
+                {NAV_SECTIONS.map((section) => {
+                  const isOpen = activeMenuId === section.id;
+                  const isCurrent =
+                    section.matchPrefix && pathname?.startsWith(section.matchPrefix);
+
                   return (
-                    <motion.div
+                    <Link
                       key={section.id}
-                      initial={{ opacity: 0, y: -6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: idx * 0.035, duration: 0.18 }}
-                      className="border-b border-white/[0.06] py-2"
+                      href={section.href}
+                      data-testid={`nav-tab-${section.id}`}
+                      onMouseEnter={() => openMenu(section.id)}
+                      onFocus={() => openMenu(section.id)}
+                      onClick={closeAll}
+                      className={cn(
+                        "relative inline-flex h-[32px] items-center rounded-[6px] px-2.5 font-mono text-[11.5px] tracking-[0.065em] uppercase transition-colors",
+                        isOpen
+                          ? "bg-white/[0.06] text-[#fafafa]"
+                          : isCurrent
+                            ? "text-[#fafafa]"
+                            : "text-[#a3a3a3] hover:text-[#fafafa]"
+                      )}
                     >
+                      <RandomLetterSwap
+                        label={section.label}
+                        triggerCount={tabTriggers[section.id] ?? 0}
+                        staggerDuration={0.024}
+                        secondaryClassName="text-[#fafafa]"
+                      />
+                      {section.badgeDot && (
+                        <span
+                          aria-hidden="true"
+                          className="ml-1 -mt-2 h-[5px] w-[5px] rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]"
+                        />
+                      )}
+                    </Link>
+                  );
+                })}
+              </nav>
+
+              {/* Right: Search + Auth / Launch Orthese + Avatar + Mobile Toggle */}
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  data-testid="navbar-cmd-btn"
+                  onClick={() => {
+                    setActiveMenuId(null);
+                    setCommandOpen(true);
+                  }}
+                  aria-label="Open command palette (⌘K)"
+                  title="Search (⌘K)"
+                  className="hidden sm:inline-flex h-7 w-7 items-center justify-center rounded-[6px] border border-transparent text-[#a3a3a3] hover:border-white/[0.09] hover:bg-white/[0.05] hover:text-[#fafafa] transition-colors cursor-pointer"
+                >
+                  <Search className="h-3.5 w-3.5" />
+                </button>
+
+                {!authReady ? (
+                  <Skeleton rounded="md" className="h-7 w-24" />
+                ) : user ? (
+                  <div className="flex items-center gap-1.5">
+                    <Link
+                      href={appUrl}
+                      data-testid="navbar-launch-orthese"
+                      onClick={closeAll}
+                      className="btn-pill-white inline-flex h-7 items-center rounded-[6px] px-2.5 font-mono text-[10.5px] font-medium uppercase tracking-[0.04em] whitespace-nowrap"
+                    >
+                      Launch Orthese
+                    </Link>
+
+                    <div ref={accountMenuRef} className="relative flex items-center">
                       <button
                         type="button"
-                        onClick={() =>
-                          setMobileSectionId(isExpanded ? null : section.id)
-                        }
-                        aria-expanded={isExpanded}
-                        className="flex w-full items-center justify-between py-2 text-left text-[22px] font-medium tracking-[-0.03em] text-[#fafafa] cursor-pointer"
+                        data-testid="navbar-avatar-btn"
+                        onClick={() => {
+                          setActiveMenuId(null);
+                          setAccountMenuOpen((prev) => !prev);
+                        }}
+                        aria-haspopup="menu"
+                        aria-expanded={accountMenuOpen}
+                        aria-label={`Account menu for ${user.name}`}
+                        className="rounded-full p-0.5 ring-1 ring-transparent hover:ring-white/25 transition-all cursor-pointer"
                       >
-                        <span>{section.label}</span>
-                        <ChevronRight
-                          className={cn(
-                            "h-4 w-4 text-[#737373] transition-transform duration-200",
-                            isExpanded && "rotate-90 text-[#fafafa]"
-                          )}
+                        <Avatar
+                          name={user.name}
+                          src={user.avatarUrl}
+                          size="sm"
+                          status="online"
                         />
                       </button>
 
-                      {isExpanded && (
-                        <div className="pb-3 pt-1 space-y-4">
-                          {section.columns.map((col) => (
-                            <div key={col.heading}>
-                              <div className="mb-1.5 text-[11px] font-medium text-[#737373]">
-                                {col.heading}
+                      {accountMenuOpen && (
+                        <div
+                          role="menu"
+                          data-testid="navbar-account-menu"
+                          className="absolute right-0 top-full z-50 mt-2.5 w-60 overflow-hidden rounded-xl border border-white/[0.13] bg-[#1f1f1f]/98 p-1.5 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
+                        >
+                          <div className="flex items-center gap-2.5 px-2.5 py-2 border-b border-white/[0.07]">
+                            <Avatar name={user.name} src={user.avatarUrl} size="md" status="online" />
+                            <div className="min-w-0">
+                              <div className="truncate text-[13px] font-medium text-[#fafafa]">
+                                {user.name}
                               </div>
-                              <div className="flex flex-col space-y-1.5">
-                                {col.links.map((item) => (
-                                  <Link
-                                    key={`${col.heading}-${item.label}`}
-                                    href={item.href}
-                                    onClick={closeAll}
-                                    className="flex items-center justify-between py-1 text-[15px] text-[#d4d4d4] hover:text-white"
-                                  >
-                                    <span>{item.label}</span>
-                                    {item.meta && (
-                                      <span className="font-mono text-[11px] text-[#737373]">
-                                        {item.meta}
-                                      </span>
-                                    )}
-                                  </Link>
-                                ))}
+                              <div className="truncate text-[11.5px] text-[#8a8a8a]">
+                                {user.email}
                               </div>
                             </div>
-                          ))}
+                          </div>
+
+                          <div className="flex items-center justify-between px-2.5 py-2 text-[11.5px] border-b border-white/[0.07]">
+                            <span className="inline-flex items-center gap-1.5 text-[#a3a3a3]">
+                              <Sparkles className="h-3 w-3 text-[#818cf8]" />
+                              <span>{user.plan}</span>
+                            </span>
+                            <span className="font-mono text-[11.5px] font-medium tabular-nums text-[#fafafa]">
+                              {user.credits.toLocaleString()} cr
+                            </span>
+                          </div>
+
+                          <div className="py-1 space-y-0.5">
+                            <Link
+                              href={appUrl}
+                              onClick={closeAll}
+                              className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] text-[#d4d4d4] hover:bg-white/[0.07] hover:text-[#fafafa] transition-colors"
+                            >
+                              <Rocket className="h-3.5 w-3.5 text-[#a3a3a3]" />
+                              <span>Launch Orthese</span>
+                            </Link>
+                            <Link
+                              href="/router"
+                              onClick={closeAll}
+                              className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] text-[#d4d4d4] hover:bg-white/[0.07] hover:text-[#fafafa] transition-colors"
+                            >
+                              <Route className="h-3.5 w-3.5 text-[#a3a3a3]" />
+                              <span>Orthese Router</span>
+                            </Link>
+                            <Link
+                              href="/marketplace"
+                              onClick={closeAll}
+                              className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] text-[#d4d4d4] hover:bg-white/[0.07] hover:text-[#fafafa] transition-colors"
+                            >
+                              <Layers className="h-3.5 w-3.5 text-[#a3a3a3]" />
+                              <span>Marketplace</span>
+                            </Link>
+                          </div>
+
+                          <div className="border-t border-white/[0.07] pt-1">
+                            <button
+                              type="button"
+                              data-testid="navbar-signout-btn"
+                              onClick={() => {
+                                closeAll();
+                                signOut();
+                                toast.info("Signed out of Orthese");
+                              }}
+                              className="flex w-full items-center gap-2 rounded-lg px-2.5 py-1.5 text-left text-[12.5px] text-rose-300 hover:bg-rose-500/15 hover:text-rose-200 transition-colors cursor-pointer"
+                            >
+                              <LogOut className="h-3.5 w-3.5" />
+                              <span>Sign out</span>
+                            </button>
+                          </div>
                         </div>
                       )}
-                    </motion.div>
-                  );
-                })}
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    href="/auth"
+                    data-testid="navbar-login-btn"
+                    onClick={closeAll}
+                    className="btn-pill-white inline-flex h-7 items-center rounded-[6px] px-2.5 font-mono text-[10.5px] font-medium uppercase tracking-[0.04em] whitespace-nowrap"
+                  >
+                    <span className="sm:hidden">Log in</span>
+                    <span className="hidden sm:inline">Log in / Sign up</span>
+                  </Link>
+                )}
+
+                {/* Two-Line Morphing Mobile Menu Toggle */}
+                <button
+                  type="button"
+                  data-testid="mobile-menu-btn"
+                  aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+                  aria-expanded={mobileOpen}
+                  onClick={() => {
+                    setMobileOpen((prev) => !prev);
+                    setMobileSectionId(null);
+                  }}
+                  className="relative flex h-7 w-7 items-center justify-center rounded-[6px] border border-white/[0.08] bg-[#202020] text-[#d4d4d4] hover:text-[#fafafa] md:hidden cursor-pointer"
+                >
+                  <span
+                    className={cn(
+                      "absolute h-[1.5px] w-3.5 rounded-full bg-current transition-transform duration-200",
+                      mobileOpen ? "translate-y-0 rotate-45" : "-translate-y-[3px]"
+                    )}
+                  />
+                  <span
+                    className={cn(
+                      "absolute h-[1.5px] w-3.5 rounded-full bg-current transition-transform duration-200",
+                      mobileOpen ? "translate-y-0 -rotate-45" : "translate-y-[3px]"
+                    )}
+                  />
+                </button>
               </div>
-            </motion.nav>
-          )}
-        </AnimatePresence>
+            </div>
+
+            {/* Desktop Expanding Curtain Mega-Menu Inside the Floating Hardware Bezel */}
+            <AnimatePresence>
+              {activeSection && (
+                <motion.div
+                  key="dock-curtain"
+                  data-testid="nav-curtain"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                  onMouseEnter={cancelCloseTimer}
+                  className="hidden overflow-hidden border-t border-white/[0.07] md:block"
+                >
+                  <motion.div
+                    key={activeSection.id}
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
+                    className="grid grid-cols-[1.15fr_0.85fr] gap-8 px-5 py-6"
+                  >
+                    {activeSection.columns.map((col, colIdx) => (
+                      <div key={col.heading}>
+                        <div className="mb-3 font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-[#737373]">
+                          {col.heading}
+                        </div>
+                        <ul className={cn(col.primary ? "space-y-1.5" : "space-y-2")}>
+                          {col.links.map((item, idx) => (
+                            <motion.li
+                              key={`${col.heading}-${item.label}`}
+                              initial={{ opacity: 0, y: -3 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{
+                                duration: 0.16,
+                                delay: colIdx * 0.035 + idx * 0.02,
+                                ease: [0.22, 1, 0.36, 1],
+                              }}
+                            >
+                              <CurtainNavLink
+                                item={item}
+                                primary={col.primary}
+                                onSelect={closeAll}
+                              />
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Mobile Expanding Drawer Inside the Floating Bezel */}
+            <AnimatePresence>
+              {mobileOpen && (
+                <motion.nav
+                  key="mobile-dock-drawer"
+                  data-testid="mobile-nav-drawer"
+                  aria-label="Mobile navigation"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                  className="max-h-[calc(100svh-120px)] overflow-y-auto border-t border-white/[0.07] px-3.5 py-4 md:hidden"
+                >
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileOpen(false);
+                      setCommandOpen(true);
+                    }}
+                    className="mb-4 flex w-full items-center justify-between rounded-lg border border-white/[0.09] bg-white/[0.03] px-3 py-2 text-left text-[12.5px] text-[#a3a3a3] hover:text-[#fafafa] cursor-pointer"
+                  >
+                    <span className="inline-flex items-center gap-2">
+                      <Search className="h-3.5 w-3.5" />
+                      <span>Search Pieces, Docs, commands…</span>
+                    </span>
+                    <kbd className="font-mono text-[10.5px] text-[#737373]">⌘K</kbd>
+                  </button>
+
+                  <div className="space-y-0.5">
+                    {NAV_SECTIONS.map((section, idx) => {
+                      const isExpanded = mobileSectionId === section.id;
+                      return (
+                        <motion.div
+                          key={section.id}
+                          initial={{ opacity: 0, y: -4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: idx * 0.03, duration: 0.16 }}
+                          className="border-b border-white/[0.06] py-1.5 last:border-b-0"
+                        >
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setMobileSectionId(isExpanded ? null : section.id)
+                            }
+                            aria-expanded={isExpanded}
+                            className="flex w-full items-center justify-between py-2 text-left font-mono text-[14px] font-medium uppercase tracking-[0.06em] text-[#fafafa] cursor-pointer"
+                          >
+                            <span className="inline-flex items-center gap-1.5">
+                              <span>{section.label}</span>
+                              {section.badgeDot && (
+                                <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+                              )}
+                            </span>
+                            <ChevronRight
+                              className={cn(
+                                "h-4 w-4 text-[#737373] transition-transform duration-200",
+                                isExpanded && "rotate-90 text-[#fafafa]"
+                              )}
+                            />
+                          </button>
+
+                          {isExpanded && (
+                            <div className="pb-2.5 pt-1 space-y-3.5">
+                              {section.columns.map((col) => (
+                                <div key={col.heading}>
+                                  <div className="mb-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-[#737373]">
+                                    {col.heading}
+                                  </div>
+                                  <div className="flex flex-col space-y-1">
+                                    {col.links.map((item) => (
+                                      <Link
+                                        key={`${col.heading}-${item.label}`}
+                                        href={item.href}
+                                        onClick={closeAll}
+                                        className="flex items-center justify-between py-1 text-[14px] text-[#d4d4d4] hover:text-white"
+                                      >
+                                        <span>{item.label}</span>
+                                        {item.meta && (
+                                          <span className="font-mono text-[11px] text-[#737373]">
+                                            {item.meta}
+                                          </span>
+                                        )}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </motion.nav>
+              )}
+            </AnimatePresence>
+
+            {/* Bottom Machined LCD Monospace Announcement Strip */}
+            {!tickerDismissed && (
+              <div className="px-1.5 pb-1.5 pt-0.5">
+                <div className="flex items-center justify-between gap-2 rounded-[5px] bg-[#dcdcdc] px-2.5 py-[3.5px] text-[#222222]">
+                  <Link
+                    href="/#workspace-demo"
+                    onClick={closeAll}
+                    className="min-w-0 flex-1 truncate text-center font-mono text-[10px] font-medium uppercase tracking-[0.055em] text-[#262626] hover:text-black transition-colors sm:text-[10.5px]"
+                  >
+                    <span className="hidden sm:inline">
+                      ORTHESE v0.1 · BROWSER WASM + DESKTOP GPUI · €2 FREE STARTER CREDITS
+                    </span>
+                    <span className="sm:hidden">
+                      ORTHESE v0.1 · €2 FREE STARTER CREDITS
+                    </span>
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => setTickerDismissed(true)}
+                    aria-label="Dismiss announcement"
+                    className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded text-[#525252] hover:bg-black/10 hover:text-black transition-colors cursor-pointer"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </header>
 
-      {/* Full-Page Soft Blur Backdrop while Apple Curtain Mega-Menu is Open */}
+      {/* Soft Full-Page Backdrop Blur When Hover Curtain or Mobile Drawer Is Open */}
       <AnimatePresence>
-        {activeSection && (
+        {(activeSection || mobileOpen) && (
           <motion.div
             key="nav-backdrop"
             aria-hidden="true"
@@ -663,8 +706,8 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            onClick={() => setActiveMenuId(null)}
-            className="fixed inset-0 z-40 hidden bg-black/55 backdrop-blur-md md:block"
+            onClick={closeAll}
+            className="fixed inset-0 z-40 bg-black/55 backdrop-blur-md"
           />
         )}
       </AnimatePresence>
