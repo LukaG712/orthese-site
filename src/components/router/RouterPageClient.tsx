@@ -296,7 +296,7 @@ export function RouterPageClient() {
   return (
     <div className="bg-[#121212] text-[#fafafa]">
       {/* 1. HERO + INTERACTIVE LIVE ROUTER STAGE */}
-      <section className="relative overflow-x-clip px-5 pb-20 pt-28 sm:px-6 sm:pb-28 sm:pt-36">
+      <section className="relative overflow-x-clip px-4 pb-16 pt-20 sm:px-6 sm:pb-28 sm:pt-36">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 top-0 h-[520px]"
@@ -308,24 +308,24 @@ export function RouterPageClient() {
 
         <div className="relative mx-auto max-w-[1080px]">
           <div className="max-w-3xl">
-            <div className="mb-4 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-[#a3a3a3]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#818cf8]" />
-              <span>Orthese Router · Automatic Real-Model Selection</span>
+            <div className="mb-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.09em] text-[#a3a3a3] sm:text-[11px] sm:tracking-[0.14em]">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#818cf8]" />
+              <span>Orthese Router · Automatic model selection</span>
             </div>
 
-            <h1 className="text-[clamp(2.5rem,5vw,3.9rem)] font-medium tracking-[-0.04em] leading-[1.06] text-[#fafafa]">
+            <h1 className="text-[clamp(2.15rem,5vw,3.9rem)] font-medium tracking-[-0.04em] leading-[1.06] text-[#fafafa]">
               The right model
               <br />
               <OrbitGradientText>for every Piece.</OrbitGradientText>
             </h1>
 
-            <p className="mt-5 max-w-2xl text-[16px] leading-relaxed text-[#a3a3a3]">
+            <p className="mt-4 max-w-2xl text-[14.5px] leading-relaxed text-[#a3a3a3] sm:mt-5 sm:text-[16px]">
               Automatic model selection across every Orthese session. Orthese Router preserves
               frontier quality on complex work and cuts token spend by up to 63%—choose it once in
               the Composer Panel.
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-4">
+            <div className="mt-6 flex flex-wrap items-center gap-4 sm:mt-7">
               <Link
                 href="/#workspace-demo"
                 className="btn-pill-white inline-flex h-9 items-center rounded-full px-5 text-[13px] font-medium"

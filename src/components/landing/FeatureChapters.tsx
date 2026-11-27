@@ -618,22 +618,23 @@ export function FeatureChapters() {
           href="/marketplace/orthese.website-builder"
         />
 
-        <div className="mask-fade-bottom-soft stage-surface mt-12 overflow-hidden rounded-xl">
+        <div className="mask-fade-bottom-soft stage-surface mt-10 overflow-hidden rounded-xl sm:mt-12">
           <div className="grid md:grid-cols-[260px_1fr]">
-            {/* Left File Tree (Right-click or Shift+F10 opens ContextMenu) */}
-            <div className="border-b border-white/[0.06] bg-[#171717] p-5 font-mono text-[12px] md:border-b-0 md:border-r">
+            {/* Left File Tree (Right-click, long-press, or Shift+F10 opens ContextMenu) */}
+            <div className="min-w-0 border-b border-white/[0.06] bg-[#171717] p-4 font-mono text-[12px] sm:p-5 md:border-b-0 md:border-r">
               <div className="mb-3 flex items-center justify-between gap-2">
                 <span className="text-[10px] uppercase tracking-[0.12em] text-[#737373]">
                   Workspace Bundle
                 </span>
                 <span className="font-sans text-[10px] text-[#737373]">
-                  Right-click files
+                  <span className="sm:hidden">Hold for menu</span>
+                  <span className="hidden sm:inline">Right-click files</span>
                 </span>
               </div>
 
-              <div className="flex items-center gap-2 py-1 text-[#a3a3a3]">
-                <FolderOpen className="h-3.5 w-3.5 text-[#737373]" />
-                <span>crates/pieces/website-builder/</span>
+              <div className="flex min-w-0 items-center gap-2 py-1 text-[#a3a3a3]">
+                <FolderOpen className="h-3.5 w-3.5 shrink-0 text-[#737373]" />
+                <span className="truncate">crates/pieces/website-builder/</span>
               </div>
 
               {(["piece.json", "lib.rs"] as const).map((file) => {
@@ -651,7 +652,7 @@ export function FeatureChapters() {
                         data-testid={`tree-${file}`}
                         onClick={() => setSelectedFile(file)}
                         className={cn(
-                          "ml-4 mt-0.5 flex w-[calc(100%-1rem)] items-center justify-between gap-2 rounded-md border px-2.5 py-1.5 text-left transition-colors cursor-pointer",
+                          "ml-4 mt-0.5 flex w-[calc(100%-1rem)] items-center justify-between gap-2 rounded-md border px-2.5 py-2 text-left transition-colors sm:py-1.5 cursor-pointer",
                           isOpen
                             ? "border-[#818cf8]/60 bg-[#818cf8]/10 text-[#fafafa]"
                             : active
@@ -677,9 +678,9 @@ export function FeatureChapters() {
                 );
               })}
 
-              <div className="mt-3 flex items-center gap-2 py-1 text-[#a3a3a3]">
-                <Folder className="h-3.5 w-3.5 text-[#737373]" />
-                <span>skills/landing-page-architect/</span>
+              <div className="mt-3 flex min-w-0 items-center gap-2 py-1 text-[#a3a3a3]">
+                <Folder className="h-3.5 w-3.5 shrink-0 text-[#737373]" />
+                <span className="truncate">skills/landing-page-architect/</span>
               </div>
 
               <ContextMenuTrigger
@@ -692,7 +693,7 @@ export function FeatureChapters() {
                     data-testid="tree-SKILL.md"
                     onClick={() => setSelectedFile("SKILL.md")}
                     className={cn(
-                      "ml-4 mt-0.5 flex w-[calc(100%-1rem)] items-center justify-between gap-2 rounded-md border px-2.5 py-1.5 text-left transition-colors cursor-pointer",
+                      "ml-4 mt-0.5 flex w-[calc(100%-1rem)] items-center justify-between gap-2 rounded-md border px-2.5 py-2 text-left transition-colors sm:py-1.5 cursor-pointer",
                       isOpen
                         ? "border-[#818cf8]/60 bg-[#818cf8]/10 text-[#fafafa]"
                         : selectedFile === "SKILL.md"
@@ -716,12 +717,13 @@ export function FeatureChapters() {
             </div>
 
             {/* Right Manifest / Code Viewer */}
-            <div className="bg-[#171717] p-5 pb-12">
+            <div className="min-w-0 bg-[#171717] p-4 pb-10 sm:p-5 sm:pb-12">
               <motion.div
                 key={selectedFile}
                 initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                className="min-w-0"
               >
                 <CodeBlock
                   code={HARNESS_FILES[selectedFile].code}
@@ -768,10 +770,10 @@ export function FeatureChapters() {
           href="/marketplace/orthese.software-engineer"
         />
 
-        <div className="mask-fade-bottom-soft stage-surface mt-12 overflow-hidden rounded-xl">
+        <div className="mask-fade-bottom-soft stage-surface mt-10 overflow-hidden rounded-xl sm:mt-12">
           <div className="grid md:grid-cols-[1.15fr_1fr]">
             {/* Left Capability Matrix */}
-            <div className="overflow-x-auto border-b border-white/[0.06] p-5 pb-10 sm:p-6 md:border-b-0 md:border-r">
+            <div className="min-w-0 overflow-x-auto border-b border-white/[0.06] p-4 pb-8 sm:p-6 sm:pb-10 md:border-b-0 md:border-r">
               <div className="min-w-[420px] sm:min-w-0">
               <div className="grid grid-cols-[1.5fr_0.9fr_0.9fr] border-b border-white/[0.07] pb-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[#737373]">
                 <span>Capability</span>
@@ -809,7 +811,7 @@ export function FeatureChapters() {
             </div>
 
             {/* Right Live Code Diff Preview */}
-            <div className="bg-[#171717] p-5 pb-10">
+            <div className="min-w-0 bg-[#171717] p-4 pb-10 sm:p-5">
               <CodeBlock className="bg-[#141414]">
                 <CodeBlockGroup>
                   <div className="flex min-w-0 items-center gap-2">

@@ -244,11 +244,15 @@ export function DownloadDesktopButton() {
   }
 
   return (
-    <div ref={containerRef} className="relative inline-flex" data-testid="download-desktop-split">
+    <div
+      ref={containerRef}
+      className="relative inline-flex w-full max-w-[240px] sm:w-auto sm:max-w-none"
+      data-testid="download-desktop-split"
+    >
       {/* Split pill button: OS-aware direct download + platform dropdown toggle */}
       <div
         className={cn(
-          "inline-flex h-9 items-stretch rounded-full border bg-[#1f1f1f]/95 text-[#fafafa] shadow-[inset_0_1px_0_rgba(255,255,255,0.09),0_4px_18px_rgba(0,0,0,0.45)] transition-colors",
+          "inline-flex h-10 w-full items-stretch rounded-full border bg-[#1f1f1f]/95 text-[#fafafa] shadow-[inset_0_1px_0_rgba(255,255,255,0.09),0_4px_18px_rgba(0,0,0,0.45)] transition-colors sm:h-9 sm:w-auto",
           open ? "border-white/[0.24]" : "border-white/[0.13] hover:border-white/[0.2]"
         )}
       >
@@ -256,7 +260,7 @@ export function DownloadDesktopButton() {
           type="button"
           data-testid="download-desktop-primary"
           onClick={handlePrimaryClick}
-          className="inline-flex items-center gap-2 rounded-l-full pl-4 pr-3.5 text-[13px] font-medium text-[#e5e5e5] hover:bg-white/[0.06] hover:text-white transition-colors cursor-pointer whitespace-nowrap"
+          className="inline-flex flex-1 items-center justify-center gap-2 rounded-l-full pl-4 pr-3.5 text-[13.5px] font-medium text-[#e5e5e5] hover:bg-white/[0.06] hover:text-white transition-colors sm:flex-none sm:text-[13px] cursor-pointer whitespace-nowrap"
         >
           <Download className="h-3.5 w-3.5 text-[#a3a3a3]" />
           <span>{detected.buttonLabel}</span>

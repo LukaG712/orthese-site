@@ -791,10 +791,10 @@ export function HeroComposerPanel() {
       )}
 
       {/* Primary Hero Links */}
-      <div className="relative z-20 mt-7 flex flex-wrap items-center justify-center gap-3">
+      <div className="relative z-20 mt-6 flex flex-col items-center justify-center gap-2.5 sm:mt-7 sm:flex-row sm:flex-wrap sm:gap-3">
         <Link
           href={appUrl}
-          className="btn-pill-white inline-flex h-9 items-center rounded-full px-5 text-[13px] font-medium"
+          className="btn-pill-white inline-flex h-10 w-full max-w-[240px] items-center justify-center rounded-full px-5 text-[13.5px] font-medium sm:h-9 sm:w-auto sm:max-w-none sm:text-[13px]"
         >
           Launch in Browser
         </Link>

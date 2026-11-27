@@ -49,9 +49,9 @@ triggers: ["landing page", "hero", "marketing site"]
 export default function DocsPage() {
   return (
     <div className="bg-[#121212]">
-      <div className="mx-auto max-w-[1024px] px-5 pb-16 pt-28 sm:px-6 sm:pb-24 sm:pt-32">
+      <div className="mx-auto max-w-[1024px] px-4 pb-16 pt-20 sm:px-6 sm:pb-24 sm:pt-32">
         {/* Header */}
-        <div className="max-w-2xl border-b border-white/[0.07] pb-10">
+        <div className="max-w-2xl border-b border-white/[0.07] pb-8 sm:pb-10">
           <div className="inline-flex items-center gap-2 text-[12px] font-medium text-[#a3a3a3]">
             <BookOpen className="h-3.5 w-3.5 text-[#818cf8]" />
             <span>Documentation</span>
@@ -59,14 +59,30 @@ export default function DocsPage() {
           <h1 className="mt-3 text-3xl font-medium tracking-[-0.04em] leading-[1.08] text-[#fafafa] sm:text-[42px]">
             Build with <OrbitGradientText>Orthese.</OrbitGradientText>
           </h1>
-          <p className="mt-3.5 text-[15px] leading-relaxed text-[#a3a3a3]">
+          <p className="mt-3.5 text-[14.5px] leading-relaxed text-[#a3a3a3] sm:text-[15px]">
             Everything you need to run modular Pieces in WebAssembly or Desktop GPUI, pipe
             typed context payloads, load progressive <code className="font-mono text-[13px] text-[#d4d4d4]">SKILL.md</code> files, and route across 44 models.
           </p>
+
+          {/* Mobile Horizontal Section Jump Bar */}
+          <nav
+            aria-label="Jump to section"
+            className="-mx-4 mt-5 flex gap-1.5 overflow-x-auto px-4 pb-1 lg:hidden"
+          >
+            {DOC_SECTIONS.map((sec) => (
+              <a
+                key={sec.id}
+                href={`#${sec.id}`}
+                className="shrink-0 rounded-full border border-white/[0.09] bg-[#171717] px-3 py-1.5 text-[12px] text-[#d4d4d4] hover:border-white/[0.2] hover:text-[#fafafa] transition-colors"
+              >
+                {sec.label}
+              </a>
+            ))}
+          </nav>
         </div>
 
         {/* Sticky Sidebar + Main Docs Content */}
-        <div className="mt-12 grid gap-12 lg:grid-cols-[200px_1fr]">
+        <div className="mt-10 grid gap-12 sm:mt-12 lg:grid-cols-[200px_1fr]">
           <aside className="hidden lg:block">
             <nav aria-label="Documentation sections" className="sticky top-28 space-y-1">
               <div className="mb-2.5 text-[11px] font-medium text-[#737373]">

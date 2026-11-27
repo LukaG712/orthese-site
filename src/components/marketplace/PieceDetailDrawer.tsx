@@ -82,14 +82,14 @@ export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
                 className="relative flex h-full w-full max-w-2xl flex-col border-l border-white/[0.1] bg-[#121212] shadow-[-24px_0_80px_rgba(0,0,0,0.92)] outline-none"
               >
                 {/* Header */}
-                <div className="flex items-start justify-between gap-4 border-b border-white/[0.08] bg-[#171717] px-6 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                <div className="flex items-start justify-between gap-3 border-b border-white/[0.08] bg-[#171717] px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:gap-4 sm:px-6 sm:py-4">
                   <div className="flex items-start gap-3 min-w-0">
-                    <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/[0.12] bg-[#1f1f1f] text-[#fafafa]">
-                      <AssetIcon name={item.icon} className="h-5 w-5" />
+                    <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/[0.12] bg-[#1f1f1f] text-[#fafafa] sm:h-10 sm:w-10">
+                      <AssetIcon name={item.icon} className="h-4.5 w-4.5 sm:h-5 sm:w-5" />
                     </span>
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <Dialog.Title className="text-[16px] font-medium text-[#fafafa]">
+                        <Dialog.Title className="truncate text-[15px] font-medium text-[#fafafa] sm:text-[16px]">
                           {item.name}
                         </Dialog.Title>
                         {item.official && (
@@ -99,7 +99,7 @@ export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
                           </span>
                         )}
                       </div>
-                      <Dialog.Description className="mt-0.5 font-mono text-[11px] tabular-nums text-[#737373]">
+                      <Dialog.Description className="mt-0.5 truncate font-mono text-[11px] tabular-nums text-[#737373]">
                         {item.id} · {item.authorHandle} · {item.installs.toLocaleString()} installs
                       </Dialog.Description>
                     </div>
@@ -109,9 +109,11 @@ export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
                     <Link
                       href={`/marketplace/${item.id}`}
                       onClick={onClose}
-                      className="btn-secondary inline-flex h-8 items-center gap-1 rounded-md px-2.5 text-[12px]"
+                      aria-label="Open permalink page"
+                      title="Open permalink"
+                      className="btn-secondary inline-flex h-8 w-8 items-center justify-center gap-1 rounded-md text-[12px] sm:w-auto sm:px-2.5"
                     >
-                      <span>Permalink</span>
+                      <span className="hidden sm:inline">Permalink</span>
                       <ArrowUpRight className="h-3.5 w-3.5" />
                     </Link>
                     <Dialog.Close
@@ -125,7 +127,7 @@ export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
                 </div>
 
                 {/* Scrollable Drawer Body */}
-                <div className="flex-1 space-y-6 overflow-y-auto px-6 py-6">
+                <div className="flex-1 space-y-5 overflow-y-auto px-4 py-5 sm:space-y-6 sm:px-6 sm:py-6">
                   {/* Primary Action Bar */}
                   <div className="obsidian-surface flex flex-wrap items-center justify-between gap-4 rounded-xl border border-white/[0.08] bg-[#171717] p-4">
                     <div>

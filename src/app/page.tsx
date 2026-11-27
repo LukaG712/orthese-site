@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <div className="bg-[#121212]">
       {/* FOCUSED HERO: ARCHITECTURAL STAGE + EDITORIAL HEADLINE + COMPOSER PANEL */}
-      <section className="relative flex min-h-[100svh] flex-col justify-center overflow-x-clip px-4 pb-16 pt-28 sm:px-6 sm:pb-20 sm:pt-32">
+      <section className="relative flex min-h-[100svh] flex-col justify-center overflow-x-clip px-4 pb-12 pt-20 sm:px-6 sm:pb-20 sm:pt-32">
         {/* Subtle BoardUI neutral top-center studio sheen + masked architectural grid */}
         <div
           aria-hidden="true"
@@ -23,13 +23,13 @@ export default function HomePage() {
         />
 
         <div className="relative mx-auto max-w-[820px] text-center">
-          <h1 className="text-[clamp(2.2rem,5.5vw,4.15rem)] font-medium tracking-[-0.042em] leading-[1.04] text-[#fafafa]">
+          <h1 className="text-[clamp(1.95rem,5.5vw,4.15rem)] font-medium tracking-[-0.042em] leading-[1.05] text-[#fafafa]">
             The modular AI workstation
             <br />
             for <OrbitGradientText>builders and agents.</OrbitGradientText>
           </h1>
 
-          <p className="mx-auto mt-4 max-w-[640px] text-balance text-[14.5px] leading-relaxed text-[#a3a3a3] sm:mt-5 sm:text-[16px]">
+          <p className="mx-auto mt-3.5 max-w-[640px] text-balance text-[14.5px] leading-relaxed text-[#a3a3a3] sm:mt-5 sm:text-[16px]">
             Snap prompt boxes, site builders, and coding agents onto one shared canvas.
           </p>
         </div>

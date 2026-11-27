@@ -266,16 +266,16 @@ export function Navbar() {
 
   return (
     <>
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-50 w-full px-3 pt-3 pb-1 sm:px-4">
+      <header className="pointer-events-none fixed inset-x-0 top-0 z-50 w-full bg-gradient-to-b from-[#121212]/95 via-[#121212]/55 to-transparent px-3 pb-3 pt-2.5 sm:px-4 sm:pb-2 sm:pt-3">
         {/* Floating Centered Dock Matching Orthese BoardUI Dark Mode & Composer Geometry */}
         <div
           onMouseLeave={scheduleClose}
           onMouseEnter={cancelCloseTimer}
-          className="nav-dither-bezel pointer-events-auto mx-auto w-full max-w-[720px] rounded-[20px] border border-white/[0.09] p-[4px]"
+          className="nav-dither-bezel pointer-events-auto mx-auto w-full max-w-[720px] rounded-[18px] border border-white/[0.09] p-[3.5px] sm:rounded-[20px] sm:p-[4px]"
         >
-          <div className="rounded-[16px] border border-white/[0.06] bg-[#171717]/95 backdrop-blur-xl">
+          <div className="rounded-[14.5px] border border-white/[0.06] bg-[#171717]/95 backdrop-blur-xl sm:rounded-[16px]">
             {/* Primary Row */}
-            <div className="flex h-[44px] items-center justify-between gap-2 px-2.5 sm:px-3">
+            <div className="flex h-[44px] items-center justify-between gap-2 px-2 sm:px-3">
               {/* Left: Orthese Mark + Wordmark (Geist Sans) */}
               <Link
                 href="/"
@@ -339,11 +339,12 @@ export function Navbar() {
                   data-testid="navbar-cmd-btn"
                   onClick={() => {
                     setActiveMenuId(null);
+                    setMobileOpen(false);
                     setCommandOpen(true);
                   }}
                   aria-label="Open command palette (⌘K)"
                   title="Search (⌘K)"
-                  className="hidden sm:inline-flex h-7 w-7 items-center justify-center rounded-full text-[#a3a3a3] hover:bg-white/[0.07] hover:text-[#fafafa] transition-colors cursor-pointer"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[#a3a3a3] hover:bg-white/[0.07] hover:text-[#fafafa] transition-colors sm:h-7 sm:w-7 cursor-pointer"
                 >
                   <Search className="h-3.5 w-3.5" />
                 </button>
@@ -645,9 +646,9 @@ export function Navbar() {
               )}
             </AnimatePresence>
 
-            {/* Recessed BoardUI Dark-Mode Status Strip Nestled Inside the Floating Dock */}
+            {/* Recessed BoardUI Dark-Mode Status Strip Nestled Inside the Floating Dock (sm+ desktop/tablet) */}
             {!tickerDismissed && (
-              <div className="px-1.5 pb-1.5">
+              <div className="hidden px-1.5 pb-1.5 sm:block">
                 <div className="flex items-center justify-between gap-2 rounded-[11px] border border-white/[0.06] bg-[#1f1f1f]/85 px-3 py-1">
                   <Link
                     href="/#workspace-demo"
@@ -658,17 +659,12 @@ export function Navbar() {
                       aria-hidden="true"
                       className="h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-tr from-[#818cf8] to-[#38bdf8]"
                     />
-                    <span className="hidden truncate sm:inline">
+                    <span className="truncate">
                       <span className="font-medium text-[#e5e5e5]">Orthese v0.1</span>
                       <span className="mx-1.5 text-[#525252]">·</span>
                       <span>Browser WASM &amp; Desktop GPUI</span>
                       <span className="mx-1.5 text-[#525252]">·</span>
                       <span className="text-[#d4d4d4]">€2 free starter credits</span>
-                    </span>
-                    <span className="truncate sm:hidden">
-                      <span className="font-medium text-[#e5e5e5]">Orthese v0.1</span>
-                      <span className="mx-1.5 text-[#525252]">·</span>
-                      <span>€2 free credits</span>
                     </span>
                     <ArrowRight className="h-3 w-3 shrink-0 text-[#737373] transition-transform group-hover:translate-x-0.5 group-hover:text-[#fafafa]" />
                   </Link>

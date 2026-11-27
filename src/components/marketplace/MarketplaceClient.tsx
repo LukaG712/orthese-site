@@ -177,19 +177,19 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
     <TooltipProvider>
       <div className="relative bg-[#121212]">
         {/* Top Header Band */}
-        <div className="relative mx-auto max-w-[1080px] px-5 pb-12 pt-28 sm:px-6 sm:pt-32">
-          <h1 className="text-4xl font-medium tracking-[-0.04em] leading-[1.06] text-[#fafafa] sm:text-5xl">
+        <div className="relative mx-auto max-w-[1080px] px-4 pb-8 pt-20 sm:px-6 sm:pb-12 sm:pt-32">
+          <h1 className="text-3xl font-medium tracking-[-0.04em] leading-[1.06] text-[#fafafa] sm:text-5xl">
             <OrbitGradientText>Marketplace</OrbitGradientText>
           </h1>
-          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[#a3a3a3]">
+          <p className="mt-2.5 max-w-xl text-[14.5px] leading-relaxed text-[#a3a3a3] sm:mt-3 sm:text-[15px]">
             Browse Pieces, <code className="font-mono text-[13px] text-[#fafafa]">SKILL.md</code>{" "}
             packs, and Starter Packs. Click any asset to inspect its{" "}
             <code className="font-mono text-[13px] text-[#fafafa]">piece.json</code> permissions.
           </p>
 
           {/* Search, Sliding Tabs, Sort & Grid/List View Toggle */}
-          <div className="mt-8 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="relative max-w-md flex-1">
+          <div className="mt-6 flex flex-col gap-3 sm:mt-8 lg:flex-row lg:items-center lg:justify-between">
+            <div className="relative w-full lg:max-w-md lg:flex-1">
               <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#737373]" />
               <input
                 ref={searchRef}
@@ -197,125 +197,131 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search Pieces, Skills, or @creators..."
-                className="h-9 w-full rounded-xl border border-white/[0.08] bg-[#171717] pl-10 pr-9 text-[13px] text-[#fafafa] placeholder:text-[#737373] focus:border-white/25 focus:outline-none transition-colors"
+                className="h-10 w-full rounded-xl border border-white/[0.08] bg-[#171717] pl-10 pr-4 text-[13.5px] text-[#fafafa] placeholder:text-[#737373] focus:border-white/25 focus:outline-none transition-colors sm:h-9 sm:pr-9 sm:text-[13px]"
               />
               {!query && (
-                <kbd className="pointer-events-none absolute right-2.5 top-1/2 inline-flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded border border-white/[0.08] bg-white/[0.03] font-mono text-[10px] text-[#737373]">
+                <kbd className="pointer-events-none absolute right-2.5 top-1/2 hidden h-5 w-5 -translate-y-1/2 items-center justify-center rounded border border-white/[0.08] bg-white/[0.03] font-mono text-[10px] text-[#737373] sm:inline-flex">
                   /
                 </kbd>
               )}
             </div>
 
-            <div className="flex flex-wrap items-center gap-2.5">
-              <SlidingTabs
-                ariaLabel="Asset Categories"
-                value={tab}
-                onChange={setTab}
-                options={[
-                  { value: "all", label: "All", count: MARKETPLACE_ITEMS.length },
-                  {
-                    value: "piece",
-                    label: "Pieces",
-                    count: MARKETPLACE_ITEMS.filter((i) => i.kind === "piece").length,
-                  },
-                  {
-                    value: "skill",
-                    label: "Skills",
-                    count: MARKETPLACE_ITEMS.filter((i) => i.kind === "skill").length,
-                  },
-                  {
-                    value: "starter-pack",
-                    label: "Starter Packs",
-                    count: MARKETPLACE_ITEMS.filter((i) => i.kind === "starter-pack").length,
-                  },
-                ]}
-              />
-
-              <div className="inline-flex rounded-lg border border-white/[0.08] bg-[#171717] p-0.5">
-                {(
-                  [
-                    { id: "popular", label: "Popular" },
-                    { id: "newest", label: "Newest" },
-                    { id: "price", label: "Price" },
-                  ] as const
-                ).map((s) => (
-                  <button
-                    key={s.id}
-                    type="button"
-                    onClick={() => setSort(s.id)}
-                    className={cn(
-                      "rounded-md px-2.5 py-1 text-[12px] transition-colors cursor-pointer",
-                      sort === s.id
-                        ? "bg-white/[0.09] font-medium text-[#fafafa]"
-                        : "text-[#a3a3a3] hover:text-[#fafafa]"
-                    )}
-                  >
-                    {s.label}
-                  </button>
-                ))}
+            <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
+              <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:overflow-visible sm:px-0">
+                <SlidingTabs
+                  ariaLabel="Asset Categories"
+                  value={tab}
+                  onChange={setTab}
+                  options={[
+                    { value: "all", label: "All", count: MARKETPLACE_ITEMS.length },
+                    {
+                      value: "piece",
+                      label: "Pieces",
+                      count: MARKETPLACE_ITEMS.filter((i) => i.kind === "piece").length,
+                    },
+                    {
+                      value: "skill",
+                      label: "Skills",
+                      count: MARKETPLACE_ITEMS.filter((i) => i.kind === "skill").length,
+                    },
+                    {
+                      value: "starter-pack",
+                      label: "Starter Packs",
+                      count: MARKETPLACE_ITEMS.filter((i) => i.kind === "starter-pack").length,
+                    },
+                  ]}
+                />
               </div>
 
-              {/* Grid / List View Toggle */}
-              <div
-                role="group"
-                aria-label="Catalog layout"
-                className="inline-flex rounded-lg border border-white/[0.08] bg-[#171717] p-0.5"
-              >
-                <button
-                  type="button"
-                  data-testid="view-grid"
-                  aria-label="Grid view"
-                  aria-pressed={viewMode === "grid"}
-                  title="Grid view"
-                  onClick={() => setViewMode("grid")}
-                  className={cn(
-                    "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors cursor-pointer",
-                    viewMode === "grid"
-                      ? "bg-white/[0.1] text-[#fafafa]"
-                      : "text-[#737373] hover:text-[#fafafa]"
-                  )}
+              <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-start">
+                <div className="inline-flex rounded-lg border border-white/[0.08] bg-[#171717] p-0.5">
+                  {(
+                    [
+                      { id: "popular", label: "Popular" },
+                      { id: "newest", label: "Newest" },
+                      { id: "price", label: "Price" },
+                    ] as const
+                  ).map((s) => (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => setSort(s.id)}
+                      className={cn(
+                        "rounded-md px-2.5 py-1.5 text-[12px] transition-colors sm:py-1 cursor-pointer",
+                        sort === s.id
+                          ? "bg-white/[0.09] font-medium text-[#fafafa]"
+                          : "text-[#a3a3a3] hover:text-[#fafafa]"
+                      )}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Grid / List View Toggle */}
+                <div
+                  role="group"
+                  aria-label="Catalog layout"
+                  className="inline-flex rounded-lg border border-white/[0.08] bg-[#171717] p-0.5"
                 >
-                  <LayoutGrid className="h-3.5 w-3.5" />
-                </button>
-                <button
-                  type="button"
-                  data-testid="view-list"
-                  aria-label="List view"
-                  aria-pressed={viewMode === "list"}
-                  title="List view"
-                  onClick={() => setViewMode("list")}
-                  className={cn(
-                    "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors cursor-pointer",
-                    viewMode === "list"
-                      ? "bg-white/[0.1] text-[#fafafa]"
-                      : "text-[#737373] hover:text-[#fafafa]"
-                  )}
-                >
-                  <List className="h-3.5 w-3.5" />
-                </button>
+                  <button
+                    type="button"
+                    data-testid="view-grid"
+                    aria-label="Grid view"
+                    aria-pressed={viewMode === "grid"}
+                    title="Grid view"
+                    onClick={() => setViewMode("grid")}
+                    className={cn(
+                      "inline-flex h-8 w-8 items-center justify-center rounded-md transition-colors sm:h-7 sm:w-7 cursor-pointer",
+                      viewMode === "grid"
+                        ? "bg-white/[0.1] text-[#fafafa]"
+                        : "text-[#737373] hover:text-[#fafafa]"
+                    )}
+                  >
+                    <LayoutGrid className="h-3.5 w-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    data-testid="view-list"
+                    aria-label="List view"
+                    aria-pressed={viewMode === "list"}
+                    title="List view"
+                    onClick={() => setViewMode("list")}
+                    className={cn(
+                      "inline-flex h-8 w-8 items-center justify-center rounded-md transition-colors sm:h-7 sm:w-7 cursor-pointer",
+                      viewMode === "list"
+                        ? "bg-white/[0.1] text-[#fafafa]"
+                        : "text-[#737373] hover:text-[#fafafa]"
+                    )}
+                  >
+                    <List className="h-3.5 w-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Main Catalog Body */}
-        <div className="mx-auto max-w-[1080px] border-t border-white/[0.06] px-5 py-12 sm:px-6">
-          <div className="grid gap-10 lg:grid-cols-[220px_1fr]">
+        <div className="mx-auto max-w-[1080px] border-t border-white/[0.06] px-4 py-8 sm:px-6 sm:py-12">
+          <div className="grid gap-8 lg:grid-cols-[220px_1fr] lg:gap-10">
             {/* Sticky 220px Filter Rail (collapsible on <lg mobile) */}
             <aside className="space-y-4 lg:sticky lg:top-28 lg:self-start lg:space-y-6">
-              <div className="flex items-center justify-between px-1 lg:px-2">
+              <div className="flex items-center justify-between px-0 lg:px-2">
                 <button
                   type="button"
                   data-testid="mobile-filters-toggle"
                   onClick={() => setMobileFiltersOpen((v) => !v)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-[12.5px] font-medium text-[#fafafa] lg:pointer-events-none lg:border-0 lg:bg-transparent lg:p-0 lg:text-[12px] cursor-pointer"
+                  className="inline-flex h-9 w-full items-center justify-between gap-2 rounded-xl border border-white/[0.09] bg-[#171717] px-3.5 text-[12.5px] font-medium text-[#fafafa] lg:pointer-events-none lg:h-auto lg:w-auto lg:border-0 lg:bg-transparent lg:p-0 lg:text-[12px] cursor-pointer"
                 >
-                  <span>Filters</span>
-                  {activeFilterCount > 0 && (
-                    <span className="rounded-full bg-white/[0.12] px-1.5 py-0.5 font-mono text-[10px] text-[#fafafa] lg:hidden">
-                      {activeFilterCount}
-                    </span>
-                  )}
+                  <span className="inline-flex items-center gap-2">
+                    <span>Filters</span>
+                    {activeFilterCount > 0 && (
+                      <span className="rounded-full bg-white/[0.12] px-1.5 py-0.5 font-mono text-[10px] text-[#fafafa] lg:hidden">
+                        {activeFilterCount}
+                      </span>
+                    )}
+                  </span>
                   <span className="font-mono text-[11px] text-[#a3a3a3] lg:hidden">
                     {mobileFiltersOpen ? "Hide" : "Show"}
                   </span>
