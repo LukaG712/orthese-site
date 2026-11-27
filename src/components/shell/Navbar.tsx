@@ -18,7 +18,6 @@ import {
 import { toast } from "sonner";
 import { Avatar } from "@/components/primitives/Avatar";
 import { Skeleton } from "@/components/primitives/Skeleton";
-import { RandomLetterSwap } from "@/components/ui/RandomLetterSwap";
 import { cn } from "@/lib/cn";
 import { useStorefront } from "./StorefrontContext";
 
@@ -52,15 +51,10 @@ function CurtainNavLink({
   primary?: boolean;
   onSelect: () => void;
 }) {
-  const [trigger, setTrigger] = useState(0);
-  const bump = () => setTrigger((c) => c + 1);
-
   return (
     <Link
       href={item.href}
       onClick={onSelect}
-      onMouseEnter={bump}
-      onFocus={bump}
       className={cn(
         "group inline-flex items-baseline gap-2.5 transition-colors",
         primary
@@ -68,12 +62,7 @@ function CurtainNavLink({
           : "text-[13px] font-medium text-[#b5b5b5] hover:text-[#fafafa]"
       )}
     >
-      <RandomLetterSwap
-        label={item.label}
-        triggerCount={trigger}
-        staggerDuration={primary ? 0.018 : 0.015}
-        secondaryClassName="text-white"
-      />
+      <span>{item.label}</span>
       {item.meta && (
         <span className="font-mono text-[10.5px] font-normal text-[#737373] group-hover:text-[#a3a3a3]">
           {item.meta}
@@ -200,7 +189,6 @@ export function Navbar() {
   const { setCommandOpen, user, authReady, signOut } = useStorefront();
 
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
-  const [tabTriggers, setTabTriggers] = useState<Record<string, number>>({});
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileSectionId, setMobileSectionId] = useState<string | null>(null);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
@@ -224,7 +212,6 @@ export function Navbar() {
     cancelCloseTimer();
     setAccountMenuOpen(false);
     setActiveMenuId(id);
-    setTabTriggers((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
   };
 
   const scheduleClose = () => {
@@ -306,7 +293,7 @@ export function Navbar() {
                 <span>Orthese</span>
               </Link>
 
-              {/* Center: Geist Sans Sentence-Case Tabs with RandomLetterSwap */}
+              {/* Center: Geist Sans Sentence-Case Tabs */}
               <nav
                 className="hidden h-full items-center gap-0.5 md:flex"
                 aria-label="Primary"
@@ -333,12 +320,7 @@ export function Navbar() {
                             : "text-[#a3a3a3] hover:text-[#fafafa]"
                       )}
                     >
-                      <RandomLetterSwap
-                        label={section.label}
-                        triggerCount={tabTriggers[section.id] ?? 0}
-                        staggerDuration={0.022}
-                        secondaryClassName="text-[#fafafa]"
-                      />
+                      <span>{section.label}</span>
                       {section.badgeDot && (
                         <span
                           aria-hidden="true"
