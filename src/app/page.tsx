@@ -5,16 +5,16 @@ import { MarketplaceAndPricing } from "@/components/landing/MarketplaceAndPricin
 
 export default function HomePage() {
   return (
-    <div className="bg-[#08090a]">
+    <div className="bg-[#121212]">
       {/* FOCUSED HERO: ARCHITECTURAL STAGE + EDITORIAL HEADLINE + COMPOSER PANEL */}
       <section className="relative flex min-h-[calc(100svh-48px)] flex-col justify-center overflow-x-clip px-4 pb-16 pt-10 sm:px-6 sm:pb-24 sm:pt-12">
-        {/* Subtle monochrome top-center radial glow + masked architectural grid */}
+        {/* Subtle BoardUI neutral top-center studio sheen + masked architectural grid */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-[580px]"
+          className="pointer-events-none absolute inset-x-0 top-0 h-[560px]"
           style={{
             background:
-              "radial-gradient(ellipse 66% 52% at 50% 0%, rgba(255,255,255,0.075), rgba(129,140,248,0.045) 42%, transparent 76%)",
+              "radial-gradient(ellipse 66% 52% at 50% 0%, rgba(255,255,255,0.045), rgba(255,255,255,0.015) 45%, transparent 76%)",
           }}
         />
         <div
@@ -23,13 +23,13 @@ export default function HomePage() {
         />
 
         <div className="relative mx-auto max-w-[820px] text-center">
-          <h1 className="text-[clamp(2.2rem,5.5vw,4.15rem)] font-medium tracking-[-0.042em] leading-[1.04] text-[#f7f8f8]">
+          <h1 className="text-[clamp(2.2rem,5.5vw,4.15rem)] font-medium tracking-[-0.042em] leading-[1.04] text-[#fafafa]">
             The modular AI workstation
             <br />
             for <OrbitGradientText>builders and agents.</OrbitGradientText>
           </h1>
 
-          <p className="mx-auto mt-4 max-w-[640px] text-balance text-[14.5px] leading-relaxed text-[#8a8f98] sm:mt-5 sm:text-[16px]">
+          <p className="mx-auto mt-4 max-w-[640px] text-balance text-[14.5px] leading-relaxed text-[#a3a3a3] sm:mt-5 sm:text-[16px]">
             Snap prompt boxes, site builders, and coding agents onto one shared canvas.
           </p>
         </div>

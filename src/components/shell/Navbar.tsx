@@ -231,8 +231,8 @@ export function Navbar() {
         className={cn(
           "sticky top-0 z-50 w-full transition-colors duration-200",
           activeSection || mobileOpen
-            ? "bg-[#0a0b0f]/98 border-b border-white/[0.07]"
-            : "bg-[#08090a]/80 border-b border-white/[0.06] backdrop-blur-xl"
+            ? "bg-[#171717]/98 border-b border-white/[0.07]"
+            : "bg-[#121212]/80 border-b border-white/[0.06] backdrop-blur-xl"
         )}
       >
         <div className="mx-auto flex h-[48px] max-w-[1024px] items-center justify-between px-4 sm:px-6">
@@ -240,7 +240,7 @@ export function Navbar() {
           <Link
             href="/"
             onClick={closeAll}
-            className="flex items-center gap-2 text-[13.5px] font-medium tracking-[-0.02em] text-[#f7f8f8] hover:opacity-90 transition-opacity"
+            className="flex items-center gap-2 text-[13.5px] font-medium tracking-[-0.02em] text-[#fafafa] hover:opacity-90 transition-opacity"
           >
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.2" fill="#F7F8F8" />
@@ -272,8 +272,8 @@ export function Navbar() {
                   className={cn(
                     "relative inline-flex h-full items-center px-3.5 text-[12.5px] transition-colors",
                     isOpen || isCurrent
-                      ? "text-[#f7f8f8]"
-                      : "text-[#8a8f98] hover:text-[#f7f8f8]"
+                      ? "text-[#fafafa]"
+                      : "text-[#a3a3a3] hover:text-[#fafafa]"
                   )}
                 >
                   <span>{section.label}</span>
@@ -281,7 +281,7 @@ export function Navbar() {
                     <motion.span
                       layoutId="nav-active-underline"
                       transition={{ type: "spring", stiffness: 460, damping: 36 }}
-                      className="absolute inset-x-3 bottom-0 h-[1.5px] bg-[#f7f8f8]/80"
+                      className="absolute inset-x-3 bottom-0 h-[1.5px] bg-[#fafafa]/80"
                     />
                   )}
                 </Link>
@@ -300,7 +300,7 @@ export function Navbar() {
               }}
               aria-label="Open command palette (⌘K)"
               title="Search (⌘K)"
-              className="hidden sm:inline-flex h-7 w-7 items-center justify-center rounded-full text-[#8a8f98] hover:bg-white/[0.06] hover:text-[#f7f8f8] transition-colors cursor-pointer"
+              className="hidden sm:inline-flex h-7 w-7 items-center justify-center rounded-full text-[#a3a3a3] hover:bg-white/[0.06] hover:text-[#fafafa] transition-colors cursor-pointer"
             >
               <Search className="h-3.5 w-3.5" />
             </button>
@@ -343,26 +343,26 @@ export function Navbar() {
                     <div
                       role="menu"
                       data-testid="navbar-account-menu"
-                      className="absolute right-0 top-full z-50 mt-2 w-60 overflow-hidden rounded-xl border border-white/[0.13] bg-[#12141a]/98 p-1.5 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
+                      className="absolute right-0 top-full z-50 mt-2 w-60 overflow-hidden rounded-xl border border-white/[0.13] bg-[#1f1f1f]/98 p-1.5 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
                     >
                       <div className="flex items-center gap-2.5 px-2.5 py-2 border-b border-white/[0.07]">
                         <Avatar name={user.name} src={user.avatarUrl} size="md" status="online" />
                         <div className="min-w-0">
-                          <div className="truncate text-[13px] font-medium text-[#f7f8f8]">
+                          <div className="truncate text-[13px] font-medium text-[#fafafa]">
                             {user.name}
                           </div>
-                          <div className="truncate text-[11.5px] text-[#7e8490]">
+                          <div className="truncate text-[11.5px] text-[#8a8a8a]">
                             {user.email}
                           </div>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between px-2.5 py-2 text-[11.5px] border-b border-white/[0.07]">
-                        <span className="inline-flex items-center gap-1.5 text-[#8a8f98]">
+                        <span className="inline-flex items-center gap-1.5 text-[#a3a3a3]">
                           <Sparkles className="h-3 w-3 text-[#818cf8]" />
                           <span>{user.plan}</span>
                         </span>
-                        <span className="font-mono text-[11.5px] font-medium tabular-nums text-[#f7f8f8]">
+                        <span className="font-mono text-[11.5px] font-medium tabular-nums text-[#fafafa]">
                           {user.credits.toLocaleString()} cr
                         </span>
                       </div>
@@ -371,25 +371,25 @@ export function Navbar() {
                         <Link
                           href={appUrl}
                           onClick={closeAll}
-                          className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] text-[#d4d6dc] hover:bg-white/[0.07] hover:text-[#f7f8f8] transition-colors"
+                          className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] text-[#d4d4d4] hover:bg-white/[0.07] hover:text-[#fafafa] transition-colors"
                         >
-                          <Rocket className="h-3.5 w-3.5 text-[#8a8f98]" />
+                          <Rocket className="h-3.5 w-3.5 text-[#a3a3a3]" />
                           <span>Launch Orthese</span>
                         </Link>
                         <Link
                           href="/router"
                           onClick={closeAll}
-                          className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] text-[#d4d6dc] hover:bg-white/[0.07] hover:text-[#f7f8f8] transition-colors"
+                          className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] text-[#d4d4d4] hover:bg-white/[0.07] hover:text-[#fafafa] transition-colors"
                         >
-                          <Route className="h-3.5 w-3.5 text-[#8a8f98]" />
+                          <Route className="h-3.5 w-3.5 text-[#a3a3a3]" />
                           <span>Orthese Router</span>
                         </Link>
                         <Link
                           href="/marketplace"
                           onClick={closeAll}
-                          className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] text-[#d4d6dc] hover:bg-white/[0.07] hover:text-[#f7f8f8] transition-colors"
+                          className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-[12.5px] text-[#d4d4d4] hover:bg-white/[0.07] hover:text-[#fafafa] transition-colors"
                         >
-                          <Layers className="h-3.5 w-3.5 text-[#8a8f98]" />
+                          <Layers className="h-3.5 w-3.5 text-[#a3a3a3]" />
                           <span>Marketplace</span>
                         </Link>
                       </div>
@@ -435,7 +435,7 @@ export function Navbar() {
                 setMobileOpen((prev) => !prev);
                 setMobileSectionId(null);
               }}
-              className="relative flex h-8 w-8 items-center justify-center rounded-full text-[#c4c8d0] hover:bg-white/[0.06] hover:text-[#f7f8f8] md:hidden cursor-pointer"
+              className="relative flex h-8 w-8 items-center justify-center rounded-full text-[#d4d4d4] hover:bg-white/[0.06] hover:text-[#fafafa] md:hidden cursor-pointer"
             >
               <span
                 className={cn(
@@ -464,7 +464,7 @@ export function Navbar() {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
               onMouseEnter={cancelCloseTimer}
-              className="hidden overflow-hidden border-t border-white/[0.06] bg-[#0a0b0f]/98 backdrop-blur-2xl md:block"
+              className="hidden overflow-hidden border-t border-white/[0.06] bg-[#171717]/98 backdrop-blur-2xl md:block"
             >
               <motion.div
                 key={activeSection.id}
@@ -475,7 +475,7 @@ export function Navbar() {
               >
                 {activeSection.columns.map((col, colIdx) => (
                   <div key={col.heading}>
-                    <div className="mb-3.5 text-[11px] font-medium text-[#6e737d]">
+                    <div className="mb-3.5 text-[11px] font-medium text-[#737373]">
                       {col.heading}
                     </div>
                     <ul className={cn(col.primary ? "space-y-1.5" : "space-y-2")}>
@@ -496,13 +496,13 @@ export function Navbar() {
                             className={cn(
                               "group inline-flex items-baseline gap-2.5 transition-colors",
                               col.primary
-                                ? "text-[22px] font-medium tracking-[-0.03em] leading-[1.3] text-[#e5e7eb] hover:text-white"
-                                : "text-[13.5px] font-medium text-[#b4b9c2] hover:text-[#f7f8f8]"
+                                ? "text-[22px] font-medium tracking-[-0.03em] leading-[1.3] text-[#e5e5e5] hover:text-white"
+                                : "text-[13.5px] font-medium text-[#b5b5b5] hover:text-[#fafafa]"
                             )}
                           >
                             <span>{item.label}</span>
                             {item.meta && (
-                              <span className="font-mono text-[11px] font-normal text-[#5e626a] group-hover:text-[#8a8f98]">
+                              <span className="font-mono text-[11px] font-normal text-[#737373] group-hover:text-[#a3a3a3]">
                                 {item.meta}
                               </span>
                             )}
@@ -528,7 +528,7 @@ export function Navbar() {
               animate={{ opacity: 1, height: "calc(100svh - 48px)" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-y-auto border-t border-white/[0.06] bg-[#0a0b0f]/98 px-6 py-6 backdrop-blur-2xl md:hidden"
+              className="overflow-y-auto border-t border-white/[0.06] bg-[#171717]/98 px-6 py-6 backdrop-blur-2xl md:hidden"
             >
               {/* Search trigger inside mobile overlay */}
               <button
@@ -537,13 +537,13 @@ export function Navbar() {
                   setMobileOpen(false);
                   setCommandOpen(true);
                 }}
-                className="mb-6 flex w-full items-center justify-between rounded-xl border border-white/[0.09] bg-white/[0.03] px-3.5 py-2.5 text-left text-[13px] text-[#8a8f98] hover:text-[#f7f8f8] cursor-pointer"
+                className="mb-6 flex w-full items-center justify-between rounded-xl border border-white/[0.09] bg-white/[0.03] px-3.5 py-2.5 text-left text-[13px] text-[#a3a3a3] hover:text-[#fafafa] cursor-pointer"
               >
                 <span className="inline-flex items-center gap-2">
                   <Search className="h-3.5 w-3.5" />
                   <span>Search Pieces, Docs, commands…</span>
                 </span>
-                <kbd className="font-mono text-[10.5px] text-[#5e626a]">⌘K</kbd>
+                <kbd className="font-mono text-[10.5px] text-[#737373]">⌘K</kbd>
               </button>
 
               <div className="space-y-1">
@@ -563,13 +563,13 @@ export function Navbar() {
                           setMobileSectionId(isExpanded ? null : section.id)
                         }
                         aria-expanded={isExpanded}
-                        className="flex w-full items-center justify-between py-2 text-left text-[22px] font-medium tracking-[-0.03em] text-[#f7f8f8] cursor-pointer"
+                        className="flex w-full items-center justify-between py-2 text-left text-[22px] font-medium tracking-[-0.03em] text-[#fafafa] cursor-pointer"
                       >
                         <span>{section.label}</span>
                         <ChevronRight
                           className={cn(
-                            "h-4 w-4 text-[#6e737d] transition-transform duration-200",
-                            isExpanded && "rotate-90 text-[#f7f8f8]"
+                            "h-4 w-4 text-[#737373] transition-transform duration-200",
+                            isExpanded && "rotate-90 text-[#fafafa]"
                           )}
                         />
                       </button>
@@ -578,7 +578,7 @@ export function Navbar() {
                         <div className="pb-3 pt-1 space-y-4">
                           {section.columns.map((col) => (
                             <div key={col.heading}>
-                              <div className="mb-1.5 text-[11px] font-medium text-[#6e737d]">
+                              <div className="mb-1.5 text-[11px] font-medium text-[#737373]">
                                 {col.heading}
                               </div>
                               <div className="flex flex-col space-y-1.5">
@@ -587,11 +587,11 @@ export function Navbar() {
                                     key={`${col.heading}-${item.label}`}
                                     href={item.href}
                                     onClick={closeAll}
-                                    className="flex items-center justify-between py-1 text-[15px] text-[#c4c8d0] hover:text-white"
+                                    className="flex items-center justify-between py-1 text-[15px] text-[#d4d4d4] hover:text-white"
                                   >
                                     <span>{item.label}</span>
                                     {item.meta && (
-                                      <span className="font-mono text-[11px] text-[#5e626a]">
+                                      <span className="font-mono text-[11px] text-[#737373]">
                                         {item.meta}
                                       </span>
                                     )}

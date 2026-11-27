@@ -117,28 +117,28 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
   );
 
   return (
-    <div className="relative bg-[#08090a]">
+    <div className="relative bg-[#121212]">
       {/* Top Header Band */}
       <div className="relative mx-auto max-w-[1080px] px-5 pb-12 pt-16 sm:px-6">
-        <h1 className="text-4xl font-medium tracking-[-0.04em] leading-[1.06] text-[#f7f8f8] sm:text-5xl">
+        <h1 className="text-4xl font-medium tracking-[-0.04em] leading-[1.06] text-[#fafafa] sm:text-5xl">
           <OrbitGradientText>Marketplace</OrbitGradientText>
         </h1>
-        <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[#8a8f98]">
-          Browse Pieces, <code className="font-mono text-[13px] text-[#f7f8f8]">SKILL.md</code>{" "}
+        <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[#a3a3a3]">
+          Browse Pieces, <code className="font-mono text-[13px] text-[#fafafa]">SKILL.md</code>{" "}
           packs, and Starter Packs. Click any item to inspect its{" "}
-          <code className="font-mono text-[13px] text-[#f7f8f8]">piece.json</code> permissions.
+          <code className="font-mono text-[13px] text-[#fafafa]">piece.json</code> permissions.
         </p>
 
         {/* Search, Sliding Tabs & Sort */}
         <div className="mt-8 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="relative max-w-md flex-1">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#5e626a]" />
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#737373]" />
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search Pieces, Skills, or @creators..."
-              className="h-9 w-full rounded-lg border border-white/[0.08] bg-[#0e0f12] pl-10 pr-3 text-[13px] text-[#f7f8f8] placeholder:text-[#5e626a] focus:border-white/25 focus:outline-none"
+              className="h-9 w-full rounded-lg border border-white/[0.08] bg-[#0e0f12] pl-10 pr-3 text-[13px] text-[#fafafa] placeholder:text-[#737373] focus:border-white/25 focus:outline-none"
             />
           </div>
 
@@ -182,8 +182,8 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
                   className={cn(
                     "rounded-md px-2.5 py-1 text-[12px] transition-colors cursor-pointer",
                     sort === s.id
-                      ? "bg-white/[0.09] text-[#f7f8f8] font-medium"
-                      : "text-[#8a8f98] hover:text-[#f7f8f8]"
+                      ? "bg-white/[0.09] text-[#fafafa] font-medium"
+                      : "text-[#a3a3a3] hover:text-[#fafafa]"
                   )}
                 >
                   {s.label}
@@ -208,11 +208,11 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
               >
                 <span>Filters</span>
                 {activeFilterCount > 0 && (
-                  <span className="rounded-full bg-white/[0.12] px-1.5 py-0.5 font-mono text-[10px] text-[#f7f8f8] lg:hidden">
+                  <span className="rounded-full bg-white/[0.12] px-1.5 py-0.5 font-mono text-[10px] text-[#fafafa] lg:hidden">
                     {activeFilterCount}
                   </span>
                 )}
-                <span className="font-mono text-[11px] text-[#8a8f98] lg:hidden">
+                <span className="font-mono text-[11px] text-[#a3a3a3] lg:hidden">
                   {mobileFiltersOpen ? "Hide" : "Show"}
                 </span>
               </button>

@@ -5,8 +5,8 @@ export function EcosystemAndPillars() {
     <div className="mx-auto max-w-[1080px] px-5 sm:px-6">
       {/* Two-Tone Editorial Statement + 3 Boxless Wireframe Pillars */}
       <section id="architecture" className="scroll-mt-16 py-24 sm:py-32">
-        <p className="max-w-[780px] text-2xl font-medium tracking-[-0.03em] leading-[1.25] text-[#8a8f98] md:text-[32px]">
-          <span className="text-[#f7f8f8]">
+        <p className="max-w-[780px] text-2xl font-medium tracking-[-0.03em] leading-[1.25] text-[#a3a3a3] md:text-[32px]">
+          <span className="text-[#fafafa]">
             A new species of <OrbitGradientText>AI workstation.</OrbitGradientText>
           </span>{" "}
           Built on one Rust + GPUI core so your prompt box, website builder, and coding agent
@@ -51,12 +51,12 @@ export function EcosystemAndPillars() {
                 />
               </svg>
             </div>
-            <h3 className="text-[15px] font-medium tracking-[-0.015em] text-[#f7f8f8]">
+            <h3 className="text-[15px] font-medium tracking-[-0.015em] text-[#fafafa]">
               Snap &amp; pipe context
             </h3>
-            <p className="mt-2 text-[14px] leading-relaxed text-[#8a8f98]">
-              Pass typed <code className="font-mono text-[12px] text-[#c4c8d0]">orthese/spec</code>{" "}
-              and <code className="font-mono text-[12px] text-[#c4c8d0]">git-diff</code> payloads
+            <p className="mt-2 text-[14px] leading-relaxed text-[#a3a3a3]">
+              Pass typed <code className="font-mono text-[12px] text-[#d4d4d4]">orthese/spec</code>{" "}
+              and <code className="font-mono text-[12px] text-[#d4d4d4]">git-diff</code> payloads
               directly between Pieces.
             </p>
           </div>
@@ -91,12 +91,12 @@ export function EcosystemAndPillars() {
                 <line x1="104" y1="54" x2="104" y2="96" stroke="rgba(255,255,255,0.22)" strokeWidth="1" />
               </svg>
             </div>
-            <h3 className="text-[15px] font-medium tracking-[-0.015em] text-[#f7f8f8]">
+            <h3 className="text-[15px] font-medium tracking-[-0.015em] text-[#fafafa]">
               Hybrid AI routing
             </h3>
-            <p className="mt-2 text-[14px] leading-relaxed text-[#8a8f98]">
+            <p className="mt-2 text-[14px] leading-relaxed text-[#a3a3a3]">
               Run on managed Cloudflare Edge credits or switch seamlessly to your local{" "}
-              <code className="font-mono text-[12px] text-[#c4c8d0]">CLIProxyAPI</code> sidecar.
+              <code className="font-mono text-[12px] text-[#d4d4d4]">CLIProxyAPI</code> sidecar.
             </p>
           </div>
 
@@ -138,10 +138,10 @@ export function EcosystemAndPillars() {
                 />
               </svg>
             </div>
-            <h3 className="text-[15px] font-medium tracking-[-0.015em] text-[#f7f8f8]">
+            <h3 className="text-[15px] font-medium tracking-[-0.015em] text-[#fafafa]">
               Native 120fps + WASM
             </h3>
-            <p className="mt-2 text-[14px] leading-relaxed text-[#8a8f98]">
+            <p className="mt-2 text-[14px] leading-relaxed text-[#a3a3a3]">
               One Rust binary powers instant zero-install browser sessions and full local
               repository access on Desktop.
             </p>

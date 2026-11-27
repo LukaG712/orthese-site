@@ -30,12 +30,12 @@ export function MarketplaceAndPricing() {
       {/* Compact 4-Column Unboxed Marketplace Row */}
       <section className="border-t border-white/[0.06] py-20">
         <div className="flex items-baseline justify-between gap-4">
-          <h2 className="text-2xl font-medium tracking-[-0.03em] text-[#f7f8f8] sm:text-[28px]">
+          <h2 className="text-2xl font-medium tracking-[-0.03em] text-[#fafafa] sm:text-[28px]">
             Marketplace
           </h2>
           <Link
             href="/marketplace"
-            className="inline-flex items-center gap-1 text-[13px] text-[#8a8f98] hover:text-[#f7f8f8] transition-colors"
+            className="inline-flex items-center gap-1 text-[13px] text-[#a3a3a3] hover:text-[#fafafa] transition-colors"
           >
             <span>Browse all</span>
             <ChevronRight className="h-3.5 w-3.5" />
@@ -49,10 +49,10 @@ export function MarketplaceAndPricing() {
               href={`/marketplace/${item.id}`}
               className="group block"
             >
-              <div className="flex items-center gap-2 text-[12px] text-[#5e626a]">
+              <div className="flex items-center gap-2 text-[12px] text-[#737373]">
                 <AssetIcon
                   name={item.icon}
-                  className="h-3.5 w-3.5 text-[#8a8f98] transition-colors group-hover:text-[#f7f8f8]"
+                  className="h-3.5 w-3.5 text-[#a3a3a3] transition-colors group-hover:text-[#fafafa]"
                 />
                 <span>
                   {item.pricing === "rev-share"
@@ -63,11 +63,11 @@ export function MarketplaceAndPricing() {
                 </span>
               </div>
 
-              <h3 className="mt-2.5 text-[14.5px] font-medium tracking-[-0.015em] text-[#f7f8f8] group-hover:underline decoration-white/25 underline-offset-4">
+              <h3 className="mt-2.5 text-[14.5px] font-medium tracking-[-0.015em] text-[#fafafa] group-hover:underline decoration-white/25 underline-offset-4">
                 {item.name}
               </h3>
 
-              <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-[#8a8f98]">
+              <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-[#a3a3a3]">
                 {item.tagline}
               </p>
             </Link>
@@ -78,10 +78,10 @@ export function MarketplaceAndPricing() {
       {/* Quiet 4-Column Hairline Pricing Row */}
       <section id="pricing" className="scroll-mt-16 border-t border-white/[0.06] py-20">
         <div className="max-w-lg">
-          <h2 className="text-2xl font-medium tracking-[-0.03em] text-[#f7f8f8] sm:text-[28px]">
+          <h2 className="text-2xl font-medium tracking-[-0.03em] text-[#fafafa] sm:text-[28px]">
             Transparent <OrbitGradientText>pricing</OrbitGradientText>
           </h2>
-          <p className="mt-2 text-[14.5px] leading-relaxed text-[#8a8f98]">
+          <p className="mt-2 text-[14.5px] leading-relaxed text-[#a3a3a3]">
             Free dashboard forever. Buy non-expiring credits only when you want cloud AI—or
             bring local models for Free.
           </p>
@@ -100,30 +100,30 @@ export function MarketplaceAndPricing() {
               >
                 <div>
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-[13.5px] font-medium text-[#f7f8f8]">
+                    <span className="text-[13.5px] font-medium text-[#fafafa]">
                       {pack.name}
                     </span>
                     {isBuilder && (
-                      <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#f7f8f8]">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#fafafa]">
                         Popular
                       </span>
                     )}
                   </div>
 
                   <div className="mt-3.5 flex items-baseline gap-1.5">
-                    <span className="font-mono text-[30px] font-medium tracking-[-0.04em] tabular-nums text-[#f7f8f8]">
+                    <span className="font-mono text-[30px] font-medium tracking-[-0.04em] tabular-nums text-[#fafafa]">
                       €<NumberFlow value={pack.priceEur} />
                     </span>
-                    <span className="text-[12px] text-[#5e626a]">
+                    <span className="text-[12px] text-[#737373]">
                       {pack.priceEur === 0 ? "forever" : "one-time"}
                     </span>
                   </div>
 
-                  <div className="mt-1 font-mono text-[12px] tabular-nums text-[#8a8f98]">
+                  <div className="mt-1 font-mono text-[12px] tabular-nums text-[#a3a3a3]">
                     <NumberFlow value={pack.credits} /> cr
                   </div>
 
-                  <p className="mt-3.5 text-[12.5px] leading-relaxed text-[#8a8f98]">
+                  <p className="mt-3.5 text-[12.5px] leading-relaxed text-[#a3a3a3]">
                     {pack.tagline}
                   </p>
                 </div>
@@ -162,14 +162,14 @@ export function MarketplaceAndPricing() {
           })}
         </div>
 
-        <p className="mt-4 font-mono text-[11px] text-[#5e626a]">
+        <p className="mt-4 font-mono text-[11px] text-[#737373]">
           Polar MoR · Apple Pay · Google Pay · Cards · Bancontact
         </p>
       </section>
 
       {/* Quiet Closing CTA */}
       <section className="border-t border-white/[0.06] py-24 text-center sm:py-28">
-        <h2 className="text-3xl font-medium tracking-[-0.04em] leading-[1.08] text-[#f7f8f8] sm:text-[42px]">
+        <h2 className="text-3xl font-medium tracking-[-0.04em] leading-[1.08] text-[#fafafa] sm:text-[42px]">
           Built for modular work.
           <br />
           <OrbitGradientText>Available today.</OrbitGradientText>

@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} dark`}>
-      <body className="min-h-screen bg-[#08090a] text-[#f7f8f8] antialiased selection:bg-[#f7f8f8] selection:text-[#08090a]">
+      <body className="min-h-screen bg-[#121212] text-[#fafafa] antialiased selection:bg-[#fafafa] selection:text-[#121212]">
         <StorefrontProvider>
           <div className="flex min-h-screen flex-col">
             <Navbar />
@@ -45,11 +45,11 @@ export default function RootLayout({
             position="bottom-right"
             toastOptions={{
               style: {
-                background: "#111215",
+                background: "#1c1c1c",
                 border: "1px solid rgba(255,255,255,0.1)",
                 boxShadow:
                   "inset 0 1px 0 0 rgba(255,255,255,0.12), 0 24px 48px -12px rgba(0,0,0,0.85)",
-                color: "#f7f8f8",
+                color: "#fafafa",
               },
             }}
           />

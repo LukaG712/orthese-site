@@ -235,7 +235,7 @@ export function TokenInput({
             ? "Describe what to build or press Enter to run..."
             : placeholder
         }
-        className="min-h-[54px] sm:min-h-[62px] w-full resize-none bg-transparent text-[15px] leading-relaxed text-[#f7f8f8] placeholder:text-[#686d76] focus:outline-none"
+        className="min-h-[54px] sm:min-h-[62px] w-full resize-none bg-transparent text-[15px] leading-relaxed text-[#fafafa] placeholder:text-[#737373] focus:outline-none"
       />
 
       {/* Caret-triggered @ Mentions & / Commands Popover */}
@@ -248,15 +248,15 @@ export function TokenInput({
               ? "Mention Pieces and workspace files"
               : "Run slash commands"
           }
-          className="absolute left-0 top-full z-40 mt-1.5 w-80 max-w-[calc(100vw-3rem)] rounded-xl border border-white/[0.13] bg-[#12141a]/98 p-1.5 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
+          className="absolute left-0 top-full z-40 mt-1.5 w-80 max-w-[calc(100vw-3rem)] rounded-xl border border-white/[0.13] bg-[#1f1f1f]/98 p-1.5 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
         >
-          <div className="flex items-center justify-between px-2.5 py-1 text-[10.5px] font-medium text-[#6e737d]">
+          <div className="flex items-center justify-between px-2.5 py-1 text-[10.5px] font-medium text-[#737373]">
             <span>
               {triggerMatch.trigger === "@"
                 ? "Mention Piece or file"
                 : "Slash commands"}
             </span>
-            <span className="font-mono text-[10px] text-[#5e626a]">
+            <span className="font-mono text-[10px] text-[#737373]">
               ↑↓ · ↵
             </span>
           </div>
@@ -279,8 +279,8 @@ export function TokenInput({
                   className={cn(
                     "flex w-full items-center justify-between gap-3 rounded-lg px-2.5 py-1.5 text-left transition-colors cursor-pointer",
                     isHighlighted
-                      ? "bg-white/[0.08] text-[#f7f8f8]"
-                      : "text-[#c4c8d0] hover:bg-white/[0.05]"
+                      ? "bg-white/[0.08] text-[#fafafa]"
+                      : "text-[#d4d4d4] hover:bg-white/[0.05]"
                   )}
                 >
                   <span className="flex items-center gap-2 min-w-0">
@@ -294,11 +294,11 @@ export function TokenInput({
                     >
                       {isCommand ? "/" : "@"}
                     </span>
-                    <span className="truncate text-[12.5px] font-medium text-[#f7f8f8]">
+                    <span className="truncate text-[12.5px] font-medium text-[#fafafa]">
                       {opt.label}
                     </span>
                   </span>
-                  <span className="truncate text-[11px] text-[#6e737d]">
+                  <span className="truncate text-[11px] text-[#737373]">
                     {opt.description}
                   </span>
                 </button>

@@ -84,7 +84,7 @@ export function SkeletonAuthCard({ className }: { className?: string }) {
       aria-busy="true"
       aria-label="Signing in"
       className={cn(
-        "space-y-4 rounded-2xl border border-white/[0.09] bg-[#111217]/95 p-6",
+        "space-y-4 rounded-2xl border border-white/[0.09] bg-[#1f1f1f]/95 p-6",
         className
       )}
     >

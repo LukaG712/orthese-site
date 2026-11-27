@@ -51,7 +51,7 @@ const FOOTER_COLUMNS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[0.07] bg-[#08090a]">
+    <footer className="border-t border-white/[0.07] bg-[#121212]">
       <div className="mx-auto max-w-[1080px] px-5 py-16 sm:px-6">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-[1.2fr_1fr_1fr_1fr_1fr_1fr]">
           {/* Far-Left Small Orthese Mark */}
@@ -59,7 +59,7 @@ export function Footer() {
             <Link
               href="/"
               aria-label="Orthese Home"
-              className="inline-flex items-center gap-2 text-[#8a8f98] hover:text-[#f7f8f8] transition-colors"
+              className="inline-flex items-center gap-2 text-[#a3a3a3] hover:text-[#fafafa] transition-colors"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1.2" fill="currentColor" />
@@ -72,8 +72,8 @@ export function Footer() {
 
           {FOOTER_COLUMNS.map((col) => (
             <div key={col.title}>
-              <h3 className="text-[12px] font-medium text-[#f7f8f8]">{col.title}</h3>
-              <ul className="mt-4 space-y-2.5 text-[12.5px] text-[#5e626a]">
+              <h3 className="text-[12px] font-medium text-[#fafafa]">{col.title}</h3>
+              <ul className="mt-4 space-y-2.5 text-[12.5px] text-[#737373]">
                 {col.links.map((link) => (
                   <li key={link.label}>
                     {"external" in link && link.external ? (
@@ -81,12 +81,12 @@ export function Footer() {
                         href={link.href}
                         target="_blank"
                         rel="noreferrer"
-                        className="hover:text-[#f7f8f8] transition-colors"
+                        className="hover:text-[#fafafa] transition-colors"
                       >
                         {link.label}
                       </a>
                     ) : (
-                      <Link href={link.href} className="hover:text-[#f7f8f8] transition-colors">
+                      <Link href={link.href} className="hover:text-[#fafafa] transition-colors">
                         {link.label}
                       </Link>
                     )}
@@ -97,7 +97,7 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-14 flex flex-col items-start justify-between gap-2 text-[12px] text-[#5e626a] sm:flex-row sm:items-center">
+        <div className="mt-14 flex flex-col items-start justify-between gap-2 text-[12px] text-[#737373] sm:flex-row sm:items-center">
           <span>© 2026 Orthese</span>
           <span className="inline-flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />

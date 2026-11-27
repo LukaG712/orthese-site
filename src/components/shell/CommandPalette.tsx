@@ -197,7 +197,7 @@ export function CommandPalette() {
       description: item.id,
       keywords: `${item.name} ${item.id} ${item.kind} ${item.tags.join(" ")}`,
       badge: item.kind,
-      icon: <AssetIcon name={item.icon} className="h-3.5 w-3.5 text-[#8a8f98]" />,
+      icon: <AssetIcon name={item.icon} className="h-3.5 w-3.5 text-[#a3a3a3]" />,
       onSelect: () => go(`/marketplace/${item.id}`),
     }));
 
@@ -210,7 +210,7 @@ export function CommandPalette() {
       description: `${pack.credits.toLocaleString()} Orthese Credits · Never expires`,
       keywords: `${pack.name} pricing credits ${pack.priceEur} top up`,
       badge: `€${pack.priceEur}`,
-      icon: <CreditCard className="h-3.5 w-3.5 text-[#8a8f98]" />,
+      icon: <CreditCard className="h-3.5 w-3.5 text-[#a3a3a3]" />,
       onSelect: () => {
         setCommandOpen(false);
         openCheckout({
@@ -315,11 +315,11 @@ export function CommandPalette() {
             exit={{ opacity: 0, scale: 0.97, y: -6, filter: "blur(3px)" }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-[580px] overflow-hidden rounded-2xl border border-white/[0.13] bg-[#111217]/98 shadow-[0_32px_96px_-18px_rgba(0,0,0,0.96),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl"
+            className="w-full max-w-[580px] overflow-hidden rounded-2xl border border-white/[0.13] bg-[#1f1f1f]/98 shadow-[0_32px_96px_-18px_rgba(0,0,0,0.96),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-2xl"
           >
             {/* Search Row */}
             <div className="flex items-center gap-3 border-b border-white/[0.08] px-4">
-              <Search className="h-4 w-4 shrink-0 text-[#6e737d]" />
+              <Search className="h-4 w-4 shrink-0 text-[#737373]" />
               <input
                 ref={inputRef}
                 type="text"
@@ -336,7 +336,7 @@ export function CommandPalette() {
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Type a command or search Pieces, Skills, accounts…"
-                className="h-12 w-full bg-transparent text-[14px] text-[#f7f8f8] placeholder:text-[#686d76] focus:outline-none"
+                className="h-12 w-full bg-transparent text-[14px] text-[#fafafa] placeholder:text-[#737373] focus:outline-none"
               />
               {query ? (
                 <button
@@ -346,7 +346,7 @@ export function CommandPalette() {
                     inputRef.current?.focus();
                   }}
                   aria-label="Clear search"
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[#6e737d] hover:bg-white/[0.08] hover:text-[#f7f8f8] transition-colors cursor-pointer"
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[#737373] hover:bg-white/[0.08] hover:text-[#fafafa] transition-colors cursor-pointer"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
@@ -354,7 +354,7 @@ export function CommandPalette() {
                 <button
                   type="button"
                   onClick={closePalette}
-                  className="shrink-0 rounded-md border border-white/[0.1] bg-white/[0.03] px-1.5 py-0.5 font-mono text-[10px] text-[#7e8490] hover:text-[#f7f8f8] transition-colors cursor-pointer"
+                  className="shrink-0 rounded-md border border-white/[0.1] bg-white/[0.03] px-1.5 py-0.5 font-mono text-[10px] text-[#8a8a8a] hover:text-[#fafafa] transition-colors cursor-pointer"
                 >
                   Esc
                 </button>
@@ -371,10 +371,10 @@ export function CommandPalette() {
             >
               {grouped.length === 0 ? (
                 <div className="py-12 text-center">
-                  <p className="text-[13px] font-medium text-[#c4c8d0]">
+                  <p className="text-[13px] font-medium text-[#d4d4d4]">
                     No commands match &ldquo;{query}&rdquo;
                   </p>
-                  <p className="mt-1 text-[12px] text-[#686d76]">
+                  <p className="mt-1 text-[12px] text-[#737373]">
                     Try searching for Router, Marketplace, Website Builder, or Log in.
                   </p>
                 </div>
@@ -382,7 +382,7 @@ export function CommandPalette() {
                 <div className="space-y-2.5">
                   {grouped.map(([section, items]) => (
                     <div key={section} role="group" aria-label={section}>
-                      <div className="px-2.5 pb-1 pt-1 text-[11px] font-medium text-[#6e737d]">
+                      <div className="px-2.5 pb-1 pt-1 text-[11px] font-medium text-[#737373]">
                         {section}
                       </div>
                       <div className="space-y-0.5">
@@ -402,8 +402,8 @@ export function CommandPalette() {
                               className={cn(
                                 "flex w-full items-center justify-between gap-3 rounded-xl px-2.5 py-2 text-left transition-colors cursor-pointer",
                                 isActive
-                                  ? "bg-white/[0.08] text-[#f7f8f8]"
-                                  : "text-[#c4c8d0] hover:bg-white/[0.05]"
+                                  ? "bg-white/[0.08] text-[#fafafa]"
+                                  : "text-[#d4d4d4] hover:bg-white/[0.05]"
                               )}
                             >
                               <span className="flex items-center gap-2.5 min-w-0">
@@ -418,11 +418,11 @@ export function CommandPalette() {
                                   {item.icon}
                                 </span>
                                 <span className="min-w-0">
-                                  <span className="block truncate text-[13px] font-medium text-[#f7f8f8]">
+                                  <span className="block truncate text-[13px] font-medium text-[#fafafa]">
                                     {item.title}
                                   </span>
                                   {item.description && (
-                                    <span className="block truncate text-[11.5px] text-[#6e737d]">
+                                    <span className="block truncate text-[11.5px] text-[#737373]">
                                       {item.description}
                                     </span>
                                   )}
@@ -431,7 +431,7 @@ export function CommandPalette() {
 
                               <span className="flex shrink-0 items-center gap-1.5">
                                 {item.badge && (
-                                  <span className="rounded-md border border-white/[0.08] bg-white/[0.03] px-1.5 py-0.5 text-[10.5px] capitalize text-[#9ba1ab]">
+                                  <span className="rounded-md border border-white/[0.08] bg-white/[0.03] px-1.5 py-0.5 text-[10.5px] capitalize text-[#a3a3a3]">
                                     {item.badge}
                                   </span>
                                 )}
@@ -440,7 +440,7 @@ export function CommandPalette() {
                                     {item.shortcut.map((key) => (
                                       <kbd
                                         key={key}
-                                        className="rounded border border-white/[0.1] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-[#8a8f98]"
+                                        className="rounded border border-white/[0.1] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-[#a3a3a3]"
                                       >
                                         {key}
                                       </kbd>
@@ -459,28 +459,28 @@ export function CommandPalette() {
             </div>
 
             {/* Footer Keyboard Hints */}
-            <div className="flex items-center justify-between gap-2 border-t border-white/[0.07] bg-white/[0.015] px-4 py-2 text-[11px] text-[#6e737d]">
+            <div className="flex items-center justify-between gap-2 border-t border-white/[0.07] bg-white/[0.015] px-4 py-2 text-[11px] text-[#737373]">
               <div className="flex items-center gap-3">
                 <span className="inline-flex items-center gap-1">
-                  <kbd className="rounded border border-white/[0.1] bg-white/[0.04] px-1 py-0.2 font-mono text-[9.5px] text-[#9ba1ab]">
+                  <kbd className="rounded border border-white/[0.1] bg-white/[0.04] px-1 py-0.2 font-mono text-[9.5px] text-[#a3a3a3]">
                     ↑↓
                   </kbd>
                   <span>Navigate</span>
                 </span>
                 <span className="inline-flex items-center gap-1">
-                  <kbd className="rounded border border-white/[0.1] bg-white/[0.04] px-1 py-0.2 font-mono text-[9.5px] text-[#9ba1ab]">
+                  <kbd className="rounded border border-white/[0.1] bg-white/[0.04] px-1 py-0.2 font-mono text-[9.5px] text-[#a3a3a3]">
                     ↵
                   </kbd>
                   <span>Select</span>
                 </span>
                 <span className="hidden sm:inline-flex items-center gap-1">
-                  <kbd className="rounded border border-white/[0.1] bg-white/[0.04] px-1 py-0.2 font-mono text-[9.5px] text-[#9ba1ab]">
+                  <kbd className="rounded border border-white/[0.1] bg-white/[0.04] px-1 py-0.2 font-mono text-[9.5px] text-[#a3a3a3]">
                     Esc
                   </kbd>
                   <span>{query ? "Clear" : "Close"}</span>
                 </span>
               </div>
-              <span className="font-mono text-[10.5px] tabular-nums text-[#5e626a]">
+              <span className="font-mono text-[10.5px] tabular-nums text-[#737373]">
                 {filtered.length} {filtered.length === 1 ? "result" : "results"}
               </span>
             </div>

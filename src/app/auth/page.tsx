@@ -121,7 +121,7 @@ export default function AuthPage() {
         className="pointer-events-none absolute inset-x-0 top-0 h-[480px]"
         style={{
           background:
-            "radial-gradient(ellipse 62% 52% at 50% 0%, rgba(255,255,255,0.065), rgba(129,140,248,0.045) 44%, transparent 78%)",
+            "radial-gradient(ellipse 62% 52% at 50% 0%, rgba(255,255,255,0.04), rgba(255,255,255,0.012) 44%, transparent 78%)",
         }}
       />
       <div
@@ -155,7 +155,7 @@ export default function AuthPage() {
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
               data-testid="auth-card"
-              className="relative rounded-2xl border border-white/[0.12] bg-[#111217]/95 p-6 sm:p-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_32px_90px_-20px_rgba(0,0,0,0.95)] backdrop-blur-xl"
+              className="relative rounded-2xl border border-white/[0.12] bg-[#1f1f1f]/95 p-6 sm:p-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_32px_90px_-20px_rgba(0,0,0,0.95)] backdrop-blur-xl"
             >
               {/* Brand header */}
               <div className="text-center">
@@ -172,7 +172,7 @@ export default function AuthPage() {
                   </svg>
                 </Link>
 
-                <h1 className="mt-4 text-[22px] font-medium tracking-[-0.03em] text-[#f7f8f8]">
+                <h1 className="mt-4 text-[22px] font-medium tracking-[-0.03em] text-[#fafafa]">
                   {isSignup ? (
                     <>
                       Create your <OrbitGradientText>Orthese</OrbitGradientText> account
@@ -183,7 +183,7 @@ export default function AuthPage() {
                     </>
                   )}
                 </h1>
-                <p className="mt-1.5 text-[13px] text-[#8a8f98]">
+                <p className="mt-1.5 text-[13px] text-[#a3a3a3]">
                   {isSignup
                     ? "Start building across WASM and Desktop with €2 starter credits."
                     : "Pick up your Pieces, shared context bus, and credit balance."}
@@ -237,7 +237,7 @@ export default function AuthPage() {
               {/* Hairline divider */}
               <div className="my-5 flex items-center gap-3">
                 <span className="h-px flex-1 bg-white/[0.08]" />
-                <span className="text-[11.5px] text-[#5e626a]">
+                <span className="text-[11.5px] text-[#737373]">
                   or continue with email
                 </span>
                 <span className="h-px flex-1 bg-white/[0.08]" />
@@ -249,12 +249,12 @@ export default function AuthPage() {
                   <div>
                     <label
                       htmlFor="auth-name"
-                      className="mb-1.5 block text-[12px] font-medium text-[#c4c8d0]"
+                      className="mb-1.5 block text-[12px] font-medium text-[#d4d4d4]"
                     >
                       Name
                     </label>
                     <div className="relative">
-                      <User className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#5e626a]" />
+                      <User className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#737373]" />
                       <input
                         id="auth-name"
                         type="text"
@@ -263,7 +263,7 @@ export default function AuthPage() {
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Luka G."
                         autoComplete="name"
-                        className="h-9 w-full rounded-lg border border-white/[0.11] bg-[#0b0c10] pl-9 pr-3 text-[13px] text-[#f7f8f8] placeholder:text-[#5e626a] focus:border-white/[0.26] focus:outline-none transition-colors"
+                        className="h-9 w-full rounded-lg border border-white/[0.11] bg-[#171717] pl-9 pr-3 text-[13px] text-[#fafafa] placeholder:text-[#737373] focus:border-white/[0.26] focus:outline-none transition-colors"
                       />
                     </div>
                   </div>
@@ -272,12 +272,12 @@ export default function AuthPage() {
                 <div>
                   <label
                     htmlFor="auth-email"
-                    className="mb-1.5 block text-[12px] font-medium text-[#c4c8d0]"
+                    className="mb-1.5 block text-[12px] font-medium text-[#d4d4d4]"
                   >
                     Email
                   </label>
                   <div className="relative">
-                    <Mail className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#5e626a]" />
+                    <Mail className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#737373]" />
                     <input
                       id="auth-email"
                       type="email"
@@ -287,7 +287,7 @@ export default function AuthPage() {
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="you@domain.com"
                       autoComplete="email"
-                      className="h-9 w-full rounded-lg border border-white/[0.11] bg-[#0b0c10] pl-9 pr-3 text-[13px] text-[#f7f8f8] placeholder:text-[#5e626a] focus:border-white/[0.26] focus:outline-none transition-colors"
+                      className="h-9 w-full rounded-lg border border-white/[0.11] bg-[#171717] pl-9 pr-3 text-[13px] text-[#fafafa] placeholder:text-[#737373] focus:border-white/[0.26] focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -295,12 +295,12 @@ export default function AuthPage() {
                 <div>
                   <label
                     htmlFor="auth-password"
-                    className="mb-1.5 block text-[12px] font-medium text-[#c4c8d0]"
+                    className="mb-1.5 block text-[12px] font-medium text-[#d4d4d4]"
                   >
                     Password
                   </label>
                   <div className="relative">
-                    <Lock className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#5e626a]" />
+                    <Lock className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#737373]" />
                     <input
                       id="auth-password"
                       type="password"
@@ -310,7 +310,7 @@ export default function AuthPage() {
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder={isSignup ? "Create a password" : "Enter your password"}
                       autoComplete={isSignup ? "new-password" : "current-password"}
-                      className="h-9 w-full rounded-lg border border-white/[0.11] bg-[#0b0c10] pl-9 pr-3 text-[13px] text-[#f7f8f8] placeholder:text-[#5e626a] focus:border-white/[0.26] focus:outline-none transition-colors"
+                      className="h-9 w-full rounded-lg border border-white/[0.11] bg-[#171717] pl-9 pr-3 text-[13px] text-[#fafafa] placeholder:text-[#737373] focus:border-white/[0.26] focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -326,7 +326,7 @@ export default function AuthPage() {
               </form>
 
               {/* Shared Login <-> Signup Toggle Line */}
-              <div className="mt-5 border-t border-white/[0.07] pt-4 text-center text-[12.5px] text-[#8a8f98]">
+              <div className="mt-5 border-t border-white/[0.07] pt-4 text-center text-[12.5px] text-[#a3a3a3]">
                 {isSignup ? (
                   <>
                     Already have an account?{" "}
@@ -334,7 +334,7 @@ export default function AuthPage() {
                       type="button"
                       data-testid="auth-toggle-mode"
                       onClick={() => setMode("login")}
-                      className="font-medium text-[#f7f8f8] underline decoration-white/30 underline-offset-4 hover:decoration-white transition-colors cursor-pointer"
+                      className="font-medium text-[#fafafa] underline decoration-white/30 underline-offset-4 hover:decoration-white transition-colors cursor-pointer"
                     >
                       Log in
                     </button>
@@ -346,7 +346,7 @@ export default function AuthPage() {
                       type="button"
                       data-testid="auth-toggle-mode"
                       onClick={() => setMode("signup")}
-                      className="font-medium text-[#f7f8f8] underline decoration-white/30 underline-offset-4 hover:decoration-white transition-colors cursor-pointer"
+                      className="font-medium text-[#fafafa] underline decoration-white/30 underline-offset-4 hover:decoration-white transition-colors cursor-pointer"
                     >
                       Sign up
                     </button>

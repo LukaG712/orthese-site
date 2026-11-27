@@ -58,7 +58,7 @@ export function inferAttachmentKind(filename: string): AttachmentKind {
 export const SAMPLE_IMAGE_THUMBNAIL =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 112"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1e1b4b"/><stop offset="48%" stop-color="#312e81"/><stop offset="100%" stop-color="#0f172a"/></linearGradient><radialGradient id="glow" cx="62%" cy="32%" r="55%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.72"/><stop offset="50%" stop-color="#e879f9" stop-opacity="0.35"/><stop offset="100%" stop-color="#000" stop-opacity="0"/></radialGradient></defs><rect width="112" height="112" fill="url(#g)"/><rect width="112" height="112" fill="url(#glow)"/><rect x="14" y="22" width="84" height="52" rx="8" fill="#0b0c10" fill-opacity="0.78" stroke="#ffffff" stroke-opacity="0.22"/><rect x="24" y="34" width="42" height="6" rx="3" fill="#f7f8f8" fill-opacity="0.88"/><rect x="24" y="46" width="60" height="4" rx="2" fill="#818cf8" fill-opacity="0.72"/><rect x="24" y="55" width="32" height="4" rx="2" fill="#38bdf8" fill-opacity="0.6"/><circle cx="84" cy="86" r="9" fill="#f7f8f8" fill-opacity="0.9"/></svg>`
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 112"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1e1b4b"/><stop offset="48%" stop-color="#312e81"/><stop offset="100%" stop-color="#0f172a"/></linearGradient><radialGradient id="glow" cx="62%" cy="32%" r="55%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.72"/><stop offset="50%" stop-color="#e879f9" stop-opacity="0.35"/><stop offset="100%" stop-color="#000" stop-opacity="0"/></radialGradient></defs><rect width="112" height="112" fill="url(#g)"/><rect width="112" height="112" fill="url(#glow)"/><rect x="14" y="22" width="84" height="52" rx="8" fill="#171717" fill-opacity="0.78" stroke="#ffffff" stroke-opacity="0.22"/><rect x="24" y="34" width="42" height="6" rx="3" fill="#fafafa" fill-opacity="0.88"/><rect x="24" y="46" width="60" height="4" rx="2" fill="#818cf8" fill-opacity="0.72"/><rect x="24" y="55" width="32" height="4" rx="2" fill="#38bdf8" fill-opacity="0.6"/><circle cx="84" cy="86" r="9" fill="#fafafa" fill-opacity="0.9"/></svg>`
   );
 
 const KIND_STYLES: Record<
@@ -262,7 +262,7 @@ export function ComposerAttachmentTile({
           data-testid={`attachment-tile-${attachment.kind}`}
           title={`${attachment.name} · Right-click for actions`}
           className={cn(
-            "group relative flex h-14 w-14 flex-col items-center justify-center rounded-xl border bg-[#16181f] text-center select-none transition-colors",
+            "group relative flex h-14 w-14 flex-col items-center justify-center rounded-xl border bg-[#262626] text-center select-none transition-colors",
             isOpen
               ? "border-[#818cf8]/70 ring-2 ring-[#818cf8]/25"
               : "border-white/[0.1] hover:border-white/[0.2]"
@@ -298,7 +298,7 @@ export function ComposerAttachmentTile({
                   className={cn("h-4 w-4", nonImageMeta?.colorClass)}
                 />
               </span>
-              <span className="mt-1 w-full truncate text-[9px] leading-none text-[#c4c8d0]">
+              <span className="mt-1 w-full truncate text-[9px] leading-none text-[#d4d4d4]">
                 {attachment.name}
               </span>
             </div>
@@ -338,8 +338,8 @@ export function ComposerAttachmentTile({
             className={cn(
               "absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full border px-1 transition-all duration-200 cursor-pointer",
               isImage && !isUploading
-                ? "border-white/30 bg-white/85 text-[#08090a] backdrop-blur-md hover:bg-white shadow-md"
-                : "border-white/[0.16] bg-[#0c0d11]/95 text-[#c4c8d0] hover:bg-white hover:text-[#08090a]"
+                ? "border-white/30 bg-white/85 text-[#121212] backdrop-blur-md hover:bg-white shadow-md"
+                : "border-white/[0.16] bg-[#171717]/95 text-[#d4d4d4] hover:bg-white hover:text-[#121212]"
             )}
           >
             <span

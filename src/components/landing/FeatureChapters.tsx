@@ -42,22 +42,22 @@ function ChapterHeader({
   return (
     <div className="grid grid-cols-1 items-end gap-6 md:grid-cols-12">
       <div className="md:col-span-5">
-        <h2 className="text-3xl font-medium tracking-[-0.035em] leading-[1.08] text-[#f7f8f8] md:text-[38px]">
+        <h2 className="text-3xl font-medium tracking-[-0.035em] leading-[1.08] text-[#fafafa] md:text-[38px]">
           {titleLine1}
           <br />
           <OrbitGradientText>{titleLine2}</OrbitGradientText>
         </h2>
       </div>
       <div className="md:col-span-7 md:pl-8">
-        <p className="max-w-lg text-[15px] leading-relaxed text-[#8a8f98]">
+        <p className="max-w-lg text-[15px] leading-relaxed text-[#a3a3a3]">
           {description}
         </p>
         <Link
           href={href}
-          className="mt-3 inline-flex items-center gap-1 text-[13.5px] font-medium text-[#f7f8f8] hover:opacity-80 transition-opacity"
+          className="mt-3 inline-flex items-center gap-1 text-[13.5px] font-medium text-[#fafafa] hover:opacity-80 transition-opacity"
         >
           <span>Learn more</span>
-          <ChevronRight className="h-3.5 w-3.5 text-[#8a8f98]" />
+          <ChevronRight className="h-3.5 w-3.5 text-[#a3a3a3]" />
         </Link>
       </div>
     </div>
@@ -69,8 +69,8 @@ function SubColumns({ items }: { items: { title: string; body: string }[] }) {
     <div className="mt-12 grid gap-8 md:grid-cols-3 md:gap-10">
       {items.map((item) => (
         <div key={item.title}>
-          <h3 className="text-[14px] font-medium text-[#f7f8f8]">{item.title}</h3>
-          <p className="mt-1.5 text-[13.5px] leading-relaxed text-[#8a8f98]">
+          <h3 className="text-[14px] font-medium text-[#fafafa]">{item.title}</h3>
+          <p className="mt-1.5 text-[13.5px] leading-relaxed text-[#a3a3a3]">
             {item.body}
           </p>
         </div>
@@ -124,7 +124,7 @@ description: Calm pitch-obsidian layouts with mask-faded UI stages.
 ---
 
 # Design Rules
-- Canvas #08090A, primary ink #F7F8F8, muted #8A8F98
+- Canvas #121212, primary ink #F7F8F8, muted #8A8F98
 - Dissolve lower UI stage edges organically with CSS mask-image
 - Reserve monospace for credits, latencies, and piece.json`,
   },
@@ -264,11 +264,11 @@ export function FeatureChapters() {
         {/* Faded Dark UI Stage */}
         <div className="mask-fade-bottom-soft stage-surface relative mt-12 overflow-hidden rounded-xl p-6 sm:p-10">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-4">
-            <div className="flex items-center gap-2.5 text-[12px] text-[#8a8f98]">
+            <div className="flex items-center gap-2.5 text-[12px] text-[#a3a3a3]">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
               <span className="font-mono">bus://workspace.default</span>
-              <span className="text-[#5e626a]">·</span>
-              <span className="font-mono tabular-nums text-[#f7f8f8]">
+              <span className="text-[#737373]">·</span>
+              <span className="font-mono tabular-nums text-[#fafafa]">
                 <NumberFlow value={busPacketCount} /> payloads routed
               </span>
             </div>
@@ -355,12 +355,12 @@ export function FeatureChapters() {
                     key={pane.name}
                     className="rounded-lg border border-white/[0.08] bg-[#0c0d0f] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
                   >
-                    <div className="flex items-center gap-2 text-[13px] font-medium text-[#f7f8f8]">
-                      <Icon className="h-3.5 w-3.5 text-[#8a8f98]" />
+                    <div className="flex items-center gap-2 text-[13px] font-medium text-[#fafafa]">
+                      <Icon className="h-3.5 w-3.5 text-[#a3a3a3]" />
                       <span>{pane.name}</span>
                     </div>
-                    <div className="mt-1.5 font-mono text-[11px] text-[#5e626a]">{pane.role}</div>
-                    <p className="mt-4 text-[12.5px] leading-relaxed text-[#8a8f98]">
+                    <div className="mt-1.5 font-mono text-[11px] text-[#737373]">{pane.role}</div>
+                    <p className="mt-4 text-[12.5px] leading-relaxed text-[#a3a3a3]">
                       {pane.snippet}
                     </p>
                   </div>
@@ -400,7 +400,7 @@ export function FeatureChapters() {
         <div className="stage-surface mt-12 overflow-hidden rounded-xl p-6 sm:p-10">
           <div className="flex flex-col items-start justify-between gap-4 border-b border-white/[0.06] pb-6 sm:flex-row sm:items-center">
             <div>
-              <div className="flex items-center gap-2 text-[13px] font-medium text-[#f7f8f8]">
+              <div className="flex items-center gap-2 text-[13px] font-medium text-[#fafafa]">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                 <span>
                   {routingMode === "credits"
@@ -408,7 +408,7 @@ export function FeatureChapters() {
                     : "Local CLIProxyAPI Sidecar"}
                 </span>
               </div>
-              <p className="mt-1 text-[12.5px] text-[#8a8f98]">
+              <p className="mt-1 text-[12.5px] text-[#a3a3a3]">
                 {routingMode === "credits"
                   ? "Official provider APIs metered cleanly across every Piece."
                   : "Runs locally on Desktop with live OAuth quota monitoring."}
@@ -416,7 +416,7 @@ export function FeatureChapters() {
             </div>
 
             {/* Working Segmented Toggle */}
-            <div className="grid w-full grid-cols-2 rounded-lg border border-white/[0.08] bg-[#08090a] p-0.5 sm:inline-flex sm:w-auto">
+            <div className="grid w-full grid-cols-2 rounded-lg border border-white/[0.08] bg-[#121212] p-0.5 sm:inline-flex sm:w-auto">
               {(
                 [
                   {
@@ -440,7 +440,7 @@ export function FeatureChapters() {
                     onClick={() => setRoutingMode(opt.id)}
                     className={cn(
                       "relative rounded-[6px] px-2.5 py-1.5 text-[11.5px] sm:px-3 sm:text-[12px] font-medium transition-colors cursor-pointer",
-                      active ? "text-[#f7f8f8]" : "text-[#8a8f98] hover:text-[#f7f8f8]"
+                      active ? "text-[#fafafa]" : "text-[#a3a3a3] hover:text-[#fafafa]"
                     )}
                   >
                     {active && (
@@ -461,22 +461,22 @@ export function FeatureChapters() {
           <div className="mt-8 grid gap-8 md:grid-cols-[0.82fr_1.48fr] items-start">
             <div className="space-y-6">
               <div>
-                <span className="block font-mono text-[11px] text-[#5e626a]">EDGE LATENCY</span>
-                <div className="mt-1 font-mono text-4xl font-medium tracking-[-0.04em] tabular-nums text-[#f7f8f8]">
+                <span className="block font-mono text-[11px] text-[#737373]">EDGE LATENCY</span>
+                <div className="mt-1 font-mono text-4xl font-medium tracking-[-0.04em] tabular-nums text-[#fafafa]">
                   <NumberFlow value={routingMode === "credits" ? 28 : 4} />
-                  <span className="ml-1.5 text-lg text-[#8a8f98]">ms</span>
+                  <span className="ml-1.5 text-lg text-[#a3a3a3]">ms</span>
                 </div>
               </div>
 
               <div>
-                <span className="block font-mono text-[11px] text-[#5e626a]">
+                <span className="block font-mono text-[11px] text-[#737373]">
                   {routingMode === "credits" ? "ACTIVE BALANCE" : "LOCAL COST"}
                 </span>
-                <div className="mt-1 font-mono text-2xl font-medium tracking-[-0.03em] tabular-nums text-[#f7f8f8]">
+                <div className="mt-1 font-mono text-2xl font-medium tracking-[-0.03em] tabular-nums text-[#fafafa]">
                   {routingMode === "credits" ? (
                     <>
                       <NumberFlow value={2410} />
-                      <span className="ml-1.5 text-sm text-[#8a8f98]">cr</span>
+                      <span className="ml-1.5 text-sm text-[#a3a3a3]">cr</span>
                     </>
                   ) : (
                     <span>Local OAuth · Free</span>
@@ -484,8 +484,8 @@ export function FeatureChapters() {
                 </div>
               </div>
 
-              <p className="text-[12.5px] leading-relaxed text-[#6e737d]">
-                Click <span className="text-[#c4c8d0]">Context window</span> to inspect live per-bucket token budgets, deferred MCP tools, and collapsible workspace groups.
+              <p className="text-[12.5px] leading-relaxed text-[#737373]">
+                Click <span className="text-[#d4d4d4]">Context window</span> to inspect live per-bucket token budgets, deferred MCP tools, and collapsible workspace groups.
               </p>
             </div>
 
@@ -509,8 +509,8 @@ export function FeatureChapters() {
                       { label: "System prompt", tokens: 42_000, color: "#a78bfa" },
                       { label: "Memory files", tokens: 24_000, color: "#38bdf8" },
                       { label: "Custom agents", tokens: 16_000, color: "#e879f9" },
-                      { label: "MCP tools (deferred)", tokens: 69_900, color: "#5e626a", deferred: true },
-                      { label: "System tools (deferred)", tokens: 16_100, color: "#5e626a", deferred: true },
+                      { label: "MCP tools (deferred)", tokens: 69_900, color: "#737373", deferred: true },
+                      { label: "System tools (deferred)", tokens: 16_100, color: "#737373", deferred: true },
                     ],
                     groups: [
                       {
@@ -560,7 +560,7 @@ export function FeatureChapters() {
                       { label: "MCP tools", tokens: 62_000, color: "#34d399" },
                       { label: "Skills", tokens: 44_000, color: "#f59e0b" },
                       { label: "Memory files", tokens: 36_000, color: "#38bdf8" },
-                      { label: "MCP tools (deferred)", tokens: 52_000, color: "#5e626a", deferred: true },
+                      { label: "MCP tools (deferred)", tokens: 52_000, color: "#737373", deferred: true },
                     ],
                     groups: [
                       {
@@ -615,18 +615,18 @@ export function FeatureChapters() {
         <div className="mask-fade-bottom-soft stage-surface mt-12 overflow-hidden rounded-xl">
           <div className="grid md:grid-cols-[260px_1fr]">
             {/* Left File Tree (Right-click or Shift+F10 opens ContextMenu) */}
-            <div className="border-b border-white/[0.06] bg-[#0b0c0e] p-5 font-mono text-[12px] md:border-b-0 md:border-r">
+            <div className="border-b border-white/[0.06] bg-[#171717] p-5 font-mono text-[12px] md:border-b-0 md:border-r">
               <div className="mb-3 flex items-center justify-between gap-2">
-                <span className="text-[10px] uppercase tracking-[0.12em] text-[#5e626a]">
+                <span className="text-[10px] uppercase tracking-[0.12em] text-[#737373]">
                   Workspace Bundle
                 </span>
-                <span className="font-sans text-[10px] text-[#5e626a]">
+                <span className="font-sans text-[10px] text-[#737373]">
                   Right-click files
                 </span>
               </div>
 
-              <div className="flex items-center gap-2 py-1 text-[#8a8f98]">
-                <FolderOpen className="h-3.5 w-3.5 text-[#5e626a]" />
+              <div className="flex items-center gap-2 py-1 text-[#a3a3a3]">
+                <FolderOpen className="h-3.5 w-3.5 text-[#737373]" />
                 <span>crates/pieces/website-builder/</span>
               </div>
 
@@ -647,14 +647,14 @@ export function FeatureChapters() {
                         className={cn(
                           "ml-4 mt-0.5 flex w-[calc(100%-1rem)] items-center justify-between gap-2 rounded-md border px-2.5 py-1.5 text-left transition-colors cursor-pointer",
                           isOpen
-                            ? "border-[#818cf8]/60 bg-[#818cf8]/10 text-[#f7f8f8]"
+                            ? "border-[#818cf8]/60 bg-[#818cf8]/10 text-[#fafafa]"
                             : active
-                              ? "border-transparent bg-white/[0.08] text-[#f7f8f8]"
-                              : "border-transparent text-[#8a8f98] hover:bg-white/[0.03] hover:text-[#f7f8f8]"
+                              ? "border-transparent bg-white/[0.08] text-[#fafafa]"
+                              : "border-transparent text-[#a3a3a3] hover:bg-white/[0.03] hover:text-[#fafafa]"
                         )}
                       >
                         <span className="flex items-center gap-2 min-w-0">
-                          <FileCode2 className="h-3.5 w-3.5 shrink-0 text-[#5e626a]" />
+                          <FileCode2 className="h-3.5 w-3.5 shrink-0 text-[#737373]" />
                           <span className="truncate">
                             {file === "lib.rs" ? "src/lib.rs" : file}
                           </span>
@@ -671,8 +671,8 @@ export function FeatureChapters() {
                 );
               })}
 
-              <div className="mt-3 flex items-center gap-2 py-1 text-[#8a8f98]">
-                <Folder className="h-3.5 w-3.5 text-[#5e626a]" />
+              <div className="mt-3 flex items-center gap-2 py-1 text-[#a3a3a3]">
+                <Folder className="h-3.5 w-3.5 text-[#737373]" />
                 <span>skills/landing-page-architect/</span>
               </div>
 
@@ -688,14 +688,14 @@ export function FeatureChapters() {
                     className={cn(
                       "ml-4 mt-0.5 flex w-[calc(100%-1rem)] items-center justify-between gap-2 rounded-md border px-2.5 py-1.5 text-left transition-colors cursor-pointer",
                       isOpen
-                        ? "border-[#818cf8]/60 bg-[#818cf8]/10 text-[#f7f8f8]"
+                        ? "border-[#818cf8]/60 bg-[#818cf8]/10 text-[#fafafa]"
                         : selectedFile === "SKILL.md"
-                          ? "border-transparent bg-white/[0.08] text-[#f7f8f8]"
-                          : "border-transparent text-[#8a8f98] hover:bg-white/[0.03] hover:text-[#f7f8f8]"
+                          ? "border-transparent bg-white/[0.08] text-[#fafafa]"
+                          : "border-transparent text-[#a3a3a3] hover:bg-white/[0.03] hover:text-[#fafafa]"
                     )}
                   >
                     <span className="flex items-center gap-2 min-w-0">
-                      <FileCode2 className="h-3.5 w-3.5 shrink-0 text-[#5e626a]" />
+                      <FileCode2 className="h-3.5 w-3.5 shrink-0 text-[#737373]" />
                       <span className="truncate">SKILL.md</span>
                     </span>
                     {contextFlags["SKILL.md"].include && (
@@ -710,8 +710,8 @@ export function FeatureChapters() {
             </div>
 
             {/* Right Manifest / Code Viewer */}
-            <div className="bg-[#090a0c] p-6 pb-12">
-              <div className="mb-3 font-mono text-[11px] text-[#5e626a]">
+            <div className="bg-[#171717] p-6 pb-12">
+              <div className="mb-3 font-mono text-[11px] text-[#737373]">
                 {HARNESS_FILES[selectedFile].path}
               </div>
               <motion.pre
@@ -719,7 +719,7 @@ export function FeatureChapters() {
                 initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                className="overflow-x-auto font-mono text-[12px] leading-[1.7] text-[#d4d6dc]"
+                className="overflow-x-auto font-mono text-[12px] leading-[1.7] text-[#d4d4d4]"
               >
                 {HARNESS_FILES[selectedFile].code}
               </motion.pre>
@@ -759,7 +759,7 @@ export function FeatureChapters() {
             {/* Left Capability Matrix */}
             <div className="overflow-x-auto border-b border-white/[0.06] p-5 pb-10 sm:p-6 md:border-b-0 md:border-r">
               <div className="min-w-[420px] sm:min-w-0">
-              <div className="grid grid-cols-[1.5fr_0.9fr_0.9fr] border-b border-white/[0.07] pb-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[#5e626a]">
+              <div className="grid grid-cols-[1.5fr_0.9fr_0.9fr] border-b border-white/[0.07] pb-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[#737373]">
                 <span>Capability</span>
                 <span>Web (WASM)</span>
                 <span>Desktop</span>
@@ -770,22 +770,22 @@ export function FeatureChapters() {
                     key={row.label}
                     className="grid grid-cols-[1.5fr_0.9fr_0.9fr] items-center gap-2 py-3.5 text-[12.5px]"
                   >
-                    <span className="text-[#f7f8f8]">{row.label}</span>
-                    <span className="text-[#8a8f98]">
+                    <span className="text-[#fafafa]">{row.label}</span>
+                    <span className="text-[#a3a3a3]">
                       {row.wasm ? (
                         <span className="inline-flex items-center gap-1.5">
-                          <Check className="h-3.5 w-3.5 shrink-0 text-[#8a8f98]" />
+                          <Check className="h-3.5 w-3.5 shrink-0 text-[#a3a3a3]" />
                           {row.wasm}
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 text-[#5e626a]">
+                        <span className="inline-flex items-center gap-1.5 text-[#737373]">
                           <Minus className="h-3.5 w-3.5 shrink-0" />
                           Desktop only
                         </span>
                       )}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 text-[#f7f8f8]">
-                      <Check className="h-3.5 w-3.5 shrink-0 text-[#f7f8f8]" />
+                    <span className="inline-flex items-center gap-1.5 text-[#fafafa]">
+                      <Check className="h-3.5 w-3.5 shrink-0 text-[#fafafa]" />
                       {row.desktop}
                     </span>
                   </div>
@@ -795,34 +795,34 @@ export function FeatureChapters() {
             </div>
 
             {/* Right Live Code Diff Preview */}
-            <div className="bg-[#090a0c] p-6 pb-10">
+            <div className="bg-[#171717] p-6 pb-10">
               <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                <span className="font-mono text-[11px] text-[#8a8f98]">
+                <span className="font-mono text-[11px] text-[#a3a3a3]">
                   crates/orthese-sdk/src/lib.rs
                 </span>
-                <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-[#8a8f98]">
+                <span className="inline-flex items-center gap-1.5 font-mono text-[10px] text-[#a3a3a3]">
                   <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
                   fs:write · shell:exec
                 </span>
               </div>
 
-              <pre className="mt-4 overflow-x-auto font-mono text-[12px] leading-[1.7] text-[#8a8f98]">
-                <span className="block text-[#5e626a]">@@ -112,6 +112,11 @@ impl PieceManifest {"{"}</span>
-                <span className="block text-[#f7f8f8] bg-white/[0.04] px-1.5 -mx-1.5">
+              <pre className="mt-4 overflow-x-auto font-mono text-[12px] leading-[1.7] text-[#a3a3a3]">
+                <span className="block text-[#737373]">@@ -112,6 +112,11 @@ impl PieceManifest {"{"}</span>
+                <span className="block text-[#fafafa] bg-white/[0.04] px-1.5 -mx-1.5">
                   +    pub fn supports_wasm(&amp;self) -&gt; bool {"{"}
                 </span>
-                <span className="block text-[#f7f8f8] bg-white/[0.04] px-1.5 -mx-1.5">
+                <span className="block text-[#fafafa] bg-white/[0.04] px-1.5 -mx-1.5">
                   +        self.permissions.elevated.is_empty()
                 </span>
-                <span className="block text-[#f7f8f8] bg-white/[0.04] px-1.5 -mx-1.5">
+                <span className="block text-[#fafafa] bg-white/[0.04] px-1.5 -mx-1.5">
                   +    {"}"}
                 </span>
                 <span className="block">{"}"}</span>
               </pre>
 
-              <div className="mt-6 flex items-center justify-between rounded-lg border border-white/[0.08] bg-[#111215] px-3.5 py-2.5 font-mono text-[11px] text-[#8a8f98]">
+              <div className="mt-6 flex items-center justify-between rounded-lg border border-white/[0.08] bg-[#1c1c1c] px-3.5 py-2.5 font-mono text-[11px] text-[#a3a3a3]">
                 <span>$ cargo test --workspace</span>
-                <span className="text-[#f7f8f8]">2 passed · 0.01s</span>
+                <span className="text-[#fafafa]">2 passed · 0.01s</span>
               </div>
             </div>
           </div>

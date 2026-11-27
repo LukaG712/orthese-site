@@ -3,21 +3,34 @@ import { cn } from "@/lib/cn";
 
 interface OrbitGradientTextProps {
   children: React.ReactNode;
-  variant?: "prismatic" | "purple" | "silver";
+  /**
+   * "neutral" is the default BoardUI Dark Mode tonal accent.
+   * "prismatic" / "purple" are reserved for future Orthese Pro subscription themes.
+   */
+  variant?: "neutral" | "prismatic" | "purple" | "silver";
   durationSec?: number;
   className?: string;
 }
 
-/**
- * Animated display text where layered radial colour washes orbit smoothly
- * around the glyphs on a continuous loop, with prefers-reduced-motion support.
- */
 export function OrbitGradientText({
   children,
-  variant = "prismatic",
+  variant = "neutral",
   durationSec = 4,
   className,
 }: OrbitGradientTextProps) {
+  if (variant === "neutral") {
+    return (
+      <span
+        className={cn(
+          "bg-gradient-to-b from-[#fafafa] via-[#d4d4d4] to-[#a3a3a3] bg-clip-text text-transparent",
+          className
+        )}
+      >
+        {children}
+      </span>
+    );
+  }
+
   return (
     <span
       style={{ "--orbit-dur": `${durationSec}s` } as CSSProperties}

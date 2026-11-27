@@ -741,19 +741,19 @@ export function ModelSelectorPopover({
         className={cn(
           "inline-flex h-8 max-w-full items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-2.5 text-[12px] sm:text-[12.5px] font-medium transition-colors cursor-pointer",
           open
-            ? "bg-white/[0.08] text-[#f7f8f8]"
-            : "text-[#9ca3af] hover:bg-white/[0.05] hover:text-[#f7f8f8]"
+            ? "bg-white/[0.08] text-[#fafafa]"
+            : "text-[#9ca3af] hover:bg-white/[0.05] hover:text-[#fafafa]"
         )}
       >
         <ProviderGlyph
           provider={activeModel.provider}
-          className="h-3.5 w-3.5 shrink-0 text-[#c4c8d0]"
+          className="h-3.5 w-3.5 shrink-0 text-[#d4d4d4]"
         />
         <span className="truncate">{activeModel.name}</span>
         <ChevronDown
           className={cn(
-            "h-3.5 w-3.5 shrink-0 text-[#5e626a] transition-transform duration-150",
-            open && "rotate-180 text-[#c4c8d0]"
+            "h-3.5 w-3.5 shrink-0 text-[#737373] transition-transform duration-150",
+            open && "rotate-180 text-[#d4d4d4]"
           )}
         />
       </button>
@@ -762,7 +762,7 @@ export function ModelSelectorPopover({
       {open && (
         <div
           data-testid="composer-model-menu"
-          className="absolute left-2 right-2 top-full mt-2 sm:left-auto sm:right-0 sm:top-10 sm:mt-0 z-40 flex h-[308px] sm:w-[366px] overflow-visible rounded-2xl border border-white/[0.11] bg-[#141518] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_70px_-14px_rgba(0,0,0,0.92)]"
+          className="absolute left-2 right-2 top-full mt-2 sm:left-auto sm:right-0 sm:top-10 sm:mt-0 z-40 flex h-[308px] sm:w-[366px] overflow-visible rounded-2xl border border-white/[0.11] bg-[#262626] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_28px_70px_-14px_rgba(0,0,0,0.92)]"
         >
           {/* Left Scrollable Vertical Provider Icon Rail (13 Providers) */}
           <div
@@ -790,8 +790,8 @@ export function ModelSelectorPopover({
                   className={cn(
                     "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors cursor-pointer",
                     selected
-                      ? "bg-white/[0.11] text-[#f7f8f8] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
-                      : "text-[#6b707a] hover:bg-white/[0.05] hover:text-[#d4d6dc]"
+                      ? "bg-white/[0.11] text-[#fafafa] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
+                      : "text-[#6b707a] hover:bg-white/[0.05] hover:text-[#d4d4d4]"
                   )}
                 >
                   <ProviderGlyph provider={prov.id} className="h-[15px] w-[15px]" />
@@ -805,7 +805,7 @@ export function ModelSelectorPopover({
             {/* Top Bar: Active Provider Label + Quick Search */}
             <div className="flex h-7 shrink-0 items-center justify-between gap-2 px-2 pb-1">
               {searchOpen ? (
-                <div className="flex flex-1 items-center gap-1.5 rounded-md border border-white/[0.1] bg-[#0c0d10] px-2 py-0.5">
+                <div className="flex flex-1 items-center gap-1.5 rounded-md border border-white/[0.1] bg-[#171717] px-2 py-0.5">
                   <Search className="h-3 w-3 shrink-0 text-[#6b707a]" />
                   <input
                     ref={searchInputRef}
@@ -815,7 +815,7 @@ export function ModelSelectorPopover({
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={`Search ${REAL_MODELS.length} models...`}
-                    className="h-5 w-full bg-transparent text-[11.5px] text-[#f7f8f8] placeholder:text-[#5e626a] focus:outline-none"
+                    className="h-5 w-full bg-transparent text-[11.5px] text-[#fafafa] placeholder:text-[#737373] focus:outline-none"
                   />
                   <button
                     type="button"
@@ -824,7 +824,7 @@ export function ModelSelectorPopover({
                       setSearchQuery("");
                       setSearchOpen(false);
                     }}
-                    className="text-[#6b707a] hover:text-[#f7f8f8] cursor-pointer"
+                    className="text-[#6b707a] hover:text-[#fafafa] cursor-pointer"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -841,7 +841,7 @@ export function ModelSelectorPopover({
                       setSearchOpen(true);
                       window.setTimeout(() => searchInputRef.current?.focus(), 0);
                     }}
-                    className="inline-flex shrink-0 items-center gap-1.5 text-[11.5px] text-[#6b707a] hover:text-[#d4d6dc] transition-colors cursor-pointer"
+                    className="inline-flex shrink-0 items-center gap-1.5 text-[11.5px] text-[#6b707a] hover:text-[#d4d4d4] transition-colors cursor-pointer"
                   >
                     <span>Quick Search</span>
                     <Search className="h-3 w-3" />
@@ -853,7 +853,7 @@ export function ModelSelectorPopover({
             {/* Model Rows */}
             <div className="mt-0.5 flex-1 space-y-0.5 overflow-y-auto pr-0.5">
               {visibleModels.length === 0 ? (
-                <div className="py-8 text-center text-[12px] text-[#5e626a]">
+                <div className="py-8 text-center text-[12px] text-[#737373]">
                   No models match &ldquo;{searchQuery}&rdquo;
                 </div>
               ) : (
@@ -888,7 +888,7 @@ export function ModelSelectorPopover({
                           provider={model.provider}
                           className={cn(
                             "h-3.5 w-3.5 shrink-0",
-                            isSelected ? "text-[#d4d6dc]" : "text-[#6b707a]"
+                            isSelected ? "text-[#d4d4d4]" : "text-[#6b707a]"
                           )}
                         />
                         <div className="min-w-0">
@@ -896,7 +896,7 @@ export function ModelSelectorPopover({
                             <span
                               className={cn(
                                 "truncate text-[13px] font-medium",
-                                isSelected ? "text-[#f7f8f8]" : "text-[#d4d6dc]"
+                                isSelected ? "text-[#fafafa]" : "text-[#d4d4d4]"
                               )}
                             >
                               {searchQuery.trim() ? model.fullName : model.name}
@@ -920,13 +920,13 @@ export function ModelSelectorPopover({
                               e.stopPropagation();
                               setEffortMenuOpen((v) => !v);
                             }}
-                            className="inline-flex items-center gap-0.5 rounded-full border border-white/[0.1] bg-[#0e0f12] px-2.5 py-0.5 text-[11px] font-medium text-[#c4c8d0] hover:border-white/[0.2] hover:text-white transition-colors cursor-pointer"
+                            className="inline-flex items-center gap-0.5 rounded-full border border-white/[0.1] bg-[#0e0f12] px-2.5 py-0.5 text-[11px] font-medium text-[#d4d4d4] hover:border-white/[0.2] hover:text-white transition-colors cursor-pointer"
                           >
                             <span>{effort}</span>
                             <ChevronRight className="h-3 w-3 text-[#6b707a]" />
                           </button>
                         ) : (
-                          <span className="font-mono text-[10.5px] tabular-nums text-[#5e626a]">
+                          <span className="font-mono text-[10.5px] tabular-nums text-[#737373]">
                             {model.baseCostCr === 0 ? "Free" : `${model.baseCostCr} cr`}
                           </span>
                         )}
@@ -967,7 +967,7 @@ export function ModelSelectorPopover({
                     type="button"
                     aria-label="Close reasoning effort"
                     onClick={() => setEffortMenuOpen(false)}
-                    className="text-[#6b707a] hover:text-[#f7f8f8] cursor-pointer"
+                    className="text-[#6b707a] hover:text-[#fafafa] cursor-pointer"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -986,8 +986,8 @@ export function ModelSelectorPopover({
                       className={cn(
                         "flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left transition-colors cursor-pointer",
                         activeLvl
-                          ? "bg-white/[0.08] text-[#f7f8f8]"
-                          : "text-[#c4c8d0] hover:bg-white/[0.04]"
+                          ? "bg-white/[0.08] text-[#fafafa]"
+                          : "text-[#d4d4d4] hover:bg-white/[0.04]"
                       )}
                     >
                       <div>
@@ -1018,7 +1018,7 @@ export function ModelSelectorPopover({
               <Link
                 href="/router"
                 onClick={onClose}
-                className="inline-flex items-center gap-0.5 text-[#8a8f98] hover:text-[#f7f8f8] transition-colors"
+                className="inline-flex items-center gap-0.5 text-[#a3a3a3] hover:text-[#fafafa] transition-colors"
               >
                 <span>Orthese Router</span>
                 <ChevronRight className="h-3 w-3" />

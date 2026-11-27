@@ -248,7 +248,7 @@ export function DownloadDesktopButton() {
       {/* Split pill button: OS-aware direct download + platform dropdown toggle */}
       <div
         className={cn(
-          "inline-flex h-9 items-stretch rounded-full border bg-[#121419]/95 text-[#f7f8f8] shadow-[inset_0_1px_0_rgba(255,255,255,0.09),0_4px_18px_rgba(0,0,0,0.45)] transition-colors",
+          "inline-flex h-9 items-stretch rounded-full border bg-[#1f1f1f]/95 text-[#fafafa] shadow-[inset_0_1px_0_rgba(255,255,255,0.09),0_4px_18px_rgba(0,0,0,0.45)] transition-colors",
           open ? "border-white/[0.24]" : "border-white/[0.13] hover:border-white/[0.2]"
         )}
       >
@@ -256,9 +256,9 @@ export function DownloadDesktopButton() {
           type="button"
           data-testid="download-desktop-primary"
           onClick={handlePrimaryClick}
-          className="inline-flex items-center gap-2 rounded-l-full pl-4 pr-3.5 text-[13px] font-medium text-[#e5e7eb] hover:bg-white/[0.06] hover:text-white transition-colors cursor-pointer whitespace-nowrap"
+          className="inline-flex items-center gap-2 rounded-l-full pl-4 pr-3.5 text-[13px] font-medium text-[#e5e5e5] hover:bg-white/[0.06] hover:text-white transition-colors cursor-pointer whitespace-nowrap"
         >
-          <Download className="h-3.5 w-3.5 text-[#8a8f98]" />
+          <Download className="h-3.5 w-3.5 text-[#a3a3a3]" />
           <span>{detected.buttonLabel}</span>
         </button>
 
@@ -271,12 +271,12 @@ export function DownloadDesktopButton() {
           aria-haspopup="menu"
           aria-expanded={open}
           aria-label="Choose desktop platform"
-          className="inline-flex w-9 items-center justify-center rounded-r-full text-[#9ba1ab] hover:bg-white/[0.06] hover:text-white transition-colors cursor-pointer"
+          className="inline-flex w-9 items-center justify-center rounded-r-full text-[#a3a3a3] hover:bg-white/[0.06] hover:text-white transition-colors cursor-pointer"
         >
           <ChevronDown
             className={cn(
               "h-3.5 w-3.5 transition-transform duration-150",
-              open && "rotate-180 text-[#f7f8f8]"
+              open && "rotate-180 text-[#fafafa]"
             )}
           />
         </button>
@@ -289,14 +289,14 @@ export function DownloadDesktopButton() {
           data-testid="download-desktop-menu"
           aria-label="Download Orthese Desktop"
           className={cn(
-            "absolute left-1/2 z-40 w-[232px] -translate-x-1/2 overflow-hidden rounded-xl border border-white/[0.13] bg-[#121318]/98 text-left shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl sm:left-0 sm:translate-x-0",
+            "absolute left-1/2 z-40 w-[232px] -translate-x-1/2 overflow-hidden rounded-xl border border-white/[0.13] bg-[#1f1f1f]/98 text-left shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl sm:left-0 sm:translate-x-0",
             openUpward ? "bottom-full mb-2" : "top-full mt-2"
           )}
         >
           <div className="divide-y divide-white/[0.08]">
             {DOWNLOAD_GROUPS.map((group) => (
               <div key={group.family} className="py-1.5">
-                <div className="px-3.5 pb-0.5 text-[11px] font-medium tracking-[-0.01em] text-[#f7f8f8]">
+                <div className="px-3.5 pb-0.5 text-[11px] font-medium tracking-[-0.01em] text-[#fafafa]">
                   {group.heading}
                 </div>
                 <div className="px-1.5">
@@ -311,7 +311,7 @@ export function DownloadDesktopButton() {
                         onClick={() => triggerDownload(opt)}
                         className="flex w-full items-center justify-between gap-2 rounded-lg px-2 py-[3px] text-left transition-colors hover:bg-white/[0.07] cursor-pointer group"
                       >
-                        <span className="flex items-center gap-2 text-[12.5px] text-[#a1a6b0] group-hover:text-[#f7f8f8]">
+                        <span className="flex items-center gap-2 text-[12.5px] text-[#a1a6b0] group-hover:text-[#fafafa]">
                           <span>{opt.label}</span>
                           {isDetected && (
                             <span
@@ -320,7 +320,7 @@ export function DownloadDesktopButton() {
                             />
                           )}
                         </span>
-                        <span className="text-[11px] text-[#5e626a] group-hover:text-[#8a8f98]">
+                        <span className="text-[11px] text-[#737373] group-hover:text-[#a3a3a3]">
                           {opt.archHint}
                         </span>
                       </button>

@@ -1,14 +1,22 @@
 @import "tailwindcss";
 
-:root {
-  --canvas: #08090a;
-  --surface: #0f1012;
-  --surface-elevated: #141518;
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-hairline: rgba(255, 255, 255, 0.08);
-  --ink-primary: #f7f8f8;
-  --ink-secondary: #8a8f98;
-  --ink-tertiary: #5e626a;
+/* BoardUI Dark Mode semantic token layer (MIT color architecture) */
+:root,
+.dark {
+  --color-neutral-925: #121212;
+  --color-accent-400: #3392ff;
+  --color-accent-500: #2b7fff;
+  --color-accent-600: #155dfc;
+
+  --canvas: #121212;            /* BoardUI background/full (neutral-925) */
+  --surface: #171717;           /* BoardUI background/secondary (neutral-900) */
+  --surface-elevated: #262626;  /* BoardUI background/primary (neutral-800) */
+  --border-subtle: #262626;     /* BoardUI separator/border (neutral-800) */
+  --border-hairline: #333333;   /* Control border */
+  --border-strong: #404040;     /* BoardUI border/button/default (neutral-700) */
+  --ink-primary: #fafafa;       /* BoardUI text/primary (neutral-50) */
+  --ink-secondary: #a3a3a3;     /* BoardUI text/secondary (neutral-400) */
+  --ink-tertiary: #737373;      /* BoardUI text/tertiary (neutral-500) */
 }
 
 @layer base {
@@ -40,26 +48,26 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Signature Linear-style Smoky-Silver Metallic Hero Backdrop Stage */
+/* Signature Smoky-Silver Metallic Backdrop Stage */
 .linear-hero-stage {
   position: relative;
   background:
     radial-gradient(
       90% 85% at 50% 0%,
-      rgba(8, 9, 10, 0.92) 0%,
-      rgba(8, 9, 10, 0.35) 38%,
-      rgba(8, 9, 10, 0.0) 72%
+      rgba(18, 18, 18, 0.92) 0%,
+      rgba(18, 18, 18, 0.35) 38%,
+      rgba(18, 18, 18, 0.0) 72%
     ),
     radial-gradient(
       75% 65% at 50% 85%,
-      rgba(166, 174, 186, 0.28) 0%,
-      rgba(106, 112, 122, 0.12) 45%,
+      rgba(163, 163, 163, 0.18) 0%,
+      rgba(115, 115, 115, 0.08) 45%,
       transparent 78%
     ),
-    linear-gradient(180deg, #16181d 0%, #3a3f47 65%, #6a707a 100%);
+    linear-gradient(180deg, #171717 0%, #262626 65%, #404040 100%);
 }
 
-/* Organic bottom fade into #08090A so dark UI stages dissolve seamlessly */
+/* Organic bottom fade into #121212 so dark UI stages dissolve seamlessly */
 .mask-fade-bottom {
   -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
   mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
@@ -75,39 +83,39 @@
   mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
 }
 
-/* Elevated dark obsidian UI stage frame with top-edge specular highlight */
+/* BoardUI Dark Mode elevated neutral stage frame */
 .stage-surface {
-  background: linear-gradient(180deg, #111215 0%, #0b0c0e 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, #1a1a1a 0%, #171717 100%);
+  border: 1px solid #262626;
   box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
-    0 24px 64px -20px rgba(0, 0, 0, 0.85);
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+    0 18px 48px -18px rgba(0, 0, 0, 0.55);
 }
 
-/* High-contrast Linear-style white pill button */
+/* High-contrast BoardUI light pill CTA on dark surfaces */
 .btn-pill-white {
-  background: #f7f8f8;
-  color: #08090a;
+  background: #fafafa;
+  color: #121212;
   box-shadow:
     inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
-    0 1px 2px rgba(0, 0, 0, 0.5);
+    0 1px 2px rgba(0, 0, 0, 0.25);
   transition: opacity 140ms ease, transform 140ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .btn-pill-white:hover {
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
 .btn-pill-white:active {
   transform: scale(0.98);
 }
 
-/* Dark hairline pill button */
+/* BoardUI neutral secondary dark pill button */
 .btn-pill-dark {
-  background: rgba(255, 255, 255, 0.04);
-  color: #f7f8f8;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  background: #262626;
+  color: #fafafa;
+  border: 1px solid #404040;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
   transition:
     background-color 150ms ease,
     border-color 150ms ease,
@@ -115,8 +123,8 @@
 }
 
 .btn-pill-dark:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: #303030;
+  border-color: #525252;
 }
 
 .btn-pill-dark:active {
@@ -282,16 +290,15 @@
   }
 }
 
+/* Default BoardUI Dark Mode working rim (clean silver-blue sweep); prismatic reserved for --pro */
 .composer-rim-beam {
   --composer-rim-angle: 0deg;
   background: conic-gradient(
     from var(--composer-rim-angle),
     transparent 0deg,
-    transparent 230deg,
-    rgba(129, 140, 248, 0.55) 268deg,
-    rgba(56, 189, 248, 0.92) 304deg,
-    rgba(240, 171, 252, 0.95) 334deg,
-    rgba(255, 255, 255, 0.98) 352deg,
+    transparent 240deg,
+    rgba(51, 146, 255, 0.45) 285deg,
+    rgba(255, 255, 255, 0.85) 338deg,
     transparent 360deg
   );
   animation: composer-rim-orbit 2.4s linear infinite;
@@ -302,14 +309,27 @@
   background: conic-gradient(
     from var(--composer-rim-angle),
     transparent 0deg,
-    transparent 220deg,
-    rgba(129, 140, 248, 0.22) 270deg,
-    rgba(56, 189, 248, 0.32) 310deg,
-    rgba(240, 171, 252, 0.28) 345deg,
+    transparent 230deg,
+    rgba(51, 146, 255, 0.18) 295deg,
+    rgba(255, 255, 255, 0.16) 340deg,
     transparent 360deg
   );
-  filter: blur(22px);
+  filter: blur(20px);
   animation: composer-rim-orbit 2.4s linear infinite;
+}
+
+/* Reserved for future Orthese Pro subscription themes */
+.composer-rim-beam--pro {
+  background: conic-gradient(
+    from var(--composer-rim-angle),
+    transparent 0deg,
+    transparent 230deg,
+    rgba(129, 140, 248, 0.55) 268deg,
+    rgba(56, 189, 248, 0.92) 304deg,
+    rgba(240, 171, 252, 0.95) 334deg,
+    rgba(255, 255, 255, 0.98) 352deg,
+    transparent 360deg
+  );
 }
 
 @keyframes mic-wave {
@@ -329,15 +349,25 @@
 /* Subtle architectural grid veil masked radially behind the Hero */
 .hero-grid-veil {
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.032) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.032) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 40px 40px;
   -webkit-mask-image: radial-gradient(ellipse 64% 54% at 50% 44%, black 15%, transparent 74%);
   mask-image: radial-gradient(ellipse 64% 54% at 50% 44%, black 15%, transparent 74%);
 }
 
-/* Soft prismatic ambient mist tethered behind the Hero Composer Panel */
+/* Quiet neutral ambient mist behind the Hero Composer Panel (prismatic reserved for Pro) */
 .hero-composer-aura {
+  background: radial-gradient(
+    ellipse 76% 70% at 50% 50%,
+    rgba(255, 255, 255, 0.045) 0%,
+    rgba(255, 255, 255, 0.015) 48%,
+    transparent 80%
+  );
+  filter: blur(42px);
+}
+
+.hero-composer-aura--pro {
   background: radial-gradient(
     ellipse 78% 72% at 50% 50%,
     rgba(129, 140, 248, 0.14) 0%,

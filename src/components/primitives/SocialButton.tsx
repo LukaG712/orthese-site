@@ -50,7 +50,7 @@ const BRAND_META: Record<
   apple: {
     label: "Apple",
     colorfulClass:
-      "bg-[#f7f8f8] border-white/20 text-[#08090a] hover:bg-white",
+      "bg-[#fafafa] border-white/20 text-[#121212] hover:bg-white",
   },
   discord: {
     label: "Discord",
@@ -65,7 +65,7 @@ const BRAND_META: Record<
   x: {
     label: "X",
     colorfulClass:
-      "bg-[#0f1014] border-white/[0.16] text-white hover:bg-[#1a1c22]",
+      "bg-[#171717] border-white/[0.16] text-white hover:bg-[#1a1c22]",
   },
 };
 
@@ -163,11 +163,11 @@ export function SocialButton({
   const appearanceClass =
     appearance === "colorful"
       ? brand === "custom"
-        ? customConfig?.accentBg ?? "bg-white/[0.08] border-white/[0.15] text-[#f7f8f8] hover:bg-white/[0.12]"
+        ? customConfig?.accentBg ?? "bg-white/[0.08] border-white/[0.15] text-[#fafafa] hover:bg-white/[0.12]"
         : BRAND_META[brand].colorfulClass
       : appearance === "solid"
-        ? "bg-[#f7f8f8] border-white/25 text-[#08090a] hover:bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]"
-        : "bg-[#15171d] border-white/[0.12] text-[#f7f8f8] hover:bg-[#1c1f27] hover:border-white/[0.2] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]";
+        ? "bg-[#fafafa] border-white/25 text-[#121212] hover:bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]"
+        : "bg-[#262626] border-white/[0.12] text-[#fafafa] hover:bg-[#2e2e2e] hover:border-white/[0.2] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]";
 
   const sizeClass = iconOnly
     ? size === "sm"

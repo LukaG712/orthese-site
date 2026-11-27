@@ -27,7 +27,7 @@ const STATUS_COLORS: Record<AvatarStatus, string> = {
   online: "bg-emerald-400",
   busy: "bg-rose-400",
   away: "bg-amber-400",
-  offline: "bg-[#5e626a]",
+  offline: "bg-[#737373]",
 };
 
 const AVATAR_TONES = [
@@ -79,7 +79,7 @@ export function Avatar({
         className={cn(
           "relative flex h-full w-full items-center justify-center overflow-hidden border bg-gradient-to-br font-medium tracking-[-0.02em]",
           radiusClass,
-          showImg ? "border-white/[0.14] bg-[#14161c]" : pickTone(name),
+          showImg ? "border-white/[0.14] bg-[#262626]" : pickTone(name),
           sz.text
         )}
       >
@@ -112,7 +112,7 @@ export function Avatar({
         <span
           aria-label={`Status: ${status}`}
           className={cn(
-            "absolute -bottom-0.5 -right-0.5 rounded-full ring-2 ring-[#08090a]",
+            "absolute -bottom-0.5 -right-0.5 rounded-full ring-2 ring-[#121212]",
             sz.dot,
             STATUS_COLORS[status]
           )}

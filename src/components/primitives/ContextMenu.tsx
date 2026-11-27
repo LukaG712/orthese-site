@@ -139,7 +139,7 @@ function SubmenuPanel({
       data-orthese-ctx-submenu="true"
       aria-label={submenu.label}
       style={{ left: pos.left, top: pos.top }}
-      className="fixed z-[110] min-w-[188px] rounded-xl border border-white/[0.13] bg-[#13151b]/98 p-1 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
+      className="fixed z-[110] min-w-[188px] rounded-xl border border-white/[0.13] bg-[#242424]/98 p-1 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
     >
       {submenu.items.map((entry, idx) => {
         if (entry.type === "separator") {
@@ -167,10 +167,10 @@ function SubmenuPanel({
             className={cn(
               "flex w-full items-center justify-between gap-3 rounded-lg px-2.5 py-1.5 text-left text-[12.5px] transition-colors",
               entry.disabled
-                ? "cursor-not-allowed opacity-40 text-[#8a8f98]"
+                ? "cursor-not-allowed opacity-40 text-[#a3a3a3]"
                 : entry.variant === "danger"
                   ? "cursor-pointer text-rose-300 hover:bg-rose-500/15 hover:text-rose-200"
-                  : "cursor-pointer text-[#d4d6dc] hover:bg-white/[0.08] hover:text-[#f7f8f8]"
+                  : "cursor-pointer text-[#d4d4d4] hover:bg-white/[0.08] hover:text-[#fafafa]"
             )}
           >
             <span className="flex items-center gap-2 min-w-0">
@@ -178,7 +178,7 @@ function SubmenuPanel({
               <span className="truncate">{entry.label}</span>
             </span>
             {entry.shortcut && (
-              <span className="shrink-0 font-mono text-[10.5px] text-[#5e626a]">
+              <span className="shrink-0 font-mono text-[10.5px] text-[#737373]">
                 {entry.shortcut}
               </span>
             )}
@@ -374,15 +374,15 @@ export function ContextMenuTrigger({
         className={cn(
           "flex w-full items-center justify-between gap-3 rounded-lg px-2.5 py-1.5 text-left text-[12.5px] transition-colors",
           item.disabled
-            ? "cursor-not-allowed opacity-40 text-[#8a8f98]"
+            ? "cursor-not-allowed opacity-40 text-[#a3a3a3]"
             : item.variant === "danger"
               ? cn(
                   "cursor-pointer text-rose-300",
                   isActive ? "bg-rose-500/15 text-rose-200" : "hover:bg-rose-500/15 hover:text-rose-200"
                 )
               : cn(
-                  "cursor-pointer text-[#d4d6dc]",
-                  isActive ? "bg-white/[0.08] text-[#f7f8f8]" : "hover:bg-white/[0.08] hover:text-[#f7f8f8]"
+                  "cursor-pointer text-[#d4d4d4]",
+                  isActive ? "bg-white/[0.08] text-[#fafafa]" : "hover:bg-white/[0.08] hover:text-[#fafafa]"
                 )
         )}
       >
@@ -397,7 +397,7 @@ export function ContextMenuTrigger({
           <span className="truncate">{item.label}</span>
         </span>
         {item.shortcut && (
-          <span className="shrink-0 font-mono text-[10.5px] text-[#5e626a]">
+          <span className="shrink-0 font-mono text-[10.5px] text-[#737373]">
             {item.shortcut}
           </span>
         )}
@@ -426,7 +426,7 @@ export function ContextMenuTrigger({
             data-testid="orthese-context-menu"
             aria-label={ariaLabel}
             style={{ left: clampedPos.x, top: clampedPos.y }}
-            className="fixed z-[100] min-w-[216px] rounded-xl border border-white/[0.13] bg-[#12141a]/98 p-1 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
+            className="fixed z-[100] min-w-[216px] rounded-xl border border-white/[0.13] bg-[#1f1f1f]/98 p-1 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
           >
             {entries.map((entry, idx) => {
               if (entry.type === "separator") {
@@ -442,7 +442,7 @@ export function ContextMenuTrigger({
                 return (
                   <div key={entry.id} role="group" aria-label={entry.title}>
                     {entry.title && (
-                      <div className="px-2.5 pb-1 pt-1 text-[10.5px] font-medium text-[#6e737d]">
+                      <div className="px-2.5 pb-1 pt-1 text-[10.5px] font-medium text-[#737373]">
                         {entry.title}
                       </div>
                     )}
@@ -481,12 +481,12 @@ export function ContextMenuTrigger({
                     className={cn(
                       "flex w-full items-center justify-between gap-3 rounded-lg px-2.5 py-1.5 text-left text-[12.5px] transition-colors",
                       entry.disabled
-                        ? "cursor-not-allowed opacity-40 text-[#8a8f98]"
+                        ? "cursor-not-allowed opacity-40 text-[#a3a3a3]"
                         : cn(
-                            "cursor-pointer text-[#d4d6dc]",
+                            "cursor-pointer text-[#d4d4d4]",
                             isActive
-                              ? "bg-white/[0.08] text-[#f7f8f8]"
-                              : "hover:bg-white/[0.08] hover:text-[#f7f8f8]"
+                              ? "bg-white/[0.08] text-[#fafafa]"
+                              : "hover:bg-white/[0.08] hover:text-[#fafafa]"
                           )
                     )}
                   >
@@ -494,7 +494,7 @@ export function ContextMenuTrigger({
                       {Icon && <Icon className="h-3.5 w-3.5 shrink-0 opacity-75" />}
                       <span className="truncate">{entry.label}</span>
                     </span>
-                    <ChevronRight className="h-3.5 w-3.5 shrink-0 text-[#5e626a]" />
+                    <ChevronRight className="h-3.5 w-3.5 shrink-0 text-[#737373]" />
                   </button>
                 );
               }

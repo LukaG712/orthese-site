@@ -75,7 +75,7 @@ export function AgentLimitsCard({
     <div
       data-testid="agent-limits-card"
       className={cn(
-        "rounded-xl border border-white/[0.09] bg-[#0c0d11]/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_18px_48px_-20px_rgba(0,0,0,0.85)] overflow-hidden",
+        "rounded-xl border border-white/[0.09] bg-[#171717]/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_18px_48px_-20px_rgba(0,0,0,0.85)] overflow-hidden",
         className
       )}
     >
@@ -88,18 +88,18 @@ export function AgentLimitsCard({
           aria-expanded={expanded}
           className="group flex w-full items-center justify-between gap-3 text-left cursor-pointer"
         >
-          <span className="flex items-center gap-1.5 text-[13px] font-medium text-[#f7f8f8]">
+          <span className="flex items-center gap-1.5 text-[13px] font-medium text-[#fafafa]">
             <span>Context window</span>
             <ChevronDown
               className={cn(
-                "h-3.5 w-3.5 text-[#6e737d] transition-transform duration-200 group-hover:text-[#f7f8f8]",
-                expanded && "rotate-180 text-[#f7f8f8]"
+                "h-3.5 w-3.5 text-[#737373] transition-transform duration-200 group-hover:text-[#fafafa]",
+                expanded && "rotate-180 text-[#fafafa]"
               )}
             />
           </span>
-          <span className="font-mono text-[12px] tabular-nums text-[#8a8f98]">
-            <span className="text-[#f7f8f8]">{formatTokens(usedTokens)}</span>
-            <span className="mx-1 text-[#5e626a]">/</span>
+          <span className="font-mono text-[12px] tabular-nums text-[#a3a3a3]">
+            <span className="text-[#fafafa]">{formatTokens(usedTokens)}</span>
+            <span className="mx-1 text-[#737373]">/</span>
             <span>{formatTokens(context.max)}</span>
             <span className="ml-1.5 text-[#a1a6b0]">({usedPct}%)</span>
           </span>
@@ -146,7 +146,7 @@ export function AgentLimitsCard({
                       key={seg.label}
                       className="flex items-center justify-between gap-2 text-[12px]"
                     >
-                      <span className="flex items-center gap-2 text-[#c4c8d0] min-w-0">
+                      <span className="flex items-center gap-2 text-[#d4d4d4] min-w-0">
                         <span
                           className="h-2 w-2 shrink-0 rounded-full"
                           style={{ backgroundColor: seg.color }}
@@ -154,8 +154,8 @@ export function AgentLimitsCard({
                         <span className="truncate">{seg.label}</span>
                       </span>
                       <span className="flex items-center gap-3 shrink-0 font-mono text-[11.5px] tabular-nums">
-                        <span className="text-[#f7f8f8]">{formatTokens(seg.tokens)}</span>
-                        <span className="w-11 text-right text-[#6e737d]">{pct}%</span>
+                        <span className="text-[#fafafa]">{formatTokens(seg.tokens)}</span>
+                        <span className="w-11 text-right text-[#737373]">{pct}%</span>
                       </span>
                     </div>
                   );
@@ -164,7 +164,7 @@ export function AgentLimitsCard({
                 {deferredSegments.map((seg) => (
                   <div
                     key={seg.label}
-                    className="flex items-center justify-between gap-2 text-[12px] text-[#6e737d]"
+                    className="flex items-center justify-between gap-2 text-[12px] text-[#737373]"
                   >
                     <span className="flex items-center gap-2 min-w-0">
                       <span className="h-2 w-2 shrink-0 rounded-full border border-white/20 bg-transparent" />
@@ -178,13 +178,13 @@ export function AgentLimitsCard({
                 ))}
 
                 <div className="flex items-center justify-between gap-2 pt-1 text-[12px]">
-                  <span className="flex items-center gap-2 text-[#8a8f98]">
+                  <span className="flex items-center gap-2 text-[#a3a3a3]">
                     <span className="h-2 w-2 shrink-0 rounded-full bg-white/[0.12]" />
                     <span>Free space</span>
                   </span>
                   <span className="flex items-center gap-3 shrink-0 font-mono text-[11.5px] tabular-nums">
-                    <span className="text-[#c4c8d0]">{formatTokens(freeTokens)}</span>
-                    <span className="w-11 text-right text-[#6e737d]">
+                    <span className="text-[#d4d4d4]">{formatTokens(freeTokens)}</span>
+                    <span className="w-11 text-right text-[#737373]">
                       {((freeTokens / context.max) * 100).toFixed(1)}%
                     </span>
                   </span>
@@ -202,19 +202,19 @@ export function AgentLimitsCard({
                           type="button"
                           onClick={() => toggleGroup(group.label)}
                           aria-expanded={isOpen}
-                          className="flex w-full items-center justify-between gap-2 rounded-md px-1.5 py-1 text-[12px] text-[#c4c8d0] hover:bg-white/[0.04] hover:text-[#f7f8f8] transition-colors cursor-pointer"
+                          className="flex w-full items-center justify-between gap-2 rounded-md px-1.5 py-1 text-[12px] text-[#d4d4d4] hover:bg-white/[0.04] hover:text-[#fafafa] transition-colors cursor-pointer"
                         >
                           <span className="flex items-center gap-1.5">
                             <ChevronRight
                               className={cn(
-                                "h-3 w-3 text-[#6e737d] transition-transform duration-150",
-                                isOpen && "rotate-90 text-[#f7f8f8]"
+                                "h-3 w-3 text-[#737373] transition-transform duration-150",
+                                isOpen && "rotate-90 text-[#fafafa]"
                               )}
                             />
                             <span>{group.label}</span>
                           </span>
                           <span className="flex items-center gap-2 font-mono text-[11px] tabular-nums">
-                            <span className="text-[#8a8f98]">{formatTokens(group.tokens)}</span>
+                            <span className="text-[#a3a3a3]">{formatTokens(group.tokens)}</span>
                             <span className="rounded bg-white/[0.06] px-1.5 py-0.5 text-[10px] text-[#a1a6b0]">
                               {group.items.length}
                             </span>
@@ -228,10 +228,10 @@ export function AgentLimitsCard({
                                 key={member.label}
                                 className="flex items-center justify-between gap-2 text-[11.5px]"
                               >
-                                <span className="truncate font-mono text-[#8a8f98]">
+                                <span className="truncate font-mono text-[#a3a3a3]">
                                   {member.label}
                                 </span>
-                                <span className="font-mono text-[11px] tabular-nums text-[#6e737d]">
+                                <span className="font-mono text-[11px] tabular-nums text-[#737373]">
                                   {formatTokens(member.tokens)}
                                 </span>
                               </div>
@@ -249,19 +249,19 @@ export function AgentLimitsCard({
       </div>
 
       {/* Plan Usage Limits Section */}
-      <div className="border-t border-white/[0.07] bg-[#0a0b0e]/80 p-4 sm:p-5">
+      <div className="border-t border-white/[0.07] bg-[#171717]/80 p-4 sm:p-5">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-[12px] font-medium text-[#c4c8d0]">
+          <span className="text-[12px] font-medium text-[#d4d4d4]">
             Plan usage limits ·{" "}
             {planHref ? (
               <Link
                 href={planHref}
-                className="text-[#f7f8f8] underline decoration-white/25 underline-offset-2 hover:decoration-white/70 transition-colors"
+                className="text-[#fafafa] underline decoration-white/25 underline-offset-2 hover:decoration-white/70 transition-colors"
               >
                 {plan}
               </Link>
             ) : (
-              <span className="text-[#f7f8f8]">{plan}</span>
+              <span className="text-[#fafafa]">{plan}</span>
             )}
           </span>
         </div>
@@ -272,10 +272,10 @@ export function AgentLimitsCard({
             return (
               <div key={lim.label} className="space-y-1.5">
                 <div className="flex items-baseline justify-between gap-2 text-[12px]">
-                  <span className="text-[#f7f8f8]">{lim.label}</span>
+                  <span className="text-[#fafafa]">{lim.label}</span>
                   <div className="flex items-baseline gap-2.5 shrink-0">
-                    <span className="text-[11px] text-[#6e737d]">{lim.resets}</span>
-                    <span className="w-8 text-right font-mono text-[11.5px] tabular-nums text-[#c4c8d0]">
+                    <span className="text-[11px] text-[#737373]">{lim.resets}</span>
+                    <span className="w-8 text-right font-mono text-[11.5px] tabular-nums text-[#d4d4d4]">
                       {pct}%
                     </span>
                   </div>
@@ -291,7 +291,7 @@ export function AgentLimitsCard({
                         ? "bg-amber-400"
                         : pct >= 45
                           ? "bg-[#818cf8]"
-                          : "bg-[#f7f8f8]/80"
+                          : "bg-[#fafafa]/80"
                     )}
                   />
                 </div>

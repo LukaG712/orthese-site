@@ -236,7 +236,7 @@ function buildRunResult(
     piece: "orthese.website-builder",
     contextType: "orthese/html-bundle",
     summary:
-      "Drafted an obsidian #08090A layout bundle with hairline surfaces, tabular counters, and instant zero-install WASM preview.",
+      "Drafted an obsidian #121212 layout bundle with hairline surfaces, tabular counters, and instant zero-install WASM preview.",
     modelLabel: isAuto ? "GPT-6.2 Sol" : model.fullName,
     routedByAuto: isAuto,
     permissionLabel: perm.label,
@@ -432,10 +432,10 @@ export function HeroComposerPanel() {
         {/* Core Two-Row Composer Panel Surface */}
         <div
           className={cn(
-            "relative rounded-[20.5px] border bg-[#111216]/95 backdrop-blur-xl transition-all duration-300",
+            "relative rounded-[20.5px] border bg-[#1f1f1f]/95 backdrop-blur-xl transition-all duration-300",
             isWorking
               ? "border-white/[0.18] shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_32px_90px_-20px_rgba(0,0,0,0.95)]"
-              : "border-white/[0.12] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_30px_84px_-22px_rgba(0,0,0,0.92),0_0_0_1px_rgba(255,255,255,0.03)] hover:border-white/[0.17] focus-within:border-white/[0.22] focus-within:shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_32px_96px_-20px_rgba(0,0,0,0.96),0_0_0_1px_rgba(129,140,248,0.18)]"
+              : "border-white/[0.12] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_30px_84px_-22px_rgba(0,0,0,0.92),0_0_0_1px_rgba(255,255,255,0.03)] hover:border-white/[0.17] focus-within:border-white/[0.22] focus-within:shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_32px_96px_-20px_rgba(0,0,0,0.96),0_0_0_1px_rgba(51,146,255,0.22)]"
           )}
         >
           {/* Sequential 56px Attachment Tiles Strip (6 kinds + right-click ContextMenu) */}
@@ -507,8 +507,8 @@ export function HeroComposerPanel() {
                   className={cn(
                     "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors cursor-pointer",
                     openMenu === "add"
-                      ? "border-white/25 bg-white/[0.12] text-[#f7f8f8]"
-                      : "border-white/[0.09] bg-white/[0.04] text-[#c4c8d0] hover:border-white/[0.18] hover:bg-white/[0.08] hover:text-white"
+                      ? "border-white/25 bg-white/[0.12] text-[#fafafa]"
+                      : "border-white/[0.09] bg-white/[0.04] text-[#d4d4d4] hover:border-white/[0.18] hover:bg-white/[0.08] hover:text-white"
                   )}
                 >
                   <Plus className="h-4 w-4" />
@@ -517,24 +517,24 @@ export function HeroComposerPanel() {
                 {openMenu === "add" && (
                   <div
                     data-testid="composer-add-menu"
-                    className="absolute left-2 right-2 top-full mt-2 sm:left-0 sm:right-auto sm:top-10 sm:mt-0 sm:w-64 z-30 rounded-xl border border-white/[0.12] bg-[#121419]/98 backdrop-blur-xl p-1.5 shadow-2xl"
+                    className="absolute left-2 right-2 top-full mt-2 sm:left-0 sm:right-auto sm:top-10 sm:mt-0 sm:w-64 z-30 rounded-xl border border-white/[0.12] bg-[#1f1f1f]/98 backdrop-blur-xl p-1.5 shadow-2xl"
                   >
-                    <div className="flex items-center justify-between px-2.5 py-1 text-[11px] font-medium text-[#6e737d]">
+                    <div className="flex items-center justify-between px-2.5 py-1 text-[11px] font-medium text-[#737373]">
                       <span>Attach context</span>
-                      <span className="text-[10px] text-[#5e626a]">Right-click tiles</span>
+                      <span className="text-[10px] text-[#737373]">Right-click tiles</span>
                     </div>
 
                     <button
                       type="button"
                       data-testid="attach-batch-3"
                       onClick={queueDemoBatch}
-                      className="flex w-full items-center justify-between gap-2 rounded-lg bg-white/[0.04] px-2.5 py-1.5 text-left text-[12.5px] font-medium text-[#f7f8f8] hover:bg-white/[0.09] transition-colors cursor-pointer mb-1"
+                      className="flex w-full items-center justify-between gap-2 rounded-lg bg-white/[0.04] px-2.5 py-1.5 text-left text-[12.5px] font-medium text-[#fafafa] hover:bg-white/[0.09] transition-colors cursor-pointer mb-1"
                     >
                       <span className="flex items-center gap-2">
                         <Layers className="h-3.5 w-3.5 text-[#818cf8]" />
                         <span>Attach 3 files (queue)</span>
                       </span>
-                      <span className="text-[10.5px] text-[#8a8f98]">Demo</span>
+                      <span className="text-[10.5px] text-[#a3a3a3]">Demo</span>
                     </button>
 
                     {SAMPLE_ATTACHMENTS.map((sample) => (
@@ -548,7 +548,7 @@ export function HeroComposerPanel() {
                             sizeLabel: sample.sizeLabel,
                           })
                         }
-                        className="flex w-full items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-left text-[12.5px] text-[#d4d6dc] hover:bg-white/[0.06] hover:text-white transition-colors cursor-pointer"
+                        className="flex w-full items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-left text-[12.5px] text-[#d4d4d4] hover:bg-white/[0.06] hover:text-white transition-colors cursor-pointer"
                       >
                         <span className="flex items-center gap-2.5 min-w-0">
                           {sample.kind === "code" ? (
@@ -566,7 +566,7 @@ export function HeroComposerPanel() {
                           )}
                           <span className="truncate">{sample.label}</span>
                         </span>
-                        <span className="shrink-0 text-[10.5px] text-[#5e626a]">
+                        <span className="shrink-0 text-[10.5px] text-[#737373]">
                           {sample.kind}
                         </span>
                       </button>
@@ -575,9 +575,9 @@ export function HeroComposerPanel() {
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-left text-[12.5px] text-[#d4d6dc] hover:bg-white/[0.06] hover:text-white transition-colors cursor-pointer"
+                      className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-left text-[12.5px] text-[#d4d4d4] hover:bg-white/[0.06] hover:text-white transition-colors cursor-pointer"
                     >
-                      <Paperclip className="h-3.5 w-3.5 text-[#8a8f98]" />
+                      <Paperclip className="h-3.5 w-3.5 text-[#a3a3a3]" />
                       <span>Upload from computer…</span>
                     </button>
                   </div>
@@ -595,12 +595,12 @@ export function HeroComposerPanel() {
                   className={cn(
                     "inline-flex h-8 shrink-0 items-center gap-1.5 rounded-full border px-2 sm:px-3 text-[12px] font-medium transition-colors cursor-pointer",
                     openMenu === "permission"
-                      ? "border-white/25 bg-white/[0.1] text-[#f7f8f8]"
-                      : "border-white/[0.08] bg-white/[0.03] text-[#c4c8d0] hover:border-white/[0.16] hover:bg-white/[0.06] hover:text-[#f7f8f8]"
+                      ? "border-white/25 bg-white/[0.1] text-[#fafafa]"
+                      : "border-white/[0.08] bg-white/[0.03] text-[#d4d4d4] hover:border-white/[0.16] hover:bg-white/[0.06] hover:text-[#fafafa]"
                   )}
                 >
                   <span className={cn("h-1.5 w-1.5 shrink-0 rounded-full", activePerm.dotClass)} />
-                  <PermIcon className="hidden sm:block h-3.5 w-3.5 shrink-0 text-[#8a8f98]" />
+                  <PermIcon className="hidden sm:block h-3.5 w-3.5 shrink-0 text-[#a3a3a3]" />
                   <span className="hidden sm:inline">{activePerm.shortLabel}</span>
                   <span className="sm:hidden">
                     {activePerm.id === "standard"
@@ -609,15 +609,15 @@ export function HeroComposerPanel() {
                         ? "Ask"
                         : "Auto"}
                   </span>
-                  <ChevronDown className="h-3 w-3 shrink-0 text-[#5e626a]" />
+                  <ChevronDown className="h-3 w-3 shrink-0 text-[#737373]" />
                 </button>
 
                 {openMenu === "permission" && (
                   <div
                     data-testid="composer-permission-menu"
-                    className="absolute left-2 right-2 top-full mt-2 sm:left-0 sm:right-auto sm:top-10 sm:mt-0 sm:w-72 z-30 rounded-xl border border-white/[0.12] bg-[#121419] p-1.5 shadow-2xl"
+                    className="absolute left-2 right-2 top-full mt-2 sm:left-0 sm:right-auto sm:top-10 sm:mt-0 sm:w-72 z-30 rounded-xl border border-white/[0.12] bg-[#1f1f1f] p-1.5 shadow-2xl"
                   >
-                    <div className="px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#5e626a]">
+                    <div className="px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#737373]">
                       Piece Permission Mode
                     </div>
                     {PERMISSION_MODES.map((mode) => {
@@ -637,17 +637,17 @@ export function HeroComposerPanel() {
                           )}
                         >
                           <div className="min-w-0">
-                            <div className="flex items-center gap-2 text-[12.5px] font-medium text-[#f7f8f8]">
+                            <div className="flex items-center gap-2 text-[12.5px] font-medium text-[#fafafa]">
                               <span
                                 className={cn("h-1.5 w-1.5 rounded-full", mode.dotClass)}
                               />
                               <span>{mode.label}</span>
                             </div>
-                            <p className="mt-0.5 text-[11px] leading-snug text-[#8a8f98]">
+                            <p className="mt-0.5 text-[11px] leading-snug text-[#a3a3a3]">
                               {mode.description}
                             </p>
                           </div>
-                          {active && <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#f7f8f8]" />}
+                          {active && <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#fafafa]" />}
                         </button>
                       );
                     })}
@@ -682,7 +682,7 @@ export function HeroComposerPanel() {
                   "flex h-8 shrink-0 items-center justify-center rounded-full border transition-all cursor-pointer",
                   isRecording
                     ? "gap-0.5 border-[#818cf8]/50 bg-[#818cf8]/15 px-2.5 text-[#c7d2fe]"
-                    : "w-8 border-white/[0.08] bg-white/[0.03] text-[#c4c8d0] hover:border-white/[0.16] hover:bg-white/[0.08] hover:text-white"
+                    : "w-8 border-white/[0.08] bg-white/[0.03] text-[#d4d4d4] hover:border-white/[0.16] hover:bg-white/[0.08] hover:text-white"
                 )}
               >
                 {isRecording ? (
@@ -712,8 +712,8 @@ export function HeroComposerPanel() {
                 className={cn(
                   "flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all cursor-pointer",
                   isWorking
-                    ? "bg-white/[0.14] text-[#f7f8f8] hover:bg-white/[0.22]"
-                    : "bg-[#f7f8f8] text-[#08090a] hover:bg-white disabled:opacity-35"
+                    ? "bg-white/[0.14] text-[#fafafa] hover:bg-white/[0.22]"
+                    : "bg-[#fafafa] text-[#121212] hover:bg-white disabled:opacity-35"
                 )}
               >
                 {isWorking ? (
@@ -735,15 +735,15 @@ export function HeroComposerPanel() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           data-testid="composer-run-output"
-          className="mt-3 rounded-xl border border-white/[0.08] bg-[#0c0d10]/90 px-4 py-3 text-left"
+          className="mt-3 rounded-xl border border-white/[0.08] bg-[#171717]/90 px-4 py-3 text-left"
         >
           {isWorking ? (
             <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2.5 text-[12.5px] text-[#c4c8d0]">
+              <div className="flex items-center gap-2.5 text-[12.5px] text-[#d4d4d4]">
                 <span className="h-2 w-2 rounded-full bg-[#38bdf8] animate-pulse" />
                 <span>
                   Routing via{" "}
-                  <span className="text-[#f7f8f8] font-medium">
+                  <span className="text-[#fafafa] font-medium">
                     {activeModel.name}
                     {activeModel.supportsEffort ? ` (${effort})` : ""}
                   </span>{" "}
@@ -754,7 +754,7 @@ export function HeroComposerPanel() {
                   …
                 </span>
               </div>
-              <span className="font-mono text-[10.5px] text-[#5e626a]">
+              <span className="font-mono text-[10.5px] text-[#737373]">
                 bus://workspace.default
               </span>
             </div>
@@ -763,7 +763,7 @@ export function HeroComposerPanel() {
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex flex-wrap items-center gap-2">
                   <Sparkles className="h-3.5 w-3.5 text-[#818cf8]" />
-                  <span className="font-mono text-[11.5px] text-[#f7f8f8]">
+                  <span className="font-mono text-[11.5px] text-[#fafafa]">
                     {lastResult.piece}
                   </span>
                   <span className="rounded border border-white/[0.08] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-[#a5b4fc]">
@@ -777,12 +777,12 @@ export function HeroComposerPanel() {
                   type="button"
                   onClick={() => setLastResult(null)}
                   aria-label="Dismiss output"
-                  className="text-[#5e626a] hover:text-[#f7f8f8] cursor-pointer"
+                  className="text-[#737373] hover:text-[#fafafa] cursor-pointer"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
               </div>
-              <p className="text-[13px] leading-relaxed text-[#c4c8d0]">
+              <p className="text-[13px] leading-relaxed text-[#d4d4d4]">
                 {lastResult.summary}
               </p>
             </div>
