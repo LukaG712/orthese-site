@@ -292,7 +292,13 @@ export function HeroComposerPanel() {
   const PermIcon = activePerm.icon;
 
   return (
-    <div id="workspace-demo" ref={panelRef} className="scroll-mt-24 mx-auto w-full max-w-[740px]">
+    <div id="workspace-demo" ref={panelRef} className="scroll-mt-24 relative mx-auto w-full max-w-[740px]">
+      {/* Soft ambient prismatic aura linking the headline light field to the Composer */}
+      <div
+        aria-hidden="true"
+        className="hero-composer-aura pointer-events-none absolute -inset-x-10 -inset-y-8 rounded-[40px]"
+      />
+
       {/* Iridescent Rim Wrapper (lights up smoothly while agent is working) */}
       <div className="relative rounded-[22px] p-[1.5px]">
         {/* Soft inner/outer bloom when working */}
@@ -315,15 +321,15 @@ export function HeroComposerPanel() {
         {/* Core Two-Row Composer Panel Surface */}
         <div
           className={cn(
-            "relative rounded-[20.5px] border bg-[#101114] transition-colors duration-300",
+            "relative rounded-[20.5px] border bg-[#111216]/95 backdrop-blur-xl transition-all duration-300",
             isWorking
-              ? "border-white/[0.16] shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_28px_80px_-20px_rgba(0,0,0,0.92)]"
-              : "border-white/[0.1] shadow-[inset_0_1px_0_rgba(255,255,255,0.13),0_28px_80px_-24px_rgba(0,0,0,0.9)] hover:border-white/[0.15]"
+              ? "border-white/[0.18] shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_32px_90px_-20px_rgba(0,0,0,0.95)]"
+              : "border-white/[0.12] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_30px_84px_-22px_rgba(0,0,0,0.92),0_0_0_1px_rgba(255,255,255,0.03)] hover:border-white/[0.17] focus-within:border-white/[0.22] focus-within:shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_32px_96px_-20px_rgba(0,0,0,0.96),0_0_0_1px_rgba(129,140,248,0.18)]"
           )}
         >
           {/* Optional 56px Attachment Tiles Strip */}
           {attachments.length > 0 && (
-            <div className="flex flex-wrap items-center gap-2 px-4 pt-3.5">
+            <div className="flex flex-wrap items-center gap-2 px-4 sm:px-5 pt-4">
               {attachments.map((att) => {
                 const done = att.progress >= 100;
                 const radius = 24;
@@ -390,7 +396,7 @@ export function HeroComposerPanel() {
           )}
 
           {/* ROW 1: Prompt Input */}
-          <div className="relative px-4 pb-2 pt-3.5">
+          <div className="relative px-4 pb-2 pt-4 sm:px-5 sm:pt-4.5">
             <textarea
               ref={textareaRef}
               rows={2}
@@ -404,7 +410,7 @@ export function HeroComposerPanel() {
                 }
               }}
               placeholder="Ask Orthese to build a Piece, refactor code, or type @ or / ..."
-              className="w-full resize-none bg-transparent text-[15px] leading-relaxed text-[#f7f8f8] placeholder:text-[#5e626a] focus:outline-none"
+              className="min-h-[58px] sm:min-h-[66px] w-full resize-none bg-transparent text-[15px] leading-relaxed text-[#f7f8f8] placeholder:text-[#686d76] focus:outline-none"
             />
 
             {/* @ Mention & / Command Caret Menu */}
@@ -719,16 +725,16 @@ export function HeroComposerPanel() {
       )}
 
       {/* Primary Hero Links */}
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-[12px]">
+      <div className="relative mt-7 flex flex-wrap items-center justify-center gap-4">
         <Link
           href={appUrl}
-          className="btn-pill-white inline-flex h-8 items-center rounded-full px-4 text-[12.5px] font-medium"
+          className="btn-pill-white inline-flex h-9 items-center rounded-full px-5 text-[13px] font-medium"
         >
           Launch in Browser
         </Link>
         <Link
           href="#dual-target"
-          className="inline-flex items-center gap-1 text-[12.5px] text-[#8a8f98] hover:text-[#f7f8f8] transition-colors"
+          className="inline-flex h-9 items-center gap-1 px-1 text-[13px] text-[#8a8f98] hover:text-[#f7f8f8] transition-colors"
         >
           <span>Download Desktop</span>
           <ChevronRight className="h-3.5 w-3.5" />

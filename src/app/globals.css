@@ -326,6 +326,28 @@
   transform-origin: center;
 }
 
+/* Subtle architectural grid veil masked radially behind the Hero */
+.hero-grid-veil {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.032) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.032) 1px, transparent 1px);
+  background-size: 40px 40px;
+  -webkit-mask-image: radial-gradient(ellipse 64% 54% at 50% 44%, black 15%, transparent 74%);
+  mask-image: radial-gradient(ellipse 64% 54% at 50% 44%, black 15%, transparent 74%);
+}
+
+/* Soft prismatic ambient mist tethered behind the Hero Composer Panel */
+.hero-composer-aura {
+  background: radial-gradient(
+    ellipse 78% 72% at 50% 50%,
+    rgba(129, 140, 248, 0.14) 0%,
+    rgba(56, 189, 248, 0.09) 34%,
+    rgba(232, 121, 249, 0.07) 62%,
+    transparent 82%
+  );
+  filter: blur(44px);
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
