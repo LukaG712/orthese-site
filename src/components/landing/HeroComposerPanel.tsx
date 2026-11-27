@@ -7,7 +7,6 @@ import {
   ArrowUp,
   Check,
   ChevronDown,
-  ChevronRight,
   FileCode2,
   FileText,
   Image as ImageIcon,
@@ -22,6 +21,7 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
+import { DownloadDesktopButton } from "@/components/landing/DownloadDesktopButton";
 import {
   EFFORT_LEVELS,
   ModelSelectorPopover,
@@ -725,20 +725,14 @@ export function HeroComposerPanel() {
       )}
 
       {/* Primary Hero Links */}
-      <div className="relative mt-7 flex flex-wrap items-center justify-center gap-4">
+      <div className="relative mt-7 flex flex-wrap items-center justify-center gap-3">
         <Link
           href={appUrl}
           className="btn-pill-white inline-flex h-9 items-center rounded-full px-5 text-[13px] font-medium"
         >
           Launch in Browser
         </Link>
-        <Link
-          href="#dual-target"
-          className="inline-flex h-9 items-center gap-1 px-1 text-[13px] text-[#8a8f98] hover:text-[#f7f8f8] transition-colors"
-        >
-          <span>Download Desktop</span>
-          <ChevronRight className="h-3.5 w-3.5" />
-        </Link>
+        <DownloadDesktopButton />
       </div>
     </div>
   );
