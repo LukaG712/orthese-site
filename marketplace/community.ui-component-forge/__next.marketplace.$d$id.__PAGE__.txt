@@ -1,0 +1,46 @@
+2:"$Sreact.fragment"
+3:"/orthese-site/_next/static/chunks/0o5c34b2rw8p7.js"
+4:"/orthese-site/_next/static/chunks/3__6c-0jczigq.js"
+5:"/orthese-site/_next/static/chunks/2-9llxh-21vqq.js"
+6:"/orthese-site/_next/static/chunks/2kcwi2mlt4sn7.js"
+7:"/orthese-site/_next/static/chunks/24fkzm0t653__.js"
+8:"/orthese-site/_next/static/chunks/3_ooc19hk1pb7.js"
+9:"/orthese-site/_next/static/chunks/1ito2rruo5eg5.js"
+a:I[79028,["$3","$4","$5","$6","$7","$8","$9"],"default"]
+b:I[16970,["$3","$4","$5","$6","$7","$8","$9"],"default"]
+12:"/orthese-site/_next/static/chunks/0jfgt_yuvfo_l.js"
+13:"/orthese-site/_next/static/chunks/22ojpwxcmtevz.js"
+14:I[97113,["$3","$4","$5","$6","$7","$8","$9","$12","$13"],""]
+15:I[66724,["$3","$4","$5","$6","$7","$8","$9","$12","$13"],"default"]
+16:"MarketplaceItemActions"
+17:I[81679,["$3","$4","$5","$6","$7","$8","$9","$12","$13"],"$16"]
+18:"ManifestSecurityPanel"
+19:I[43141,["$3","$4","$5","$6","$7","$8","$9","$12","$13"],"$18"]
+20:"ViewportBoundary"
+21:I[52522,["$3","$4","$5","$6","$7","$8","$9"],"$20"]
+22:"MetadataBoundary"
+23:I[52522,["$3","$4","$5","$6","$7","$8","$9"],"$22"]
+24:"$Sreact.suspense"
+25:I[96060,["$3","$4","$5","$6","$7","$8","$9"],"IconMark"]
+d:X
+d:C
+e:X
+11:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$2","c",{"children":[["$","div",null,{"className":"mx-auto max-w-4xl px-4 pb-12 pt-28 sm:px-6 sm:pt-32","children":[["$","$L14",null,{"href":"/marketplace","className":"inline-flex items-center gap-1.5 font-mono text-xs text-zinc-400 hover:text-white transition-colors","children":[["$","$L15",null,{"icon":{"name":"arrow-left","size":24,"node":[["path",{"d":"m12 19-7-7 7-7","key":"1l729n"}],["path",{"d":"M19 12H5","key":"x3x0zl"}]]},"className":"h-3.5 w-3.5"}],["$","span",null,{"children":"Back to Marketplace"}]]}],["$","div",null,{"className":"mt-6 flex flex-col justify-between gap-6 border-b border-white/[0.08] pb-8 md:flex-row md:items-start","children":[["$","div",null,{"className":"flex items-start gap-4","children":[["$","span",null,{"className":"flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/[0.14] bg-white/[0.04] text-white","children":["$","$L15",null,{"icon":{"name":"layers","size":24,"node":[["path",{"d":"M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z","key":"zw3jo"}],["path",{"d":"M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12","key":"1wduqc"}],["path",{"d":"M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17","key":"kqbvx6"}]],"aliases":["layers-3"]},"className":"h-6 w-6"}]}],["$","div",null,{"children":[["$","div",null,{"className":"flex flex-wrap items-center gap-2","children":[["$","h1",null,{"className":"text-2xl font-semibold tracking-tight text-white","children":"UI Component Forge"}],false,["$","span",null,{"className":"rounded border border-white/[0.09] px-1.5 py-0.5 font-mono text-[10px] uppercase text-zinc-400","children":"piece"}]]}],["$","p",null,{"className":"mt-1 font-mono text-xs text-zinc-500","children":["community.ui-component-forge"," · ","@studionord"," · ","4,320"," installs"]}],["$","p",null,{"className":"mt-3 max-w-xl text-sm leading-relaxed text-zinc-300","children":"Community-built free Piece powered by tokenRevShare. Generates copy-ready React 19 + Base UI + Tailwind components with keyboard accessibility and reduced-motion guards, then pipes JSX directly into Website Builder."}]]}]]}],["$","$L17",null,{"item":{"id":"community.ui-component-forge","kind":"piece","name":"UI Component Forge","tagline":"Generate accessible Base UI + Tailwind v4 components on demand.","description":"Community-built free Piece powered by tokenRevShare. Generates copy-ready React 19 + Base UI + Tailwind components with keyboard accessibility and reduced-motion guards, then pipes JSX directly into Website Builder.","author":"Studio Nord","authorHandle":"@studionord","official":false,"icon":"layers","runtime":"wasm+desktop","pricing":"rev-share","priceEur":0,"installs":4320,"publishedAt":"2026-11-22","tags":["components","tailwind","base-ui","rev-share"],"manifest":{"id":"community.ui-component-forge","name":"UI Component Forge","version":"0.3.1","author":"Studio Nord","entry":"./dist/index.html","extends":"orthese.base-harness","defaultModel":"gpt-6.2-sol","layout":{"defaultSize":{"w":6,"h":6},"minSize":{"w":4,"h":4},"resizable":true},"ui":{"theme":"inherit","usePrimitives":true},"permissions":{"standard":["ai:generate","context:send","context:receive","storage:local"],"elevated":[]},"context":{"accepts":["orthese/spec"],"emits":["orthese/html-bundle","text/markdown"]},"monetization":{"purchaseType":"free","priceUsd":0,"tokenRevShare":true}},"changelog":[{"version":"0.3.1","date":"2026-11-22","notes":["Upgraded templates to @base-ui/react 1.9 and Tailwind v4."]}],"repoUrl":"https://github.com/LukaG712/orthese-marketplace"}}]]}],["$","div",null,{"className":"mt-8 space-y-6","children":[["$","$L19",null,{"manifest":"$11:0:1:d:r:props:children:0:props:children:1:props:children:1:props:item:manifest"}],"$undefined","$undefined",["$","div",null,{"className":"obsidian-surface border border-white/[0.08] rounded-xl p-5","children":["$L1a","$L1b"]}]]}]]}],["$L1c","$L1d"],"$L1e"]}],"p":"$@1f","v":null,"s":"$e"}}]]
+f:[["children",{"s":{"n":"id","t":"d","k":"community.ui-component-forge","s":[]},"h":96,"d":{"r":["$","$2","c",{"children":[null,["$","$La",null,{"parallelRouterKey":"children","template":["$","$Lb",null,{}]}]]}],"p":"$@10","v":"$d","s":"$e"},"c":"$Q11"}]]
+1:[["children",{"s":"marketplace","h":64,"d":{"r":["$","$2","c",{"children":[null,["$","$La",null,{"parallelRouterKey":"children","template":["$","$Lb",null,{}]}]]}],"p":"$@c","v":"$d","s":"$e"},"c":"$Qf"}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L21",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L23",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$24",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Orthese — The modular AI workstation for builders and agents"}],["$","meta","1",{"name":"description","content":"Assemble your custom AI workspace out of interchangeable Pieces. Free Rust + GPUI desktop & zero-install WebAssembly dashboard with transparent non-expiring credits."}],["$","link","2",{"rel":"icon","href":"/orthese-site/icon.svg?icon.33o6f9agqmhnh.svg","sizes":"any","type":"image/svg+xml"}],["$","$L25","3",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@26","v":null,"s":"$e"}},"a":"$@27","u":"$@28","b":"44XRZ9_UNNu5oBeAI_lA7"}
+29:I[52522,["$3","$4","$5","$6","$7","$8","$9"],"OutletBoundary"]
+1a:["$","div",null,{"className":"flex items-center justify-between","children":[["$","h2",null,{"className":"font-mono text-[11px] uppercase tracking-wider text-zinc-500","children":"Changelog"}],["$","a",null,{"href":"https://github.com/LukaG712/orthese-marketplace","target":"_blank","rel":"noreferrer","className":"inline-flex items-center gap-1 font-mono text-xs text-zinc-400 hover:text-white transition-colors","children":[["$","span",null,{"children":"View Repository"}],["$","$L15",null,{"icon":{"name":"external-link","size":24,"node":[["path",{"d":"M15 3h6v6","key":"1q9fwt"}],["path",{"d":"M10 14 21 3","key":"gplh6r"}],["path",{"d":"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6","key":"a6xqqp"}]]},"className":"h-3.5 w-3.5"}]]}]]}]
+1b:["$","div",null,{"className":"mt-3 space-y-3","children":[["$","div","0.3.1",{"className":"rounded-lg border border-white/[0.07] bg-[#0a0a0a] p-4","children":[["$","div",null,{"className":"flex items-center justify-between font-mono text-xs","children":[["$","span",null,{"className":"font-semibold text-white","children":["v","0.3.1"]}],["$","span",null,{"className":"text-zinc-500","children":"2026-11-22"}]]}],["$","ul",null,{"className":"mt-2 list-disc space-y-1 pl-4 text-xs text-zinc-400","children":[["$","li","Upgraded templates to @base-ui/react 1.9 and Tailwind v4.",{"children":"Upgraded templates to @base-ui/react 1.9 and Tailwind v4."}]]}]]}]]}]
+1c:["$","script","script-0",{"src":"/orthese-site/_next/static/chunks/0jfgt_yuvfo_l.js","async":true}]
+1d:["$","script","script-1",{"src":"/orthese-site/_next/static/chunks/22ojpwxcmtevz.js","async":true}]
+1e:["$","$L29",null,{"children":["$","$24",null,{"name":"Next.MetadataOutlet","children":"$@2a"}]}]
+28:true
+e:300
+2a:null
+e:C
+27:0
+10:"$undefined"
+c:"$undefined"
+26:"$undefined"
+1f:"$undefined"

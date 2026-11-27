@@ -1,0 +1,32 @@
+2:"$Sreact.fragment"
+3:"/orthese-site/_next/static/chunks/0o5c34b2rw8p7.js"
+4:"/orthese-site/_next/static/chunks/3__6c-0jczigq.js"
+5:"/orthese-site/_next/static/chunks/2-9llxh-21vqq.js"
+6:"/orthese-site/_next/static/chunks/2kcwi2mlt4sn7.js"
+7:"/orthese-site/_next/static/chunks/24fkzm0t653__.js"
+8:"/orthese-site/_next/static/chunks/3_ooc19hk1pb7.js"
+9:"/orthese-site/_next/static/chunks/1ito2rruo5eg5.js"
+a:"/orthese-site/_next/static/chunks/31tjav5-3c9cj.js"
+b:"/orthese-site/_next/static/chunks/3rumthi0y0mdf.js"
+c:"HeroComposerPanel"
+d:I[42649,["$3","$4","$5","$6","$7","$8","$9","$a","$b"],"$c"]
+e:I[8729,["$3","$4","$5","$6","$7","$8","$9","$a","$b"],"FeatureChapters"]
+f:"MarketplaceAndPricing"
+10:I[28980,["$3","$4","$5","$6","$7","$8","$9","$a","$b"],"$f"]
+11:I[52522,["$3","$4","$5","$6","$7","$8","$9"],"OutletBoundary"]
+12:"$Sreact.suspense"
+16:"ViewportBoundary"
+17:I[52522,["$3","$4","$5","$6","$7","$8","$9"],"$16"]
+18:"MetadataBoundary"
+19:I[52522,["$3","$4","$5","$6","$7","$8","$9"],"$18"]
+1a:I[96060,["$3","$4","$5","$6","$7","$8","$9"],"IconMark"]
+15:X
+1:[["children",{"s":"__PAGE__","h":128,"d":{"r":["$","$2","c",{"children":[["$","div",null,{"className":"bg-[#121212]","children":[["$","section",null,{"className":"relative flex min-h-[100svh] flex-col justify-center overflow-x-clip px-4 pb-12 pt-20 sm:px-6 sm:pb-20 sm:pt-32","children":[["$","div",null,{"aria-hidden":"true","className":"pointer-events-none absolute inset-x-0 top-0 h-[560px]","style":{"background":"radial-gradient(ellipse 66% 52% at 50% 0%, rgba(255,255,255,0.045), rgba(255,255,255,0.015) 45%, transparent 76%)"}}],["$","div",null,{"aria-hidden":"true","className":"hero-grid-veil pointer-events-none absolute inset-0"}],["$","div",null,{"className":"relative mx-auto max-w-[820px] text-center","children":[["$","h1",null,{"className":"text-[clamp(1.95rem,5.5vw,4.15rem)] font-medium tracking-[-0.042em] leading-[1.05] text-[#fafafa]","children":["The modular AI workstation",["$","br",null,{}],"for ",["$","span",null,{"style":{"--orbit-dur":"4s"},"className":"orbit-gradient-text","children":"builders and agents."}]]}],["$","p",null,{"className":"mx-auto mt-3.5 max-w-[640px] text-balance text-[14.5px] leading-relaxed text-[#a3a3a3] sm:mt-5 sm:text-[16px]","children":"Snap prompt boxes, site builders, and coding agents onto one shared canvas."}]]}],["$","div",null,{"className":"relative mt-9 sm:mt-11","children":["$","$Ld",null,{}]}],["$","a",null,{"href":"#architecture","aria-label":"Scroll to architecture","className":"hidden sm:flex absolute bottom-6 left-1/2 -translate-x-1/2 flex-col items-center gap-1.5 opacity-40 hover:opacity-80 transition-opacity","children":["$","span",null,{"className":"h-7 w-px bg-gradient-to-b from-white/50 to-transparent"}]}]]}],["$","$Le",null,{}],["$","$L10",null,{}]]}],[["$","script","script-0",{"src":"/orthese-site/_next/static/chunks/31tjav5-3c9cj.js","async":true}],["$","script","script-1",{"src":"/orthese-site/_next/static/chunks/3rumthi0y0mdf.js","async":true}]],["$","$L11",null,{"children":["$","$12",null,{"name":"Next.MetadataOutlet","children":"$@13"}]}]]}],"p":"$@14","v":null,"s":"$15"}}]]
+0:{"t":{"t":{"s":"","h":16,"c":"$Q1"},"h":{"r":["$","$2","h",{"children":[null,["$","$L17",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L19",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$12",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Orthese — The modular AI workstation for builders and agents"}],["$","meta","1",{"name":"description","content":"Assemble your custom AI workspace out of interchangeable Pieces. Free Rust + GPUI desktop & zero-install WebAssembly dashboard with transparent non-expiring credits."}],["$","link","2",{"rel":"icon","href":"/orthese-site/icon.svg?icon.33o6f9agqmhnh.svg","sizes":"any","type":"image/svg+xml"}],["$","$L1a","3",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"p":"$@1b","v":null,"s":"$15"}},"a":"$@1c","u":"$@1d","b":"44XRZ9_UNNu5oBeAI_lA7"}
+13:null
+1d:true
+15:300
+15:C
+1c:0
+1b:"$undefined"
+14:"$undefined"
