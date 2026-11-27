@@ -35,14 +35,6 @@ const DOWNLOAD_GROUPS: DownloadGroup[] = [
         filename: "Orthese-Desktop-macos-arm64.dmg",
         fullLabel: "macOS (Apple Silicon)",
       },
-      {
-        id: "macos-x64",
-        family: "macos",
-        label: "Intel",
-        archHint: ".dmg",
-        filename: "Orthese-Desktop-macos-x64.dmg",
-        fullLabel: "macOS (Intel)",
-      },
     ],
   },
   {
@@ -167,10 +159,10 @@ export function DownloadDesktopButton() {
     const initial = detectInitialPlatform();
     setDetected(initial);
 
-    // Refine CPU architecture via UA Client Hints where supported (Chromium)
+    // Refine Windows CPU architecture via UA Client Hints where supported (Chromium)
     const nav = navigator as Navigator & { userAgentData?: NavigatorUAData };
     if (
-      (initial.family === "macos" || initial.family === "windows") &&
+      initial.family === "windows" &&
       typeof nav.userAgentData?.getHighEntropyValues === "function"
     ) {
       nav.userAgentData
@@ -178,17 +170,10 @@ export function DownloadDesktopButton() {
         .then(({ architecture }) => {
           const arch = (architecture || "").toLowerCase();
           if (!arch) return;
-          if (initial.family === "macos") {
-            setDetected((prev) => ({
-              ...prev,
-              optionId: arch.includes("x86") ? "macos-x64" : "macos-arm64",
-            }));
-          } else if (initial.family === "windows") {
-            setDetected((prev) => ({
-              ...prev,
-              optionId: arch.includes("arm") ? "windows-arm64" : "windows-x64",
-            }));
-          }
+          setDetected((prev) => ({
+            ...prev,
+            optionId: arch.includes("arm") ? "windows-arm64" : "windows-x64",
+          }));
         })
         .catch(() => {
           // Ignore browsers that decline high-entropy hints

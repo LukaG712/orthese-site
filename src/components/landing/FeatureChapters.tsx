@@ -7,15 +7,24 @@ import NumberFlow from "@number-flow/react";
 import {
   Check,
   ChevronRight,
+  Copy,
+  ExternalLink,
   FileCode2,
   Folder,
   FolderOpen,
   Globe,
   Minus,
+  Send,
   Sparkles,
   Terminal,
+  Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
+import { AgentLimitsCard } from "@/components/primitives/AgentLimitsCard";
+import {
+  ContextMenuTrigger,
+  type ContextMenuEntry,
+} from "@/components/primitives/ContextMenu";
 import { OrbitGradientText } from "@/components/ui/OrbitGradientText";
 import { cn } from "@/lib/cn";
 
@@ -135,6 +144,108 @@ export function FeatureChapters() {
   const [routingMode, setRoutingMode] = useState<"credits" | "cliproxy">("credits");
   const [selectedFile, setSelectedFile] = useState<HarnessFileKey>("piece.json");
   const [busPacketCount, setBusPacketCount] = useState(14);
+  const [contextFlags, setContextFlags] = useState<
+    Record<HarnessFileKey, { include: boolean; watch: boolean }>
+  >({
+    "piece.json": { include: true, watch: true },
+    "lib.rs": { include: true, watch: false },
+    "SKILL.md": { include: true, watch: true },
+  });
+
+  function buildFileMenuEntries(file: HarnessFileKey): ContextMenuEntry[] {
+    const displayName = file === "lib.rs" ? "src/lib.rs" : file;
+    const flags = contextFlags[file];
+
+    return [
+      {
+        id: `open-${file}`,
+        label: "Open in viewer",
+        icon: ExternalLink,
+        shortcut: "↵",
+        onSelect: () => setSelectedFile(file),
+      },
+      {
+        id: `copy-${file}`,
+        label: `Copy @${displayName}`,
+        icon: Copy,
+        shortcut: "⌘C",
+        onSelect: () => {
+          navigator.clipboard?.writeText(`@${displayName}`).catch(() => {});
+          toast.success(`Copied @${displayName}`, {
+            description: "Ready to paste into the Orthese Composer.",
+          });
+        },
+      },
+      {
+        type: "submenu",
+        id: `send-${file}`,
+        label: "Pipe to Piece",
+        icon: Send,
+        items: [
+          {
+            id: `pipe-wb-${file}`,
+            label: "Website Builder",
+            onSelect: () =>
+              toast.success(`Piped ${displayName} → Website Builder`),
+          },
+          {
+            id: `pipe-se-${file}`,
+            label: "Software Engineer",
+            onSelect: () =>
+              toast.success(`Piped ${displayName} → Software Engineer`),
+          },
+          {
+            id: `pipe-pb-${file}`,
+            label: "AI Prompt Box",
+            onSelect: () =>
+              toast.success(`Piped ${displayName} → AI Prompt Box`),
+          },
+        ],
+      },
+      { type: "separator" },
+      {
+        type: "section",
+        id: `ctx-${file}`,
+        title: "Harness context",
+        items: [
+          {
+            id: `inc-${file}`,
+            label: "Include in prompt",
+            checked: flags.include,
+            keepOpen: true,
+            onSelect: () =>
+              setContextFlags((prev) => ({
+                ...prev,
+                [file]: { ...prev[file], include: !prev[file].include },
+              })),
+          },
+          {
+            id: `watch-${file}`,
+            label: "Watch file changes",
+            checked: flags.watch,
+            keepOpen: true,
+            onSelect: () =>
+              setContextFlags((prev) => ({
+                ...prev,
+                [file]: { ...prev[file], watch: !prev[file].watch },
+              })),
+          },
+        ],
+      },
+      { type: "separator" },
+      {
+        id: `unload-${file}`,
+        label: "Unload from bundle",
+        icon: Trash2,
+        shortcut: "⌫",
+        variant: "danger",
+        onSelect: () =>
+          toast.info(`Unloaded ${displayName} from active session`, {
+            description: "Manifest files stay intact on disk.",
+          }),
+      },
+    ];
+  }
 
   return (
     <div className="mx-auto max-w-[1080px] space-y-36 px-5 py-16 sm:px-6 sm:space-y-44">
@@ -283,7 +394,7 @@ export function FeatureChapters() {
           href="/router"
         />
 
-        <div className="mask-fade-bottom-soft stage-surface mt-12 overflow-hidden rounded-xl p-6 sm:p-10">
+        <div className="stage-surface mt-12 overflow-hidden rounded-xl p-6 sm:p-10">
           <div className="flex flex-col items-start justify-between gap-4 border-b border-white/[0.06] pb-6 sm:flex-row sm:items-center">
             <div>
               <div className="flex items-center gap-2 text-[13px] font-medium text-[#f7f8f8]">
@@ -344,7 +455,7 @@ export function FeatureChapters() {
             </div>
           </div>
 
-          <div className="mt-8 grid gap-8 md:grid-cols-[1fr_1.4fr] pb-8">
+          <div className="mt-8 grid gap-8 md:grid-cols-[0.82fr_1.48fr] items-start">
             <div className="space-y-6">
               <div>
                 <span className="block font-mono text-[11px] text-[#5e626a]">EDGE LATENCY</span>
@@ -365,10 +476,14 @@ export function FeatureChapters() {
                       <span className="ml-1.5 text-sm text-[#8a8f98]">cr</span>
                     </>
                   ) : (
-                    <span>Local OAuth · €0</span>
+                    <span>Local OAuth · Free</span>
                   )}
                 </div>
               </div>
+
+              <p className="text-[12.5px] leading-relaxed text-[#6e737d]">
+                Click <span className="text-[#c4c8d0]">Context window</span> to inspect live per-bucket token budgets, deferred MCP tools, and collapsible workspace groups.
+              </p>
             </div>
 
             <motion.div
@@ -376,38 +491,93 @@ export function FeatureChapters() {
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-4"
             >
-              {(routingMode === "credits"
-                ? [
-                    { label: "Gemini 4 Hydrogen · Fast edits & SQL", meta: "~1 cr / turn", pct: 94 },
-                    { label: "Gemini 4 Neon · Long-context & Website Builder", meta: "~4 cr / turn", pct: 80 },
-                    { label: "Claude Opus 5.5 · Software Engineer", meta: "~5 cr / turn", pct: 68 },
-                    { label: "GPT-6.2 Astra · Frontier architecture", meta: "~8 cr / turn", pct: 52 },
-                  ]
-                : [
-                    { label: "Claude Code OAuth", meta: "84% quota", pct: 84 },
-                    { label: "Codex CLI OAuth", meta: "62% quota", pct: 62 },
-                    { label: "Gemini CLI OAuth", meta: "95% quota", pct: 95 },
-                  ]
-              ).map((bar) => (
-                <div key={bar.label} className="space-y-2">
-                  <div className="flex items-center justify-between text-[12.5px]">
-                    <span className="text-[#f7f8f8]">{bar.label}</span>
-                    <span className="font-mono text-[11px] tabular-nums text-[#8a8f98]">
-                      {bar.meta}
-                    </span>
-                  </div>
-                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${bar.pct}%` }}
-                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                      className="h-full rounded-full bg-[#f7f8f8]/80"
-                    />
-                  </div>
-                </div>
-              ))}
+              {routingMode === "credits" ? (
+                <AgentLimitsCard
+                  plan="Max (5x)"
+                  planHref="/router"
+                  context={{
+                    max: 1_000_000,
+                    segments: [
+                      { label: "Messages", tokens: 520_000, color: "#60a5fa" },
+                      { label: "System tools", tokens: 96_000, color: "#818cf8" },
+                      { label: "MCP tools", tokens: 68_000, color: "#34d399" },
+                      { label: "Skills", tokens: 54_000, color: "#f59e0b" },
+                      { label: "System prompt", tokens: 42_000, color: "#a78bfa" },
+                      { label: "Memory files", tokens: 24_000, color: "#38bdf8" },
+                      { label: "Custom agents", tokens: 16_000, color: "#e879f9" },
+                      { label: "MCP tools (deferred)", tokens: 69_900, color: "#5e626a", deferred: true },
+                      { label: "System tools (deferred)", tokens: 16_100, color: "#5e626a", deferred: true },
+                    ],
+                    groups: [
+                      {
+                        label: "MCP tools",
+                        tokens: 137_900,
+                        items: [
+                          { label: "browser", tokens: 54_200 },
+                          { label: "github", tokens: 38_400 },
+                          { label: "filesystem", tokens: 26_100 },
+                          { label: "postgres", tokens: 19_200 },
+                        ],
+                      },
+                      {
+                        label: "Memory files",
+                        tokens: 24_000,
+                        items: [
+                          { label: "ORTHE.md", tokens: 14_800 },
+                          { label: "workspace-rules.md", tokens: 9_200 },
+                        ],
+                      },
+                      {
+                        label: "Custom agents",
+                        tokens: 16_000,
+                        items: [
+                          { label: "orthese.website-builder", tokens: 6_400 },
+                          { label: "orthese.software-engineer", tokens: 5_800 },
+                          { label: "orthese.research-canvas", tokens: 3_800 },
+                        ],
+                      },
+                    ],
+                  }}
+                  limits={[
+                    { label: "5-hour limit", used: 0.38, resets: "Resets in 2 hr 46 min" },
+                    { label: "Weekly · all models", used: 0.14, resets: "Resets Tue 3:00 PM" },
+                    { label: "Weekly · Frontier", used: 0.22, resets: "Resets Tue 3:00 PM" },
+                  ]}
+                />
+              ) : (
+                <AgentLimitsCard
+                  plan="Local CLIProxyAPI"
+                  planHref="/router"
+                  context={{
+                    max: 1_000_000,
+                    segments: [
+                      { label: "Messages", tokens: 390_000, color: "#60a5fa" },
+                      { label: "System tools", tokens: 78_000, color: "#818cf8" },
+                      { label: "MCP tools", tokens: 62_000, color: "#34d399" },
+                      { label: "Skills", tokens: 44_000, color: "#f59e0b" },
+                      { label: "Memory files", tokens: 36_000, color: "#38bdf8" },
+                      { label: "MCP tools (deferred)", tokens: 52_000, color: "#5e626a", deferred: true },
+                    ],
+                    groups: [
+                      {
+                        label: "Local OAuth pool",
+                        tokens: 114_000,
+                        items: [
+                          { label: "claude-code-oauth", tokens: 48_000 },
+                          { label: "codex-cli-oauth", tokens: 39_000 },
+                          { label: "gemini-cli-oauth", tokens: 27_000 },
+                        ],
+                      },
+                    ],
+                  }}
+                  limits={[
+                    { label: "Claude Code OAuth", used: 0.16, resets: "84% remaining" },
+                    { label: "Codex CLI OAuth", used: 0.38, resets: "62% remaining" },
+                    { label: "Gemini CLI OAuth", used: 0.05, resets: "95% remaining" },
+                  ]}
+                />
+              )}
             </motion.div>
           </div>
         </div>
@@ -441,10 +611,15 @@ export function FeatureChapters() {
 
         <div className="mask-fade-bottom-soft stage-surface mt-12 overflow-hidden rounded-xl">
           <div className="grid md:grid-cols-[260px_1fr]">
-            {/* Left File Tree */}
+            {/* Left File Tree (Right-click or Shift+F10 opens ContextMenu) */}
             <div className="border-b border-white/[0.06] bg-[#0b0c0e] p-5 font-mono text-[12px] md:border-b-0 md:border-r">
-              <div className="mb-3 text-[10px] uppercase tracking-[0.12em] text-[#5e626a]">
-                Workspace Bundle
+              <div className="mb-3 flex items-center justify-between gap-2">
+                <span className="text-[10px] uppercase tracking-[0.12em] text-[#5e626a]">
+                  Workspace Bundle
+                </span>
+                <span className="font-sans text-[10px] text-[#5e626a]">
+                  Right-click files
+                </span>
               </div>
 
               <div className="flex items-center gap-2 py-1 text-[#8a8f98]">
@@ -454,22 +629,42 @@ export function FeatureChapters() {
 
               {(["piece.json", "lib.rs"] as const).map((file) => {
                 const active = selectedFile === file;
+                const flags = contextFlags[file];
                 return (
-                  <button
+                  <ContextMenuTrigger
                     key={file}
-                    type="button"
-                    data-testid={`tree-${file}`}
-                    onClick={() => setSelectedFile(file)}
-                    className={cn(
-                      "ml-4 mt-0.5 flex w-[calc(100%-1rem)] items-center gap-2 rounded-md px-2.5 py-1.5 text-left transition-colors cursor-pointer",
-                      active
-                        ? "bg-white/[0.08] text-[#f7f8f8]"
-                        : "text-[#8a8f98] hover:bg-white/[0.03] hover:text-[#f7f8f8]"
-                    )}
+                    ariaLabel={`Actions for ${file}`}
+                    entries={buildFileMenuEntries(file)}
                   >
-                    <FileCode2 className="h-3.5 w-3.5 text-[#5e626a]" />
-                    <span>{file === "lib.rs" ? "src/lib.rs" : file}</span>
-                  </button>
+                    {({ isOpen }) => (
+                      <button
+                        type="button"
+                        data-testid={`tree-${file}`}
+                        onClick={() => setSelectedFile(file)}
+                        className={cn(
+                          "ml-4 mt-0.5 flex w-[calc(100%-1rem)] items-center justify-between gap-2 rounded-md border px-2.5 py-1.5 text-left transition-colors cursor-pointer",
+                          isOpen
+                            ? "border-[#818cf8]/60 bg-[#818cf8]/10 text-[#f7f8f8]"
+                            : active
+                              ? "border-transparent bg-white/[0.08] text-[#f7f8f8]"
+                              : "border-transparent text-[#8a8f98] hover:bg-white/[0.03] hover:text-[#f7f8f8]"
+                        )}
+                      >
+                        <span className="flex items-center gap-2 min-w-0">
+                          <FileCode2 className="h-3.5 w-3.5 shrink-0 text-[#5e626a]" />
+                          <span className="truncate">
+                            {file === "lib.rs" ? "src/lib.rs" : file}
+                          </span>
+                        </span>
+                        {flags.include && (
+                          <span
+                            title="Included in prompt context"
+                            className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400/80"
+                          />
+                        )}
+                      </button>
+                    )}
+                  </ContextMenuTrigger>
                 );
               })}
 
@@ -478,20 +673,37 @@ export function FeatureChapters() {
                 <span>skills/landing-page-architect/</span>
               </div>
 
-              <button
-                type="button"
-                data-testid="tree-SKILL.md"
-                onClick={() => setSelectedFile("SKILL.md")}
-                className={cn(
-                  "ml-4 mt-0.5 flex w-[calc(100%-1rem)] items-center gap-2 rounded-md px-2.5 py-1.5 text-left transition-colors cursor-pointer",
-                  selectedFile === "SKILL.md"
-                    ? "bg-white/[0.08] text-[#f7f8f8]"
-                    : "text-[#8a8f98] hover:bg-white/[0.03] hover:text-[#f7f8f8]"
-                )}
+              <ContextMenuTrigger
+                ariaLabel="Actions for SKILL.md"
+                entries={buildFileMenuEntries("SKILL.md")}
               >
-                <FileCode2 className="h-3.5 w-3.5 text-[#5e626a]" />
-                <span>SKILL.md</span>
-              </button>
+                {({ isOpen }) => (
+                  <button
+                    type="button"
+                    data-testid="tree-SKILL.md"
+                    onClick={() => setSelectedFile("SKILL.md")}
+                    className={cn(
+                      "ml-4 mt-0.5 flex w-[calc(100%-1rem)] items-center justify-between gap-2 rounded-md border px-2.5 py-1.5 text-left transition-colors cursor-pointer",
+                      isOpen
+                        ? "border-[#818cf8]/60 bg-[#818cf8]/10 text-[#f7f8f8]"
+                        : selectedFile === "SKILL.md"
+                          ? "border-transparent bg-white/[0.08] text-[#f7f8f8]"
+                          : "border-transparent text-[#8a8f98] hover:bg-white/[0.03] hover:text-[#f7f8f8]"
+                    )}
+                  >
+                    <span className="flex items-center gap-2 min-w-0">
+                      <FileCode2 className="h-3.5 w-3.5 shrink-0 text-[#5e626a]" />
+                      <span className="truncate">SKILL.md</span>
+                    </span>
+                    {contextFlags["SKILL.md"].include && (
+                      <span
+                        title="Included in prompt context"
+                        className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400/80"
+                      />
+                    )}
+                  </button>
+                )}
+              </ContextMenuTrigger>
             </div>
 
             {/* Right Manifest / Code Viewer */}
