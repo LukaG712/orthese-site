@@ -311,7 +311,7 @@ export function DownloadDesktopButton() {
           <div className="divide-y divide-white/[0.08]">
             {DOWNLOAD_GROUPS.map((group) => (
               <div key={group.family} className="py-1.5">
-                <div className="px-3.5 pb-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.08em] text-[#f7f8f8]">
+                <div className="px-3.5 pb-0.5 text-[11px] font-medium tracking-[-0.01em] text-[#f7f8f8]">
                   {group.heading}
                 </div>
                 <div className="px-1.5">
@@ -326,7 +326,7 @@ export function DownloadDesktopButton() {
                         onClick={() => triggerDownload(opt)}
                         className="flex w-full items-center justify-between gap-2 rounded-lg px-2 py-[3px] text-left transition-colors hover:bg-white/[0.07] cursor-pointer group"
                       >
-                        <span className="flex items-center gap-2 font-mono text-[11.5px] uppercase tracking-[0.03em] text-[#b4b9c2] group-hover:text-[#f7f8f8]">
+                        <span className="flex items-center gap-2 text-[12.5px] text-[#a1a6b0] group-hover:text-[#f7f8f8]">
                           <span>{opt.label}</span>
                           {isDetected && (
                             <span
@@ -335,7 +335,7 @@ export function DownloadDesktopButton() {
                             />
                           )}
                         </span>
-                        <span className="font-mono text-[10px] text-[#5e626a] group-hover:text-[#8a8f98]">
+                        <span className="text-[11px] text-[#5e626a] group-hover:text-[#8a8f98]">
                           {opt.archHint}
                         </span>
                       </button>
