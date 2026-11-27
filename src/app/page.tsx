@@ -25,13 +25,9 @@ export default function HomePage() {
             <br />
             for <OrbitGradientText>builders and agents.</OrbitGradientText>
           </h1>
-
-          <p className="mt-4 font-mono text-[11.5px] sm:mt-5 sm:text-[12.5px] text-[#8a8f98]">
-            Free dashboard · €2 starter credits · No subscription
-          </p>
         </div>
 
-        <div className="relative mt-8 sm:mt-11">
+        <div className="relative mt-8 sm:mt-10">
           <HeroComposerPanel />
         </div>
       </section>

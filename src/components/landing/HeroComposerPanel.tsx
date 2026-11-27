@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
-import NumberFlow from "@number-flow/react";
 import {
   ArrowUp,
   Check,
@@ -11,12 +10,10 @@ import {
   ChevronRight,
   FileCode2,
   FileText,
-  GitBranch,
   Image as ImageIcon,
   Mic,
   Paperclip,
   Plus,
-  Radio,
   Shield,
   ShieldAlert,
   ShieldCheck,
@@ -178,7 +175,6 @@ export function HeroComposerPanel() {
   const [openMenu, setOpenMenu] = useState<"add" | "permission" | "model" | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [isWorking, setIsWorking] = useState(false);
-  const [credits, setCredits] = useState(197);
   const [lastResult, setLastResult] = useState<ComposerRunResult | null>(null);
 
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -289,13 +285,10 @@ export function HeroComposerPanel() {
 
     const tid = window.setTimeout(() => {
       const result = buildRunResult(text, activeModel, effort, activePerm);
-      if (result.cost > 0) {
-        setCredits((c) => Math.max(0, c - result.cost));
-      }
       setLastResult(result);
       setIsWorking(false);
       toast.success(`${result.piece} completed`, {
-        description: `Emitted ${result.contextType} · ${result.cost > 0 ? `-${result.cost} cr` : "€0 local"}`,
+        description: `Emitted ${result.contextType} · ${result.cost > 0 ? `-${result.cost} cr` : "Free · local"}`,
       });
     }, 1450);
 
@@ -745,42 +738,21 @@ export function HeroComposerPanel() {
         ))}
       </div>
 
-      {/* Compact Workspace Status Bar + Primary Links */}
-      <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.06] pt-4 text-[12px]">
-        <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] text-[#5e626a]">
-          <span className="inline-flex items-center gap-1.5 text-[#8a8f98]">
-            <GitBranch className="h-3 w-3" />
-            <span>main</span>
-          </span>
-          <span>·</span>
-          <span className="inline-flex items-center gap-1.5 text-[#8a8f98]">
-            <Radio className="h-3 w-3 text-emerald-400" />
-            <span>MCP Hub</span>
-          </span>
-          <span>·</span>
-          <span
-            data-testid="composer-credit-counter"
-            className="tabular-nums text-[#f7f8f8]"
-          >
-            <NumberFlow value={credits} /> cr
-          </span>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <Link
-            href={appUrl}
-            className="btn-pill-white inline-flex h-8 items-center rounded-full px-4 text-[12.5px] font-medium"
-          >
-            Launch in Browser
-          </Link>
-          <Link
-            href="#dual-target"
-            className="inline-flex items-center gap-1 text-[12.5px] text-[#8a8f98] hover:text-[#f7f8f8] transition-colors"
-          >
-            <span>Download Desktop</span>
-            <ChevronRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
+      {/* Primary Hero Links */}
+      <div className="mt-7 flex flex-wrap items-center justify-center gap-4 text-[12px]">
+        <Link
+          href={appUrl}
+          className="btn-pill-white inline-flex h-8 items-center rounded-full px-4 text-[12.5px] font-medium"
+        >
+          Launch in Browser
+        </Link>
+        <Link
+          href="#dual-target"
+          className="inline-flex items-center gap-1 text-[12.5px] text-[#8a8f98] hover:text-[#f7f8f8] transition-colors"
+        >
+          <span>Download Desktop</span>
+          <ChevronRight className="h-3.5 w-3.5" />
+        </Link>
       </div>
     </div>
   );
