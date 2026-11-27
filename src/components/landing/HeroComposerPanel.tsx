@@ -411,7 +411,7 @@ export function HeroComposerPanel() {
             {activeTrigger && (
               <div
                 data-testid="composer-trigger-menu"
-                className="absolute left-4 bottom-full z-30 mb-1.5 w-72 rounded-xl border border-white/[0.12] bg-[#121419] p-1.5 shadow-2xl"
+                className="absolute left-4 top-full z-30 mt-1 w-72 rounded-xl border border-white/[0.12] bg-[#121419] p-1.5 shadow-2xl"
               >
                 <div className="px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#5e626a]">
                   {activeTrigger === "@" ? "Pieces & Files" : "Workspace Commands"}
@@ -476,7 +476,7 @@ export function HeroComposerPanel() {
                 {openMenu === "add" && (
                   <div
                     data-testid="composer-add-menu"
-                    className="absolute left-2 right-2 bottom-full mb-2 sm:left-0 sm:right-auto sm:bottom-11 sm:top-auto sm:mb-0 sm:w-64 z-30 rounded-xl border border-white/[0.12] bg-[#121419] p-1.5 shadow-2xl"
+                    className="absolute left-2 right-2 top-full mt-2 sm:left-0 sm:right-auto sm:top-10 sm:mt-0 sm:w-64 z-30 rounded-xl border border-white/[0.12] bg-[#121419] p-1.5 shadow-2xl"
                   >
                     <div className="px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#5e626a]">
                       Attach Context
@@ -543,7 +543,7 @@ export function HeroComposerPanel() {
                 {openMenu === "permission" && (
                   <div
                     data-testid="composer-permission-menu"
-                    className="absolute left-2 right-2 bottom-full mb-2 sm:left-0 sm:right-auto sm:bottom-11 sm:top-auto sm:mb-0 sm:w-72 z-30 rounded-xl border border-white/[0.12] bg-[#121419] p-1.5 shadow-2xl"
+                    className="absolute left-2 right-2 top-full mt-2 sm:left-0 sm:right-auto sm:top-10 sm:mt-0 sm:w-72 z-30 rounded-xl border border-white/[0.12] bg-[#121419] p-1.5 shadow-2xl"
                   >
                     <div className="px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[#5e626a]">
                       Piece Permission Mode

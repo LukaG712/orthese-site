@@ -7,8 +7,8 @@ import { MarketplaceAndPricing } from "@/components/landing/MarketplaceAndPricin
 export default function HomePage() {
   return (
     <div className="bg-[#08090a]">
-      {/* FOCUSED HERO: DISPLAY HEADLINE + COMPOSER PANEL */}
-      <section className="relative flex min-h-[calc(100svh-52px)] flex-col justify-between overflow-x-clip px-4 pb-10 pt-20 sm:px-6 sm:pb-14 sm:pt-28">
+      {/* FOCUSED HERO: OPTICALLY CENTERED DISPLAY HEADLINE + COMPOSER PANEL */}
+      <section className="relative flex min-h-[calc(100svh-52px)] flex-col justify-center overflow-x-clip px-4 pb-14 pt-8 sm:px-6 sm:pb-20 sm:pt-10">
         {/* Subtle monochrome top-center radial glow behind the hero */}
         <div
           aria-hidden="true"
@@ -27,7 +27,7 @@ export default function HomePage() {
           </h1>
         </div>
 
-        <div className="relative mt-auto pt-16 sm:pt-24">
+        <div className="relative mt-8 sm:mt-10">
           <HeroComposerPanel />
         </div>
       </section>
