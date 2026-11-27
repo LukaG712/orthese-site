@@ -119,7 +119,7 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
   return (
     <div className="relative bg-[#121212]">
       {/* Top Header Band */}
-      <div className="relative mx-auto max-w-[1080px] px-5 pb-12 pt-16 sm:px-6">
+      <div className="relative mx-auto max-w-[1080px] px-5 pb-12 pt-28 sm:px-6 sm:pt-32">
         <h1 className="text-4xl font-medium tracking-[-0.04em] leading-[1.06] text-[#fafafa] sm:text-5xl">
           <OrbitGradientText>Marketplace</OrbitGradientText>
         </h1>

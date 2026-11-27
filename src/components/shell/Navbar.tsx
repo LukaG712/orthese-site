@@ -279,7 +279,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="pointer-events-none sticky top-0 z-50 w-full px-3 pt-3 pb-1 sm:px-4">
+      <header className="pointer-events-none fixed inset-x-0 top-0 z-50 w-full px-3 pt-3 pb-1 sm:px-4">
         {/* Floating Centered Dock Matching Orthese BoardUI Dark Mode & Composer Geometry */}
         <div
           onMouseLeave={scheduleClose}

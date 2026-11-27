@@ -21,7 +21,7 @@ export default async function MarketplaceItemPage({
   if (!item) notFound();
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
+    <div className="mx-auto max-w-4xl px-4 pb-12 pt-28 sm:px-6 sm:pt-32">
       <Link
         href="/marketplace"
         className="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-400 hover:text-white transition-colors"

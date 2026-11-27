@@ -49,7 +49,7 @@ triggers: ["landing page", "hero", "marketing site"]
 export default function DocsPage() {
   return (
     <div className="bg-[#121212]">
-      <div className="mx-auto max-w-[1024px] px-5 py-16 sm:px-6 sm:py-24">
+      <div className="mx-auto max-w-[1024px] px-5 pb-16 pt-28 sm:px-6 sm:pb-24 sm:pt-32">
         {/* Header */}
         <div className="max-w-2xl border-b border-white/[0.07] pb-10">
           <div className="inline-flex items-center gap-2 text-[12px] font-medium text-[#a3a3a3]">
@@ -68,7 +68,7 @@ export default function DocsPage() {
         {/* Sticky Sidebar + Main Docs Content */}
         <div className="mt-12 grid gap-12 lg:grid-cols-[200px_1fr]">
           <aside className="hidden lg:block">
-            <nav aria-label="Documentation sections" className="sticky top-20 space-y-1">
+            <nav aria-label="Documentation sections" className="sticky top-28 space-y-1">
               <div className="mb-2.5 text-[11px] font-medium text-[#737373]">
                 On this page
               </div>

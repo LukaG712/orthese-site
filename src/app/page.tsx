@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <div className="bg-[#121212]">
       {/* FOCUSED HERO: ARCHITECTURAL STAGE + EDITORIAL HEADLINE + COMPOSER PANEL */}
-      <section className="relative flex min-h-[calc(100svh-92px)] flex-col justify-center overflow-x-clip px-4 pb-16 pt-6 sm:px-6 sm:pb-20 sm:pt-8">
+      <section className="relative flex min-h-[100svh] flex-col justify-center overflow-x-clip px-4 pb-16 pt-28 sm:px-6 sm:pb-20 sm:pt-32">
         {/* Subtle BoardUI neutral top-center studio sheen + masked architectural grid */}
         <div
           aria-hidden="true"

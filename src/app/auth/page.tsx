@@ -114,7 +114,7 @@ export default function AuthPage() {
   const socialVerb = isSignup ? "Sign up with" : "Continue with";
 
   return (
-    <section className="relative flex min-h-[calc(100svh-52px)] items-center justify-center overflow-x-clip px-4 py-12 sm:px-6">
+    <section className="relative flex min-h-[100svh] items-center justify-center overflow-x-clip px-4 pb-14 pt-28 sm:px-6 sm:pt-32">
       {/* Subtle architectural atmosphere matching Hero */}
       <div
         aria-hidden="true"

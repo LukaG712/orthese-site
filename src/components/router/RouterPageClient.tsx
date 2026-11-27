@@ -296,7 +296,7 @@ export function RouterPageClient() {
   return (
     <div className="bg-[#121212] text-[#fafafa]">
       {/* 1. HERO + INTERACTIVE LIVE ROUTER STAGE */}
-      <section className="relative overflow-x-clip px-5 pb-20 pt-20 sm:px-6 sm:pb-28 sm:pt-28">
+      <section className="relative overflow-x-clip px-5 pb-20 pt-28 sm:px-6 sm:pb-28 sm:pt-36">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 top-0 h-[520px]"
