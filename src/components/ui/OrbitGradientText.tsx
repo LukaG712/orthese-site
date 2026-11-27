@@ -14,7 +14,7 @@ interface OrbitGradientTextProps {
 
 export function OrbitGradientText({
   children,
-  variant = "neutral",
+  variant = "prismatic",
   durationSec = 4,
   className,
 }: OrbitGradientTextProps) {
