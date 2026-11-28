@@ -82,7 +82,7 @@ const NAV_SECTIONS: NavMenuSection[] = [
         heading: "Explore Orthese",
         primary: true,
         links: [
-          { label: "Workspace Canvas", href: "/#workspace-demo" },
+          { label: "Dashboard Canvas", href: "/dashboard", meta: "Live" },
           { label: "Shared Context Bus", href: "/#shared-context" },
           { label: "Hybrid AI Routing", href: "/#hybrid-routing" },
           { label: "Extensible Harness", href: "/#base-harness" },
@@ -165,7 +165,8 @@ const NAV_SECTIONS: NavMenuSection[] = [
         heading: "Documentation",
         primary: true,
         links: [
-          { label: "Quickstart", href: "/docs" },
+          { label: "Quickstart Guide", href: "/docs/quickstart", meta: "No code" },
+          { label: "Tech & Pro Docs", href: "/docs", meta: "SDK" },
           { label: "Piece SDK (piece.json)", href: "/docs#piece-sdk" },
           { label: "Shared Context Bus", href: "/docs#context-bus" },
           { label: "Progressive SKILL.md", href: "/docs#skills" },
@@ -196,7 +197,7 @@ export function Navbar() {
 
   const closeTimerRef = useRef<number | null>(null);
   const accountMenuRef = useRef<HTMLDivElement | null>(null);
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "/#workspace-demo";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "/dashboard";
 
   const activeSection =
     NAV_SECTIONS.find((s) => s.id === activeMenuId) ?? null;
@@ -263,6 +264,10 @@ export function Navbar() {
     document.addEventListener("mousedown", onPointerDown);
     return () => document.removeEventListener("mousedown", onPointerDown);
   }, [accountMenuOpen]);
+
+  if (pathname?.startsWith("/dashboard")) {
+    return null;
+  }
 
   return (
     <>
@@ -357,7 +362,7 @@ export function Navbar() {
                       href={appUrl}
                       data-testid="navbar-launch-orthese"
                       onClick={closeAll}
-                      className="btn-pill-white inline-flex h-7 items-center rounded-full px-3 text-[12px] font-medium whitespace-nowrap"
+                      className="bg-button-primary inline-flex h-8 items-center justify-center rounded-lg px-3 text-[12.5px] font-medium whitespace-nowrap"
                     >
                       Launch Orthese
                     </Link>
@@ -387,7 +392,7 @@ export function Navbar() {
                         <div
                           role="menu"
                           data-testid="navbar-account-menu"
-                          className="absolute right-0 top-full z-50 mt-2.5 w-60 overflow-hidden rounded-xl border border-white/[0.13] bg-[#1f1f1f]/98 p-1.5 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.92),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl"
+                          className="absolute right-0 top-full z-50 mt-2.5 w-60 overflow-hidden rounded-xl border border-white/[0.13] bg-[#161618] p-1.5 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.96),inset_0_1px_0_rgba(255,255,255,0.08)]"
                         >
                           <div className="flex items-center gap-2.5 px-2.5 py-2 border-b border-white/[0.07]">
                             <Avatar name={user.name} src={user.avatarUrl} size="md" status="online" />
@@ -462,7 +467,7 @@ export function Navbar() {
                     href="/auth"
                     data-testid="navbar-login-btn"
                     onClick={closeAll}
-                    className="btn-pill-white inline-flex h-7 items-center rounded-full px-3 text-[12px] font-medium whitespace-nowrap"
+                    className="bg-button-primary inline-flex h-8 items-center justify-center rounded-lg px-3 text-[12.5px] font-medium whitespace-nowrap"
                   >
                     <span className="sm:hidden">Log in</span>
                     <span className="hidden sm:inline">Log in / Sign up</span>
@@ -651,7 +656,7 @@ export function Navbar() {
               <div className="hidden px-1.5 pb-1.5 sm:block">
                 <div className="flex items-center justify-between gap-2 rounded-[11px] border border-white/[0.06] bg-[#1f1f1f]/85 px-3 py-1">
                   <Link
-                    href="/#workspace-demo"
+                    href={appUrl}
                     onClick={closeAll}
                     className="group flex min-w-0 flex-1 items-center justify-center gap-2 truncate text-[11.5px] text-[#a3a3a3] hover:text-[#fafafa] transition-colors"
                   >

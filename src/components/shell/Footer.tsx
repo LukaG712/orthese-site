@@ -1,10 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const FOOTER_COLUMNS = [
   {
     title: "Product",
     links: [
-      { label: "Composer Panel", href: "/#workspace-demo" },
+      { label: "Dashboard Canvas", href: "/dashboard" },
       { label: "Orthese Router", href: "/router" },
       { label: "Shared Context Bus", href: "/#shared-context" },
       { label: "Base Harness", href: "/#base-harness" },
@@ -24,10 +27,10 @@ const FOOTER_COLUMNS = [
   {
     title: "Developers",
     links: [
-      { label: "Piece SDK Docs", href: "/marketplace/orthese.website-builder" },
-      { label: "piece.json Spec", href: "/#base-harness" },
+      { label: "Piece SDK Docs", href: "/docs" },
+      { label: "Quickstart (No Code)", href: "/docs/quickstart" },
+      { label: "piece.json Spec", href: "/docs#piece-sdk" },
       { label: "Desktop vs. WASM", href: "/#dual-target" },
-      { label: "Changelog", href: "/marketplace/orthese.software-engineer" },
     ],
   },
   {
@@ -50,6 +53,11 @@ const FOOTER_COLUMNS = [
 ];
 
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname?.startsWith("/dashboard")) {
+    return null;
+  }
+
   return (
     <footer className="border-t border-white/[0.07] bg-[#121212]">
       <div className="mx-auto max-w-[1080px] px-5 py-16 sm:px-6">

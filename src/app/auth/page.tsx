@@ -318,7 +318,7 @@ export default function AuthPage() {
                 <button
                   type="submit"
                   data-testid="auth-submit-btn"
-                  className="btn-pill-white mt-1 inline-flex h-9 w-full items-center justify-center gap-1.5 rounded-lg px-4 text-[13px] font-medium cursor-pointer"
+                  className="bg-button-primary mt-1 inline-flex h-9 w-full items-center justify-center gap-1.5 rounded-[10px] px-4 text-[13.5px] font-medium cursor-pointer"
                 >
                   <span>{isSignup ? "Create account" : "Log in"}</span>
                   <ArrowRight className="h-3.5 w-3.5" />

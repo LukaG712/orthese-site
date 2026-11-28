@@ -1,19 +1,25 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { MarketplaceItem } from "@/types/piece-sdk";
 import { Play, Plus, ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
 import { useStorefront } from "@/components/shell/StorefrontContext";
 
 export function MarketplaceItemActions({ item }: { item: MarketplaceItem }) {
+  const router = useRouter();
   const { openCheckout } = useStorefront();
+  const dashboardHref =
+    item.kind === "starter-pack"
+      ? `/dashboard?pack=${encodeURIComponent(item.id)}`
+      : `/dashboard?piece=${encodeURIComponent(item.id)}`;
 
   return (
     <div className="flex shrink-0 flex-wrap items-center gap-2">
       {item.runtime === "wasm+desktop" && (
         <Link
-          href="/#workspace-demo"
+          href={dashboardHref}
           className="btn-secondary inline-flex h-9 items-center gap-1.5 rounded-lg px-3.5 text-[13px] font-medium"
         >
           <Play className="h-3.5 w-3.5" />
@@ -31,10 +37,11 @@ export function MarketplaceItemActions({ item }: { item: MarketplaceItem }) {
               priceEur: item.priceEur,
             });
           } else {
-            toast.success(`Added ${item.name} to Orthese Canvas`);
+            toast.success(`Opening ${item.name} in Orthese Dashboard`);
+            router.push(dashboardHref);
           }
         }}
-        className="btn-primary inline-flex h-9 items-center gap-1.5 rounded-lg px-4 text-[13px] font-medium cursor-pointer"
+        className="bg-button-primary inline-flex h-9 items-center gap-1.5 rounded-[10px] px-4 text-[13.5px] font-medium cursor-pointer"
       >
         {item.pricing === "paid" ? (
           <>

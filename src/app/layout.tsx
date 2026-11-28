@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Orthese — The modular AI workstation for builders and agents",
+  title: "Orthese | The modular AI workstation for builders and agents",
   description:
     "Assemble your custom AI workspace out of interchangeable Pieces. Free Rust + GPUI desktop & zero-install WebAssembly dashboard with transparent non-expiring credits.",
 };

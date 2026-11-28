@@ -81,28 +81,28 @@ const DEMO_PROMPTS: {
     piece: "orthese.website-builder",
     target: "efficient",
     chosenModel: "Gemini 4 Hydrogen",
-    reason: "Single-line CSS adjustment — routed to efficient pool (83% token savings).",
+    reason: "Single-line CSS adjustment: routed to efficient pool (83% token savings).",
   },
   {
     prompt: "Add pagination & filtering to the Pieces registry API",
     piece: "orthese.software-engineer",
     target: "mid",
     chosenModel: "Gemini 4 Neon",
-    reason: "Scoped multi-file feature — routed to Gemini 4 Neon for long-context balance (50% savings).",
+    reason: "Scoped multi-file feature: routed to Gemini 4 Neon for long-context balance (50% savings).",
   },
   {
     prompt: "Build a dark obsidian pricing strip with Polar checkout",
     piece: "orthese.website-builder",
     target: "mid",
     chosenModel: "GPT-6.2 Sol",
-    reason: "Structured UI layout + state wiring — routed to GPT-6.2 Sol via Cloudflare Edge.",
+    reason: "Structured UI layout + state wiring: routed to GPT-6.2 Sol via Cloudflare Edge.",
   },
   {
     prompt: "Design the Rust GPUI permission sandbox & MCP allowlist verifier",
     piece: "orthese.software-engineer",
     target: "frontier",
     chosenModel: "Claude Opus 5.5",
-    reason: "High-complexity systems & security boundary — kept directly on frontier.",
+    reason: "High-complexity systems & security boundary: kept directly on frontier.",
   },
 ];
 
@@ -124,7 +124,7 @@ function classifyPrompt(text: string): {
     return {
       target: "frontier",
       chosenModel: lower.includes("architect") ? "GPT-6.2 Astra" : "Claude Opus 5.5",
-      reason: "High-complexity reasoning & architectural constraints — kept on frontier.",
+      reason: "High-complexity reasoning & architectural constraints: kept on frontier.",
     };
   }
   if (
@@ -139,13 +139,13 @@ function classifyPrompt(text: string): {
     return {
       target: "efficient",
       chosenModel: "Gemini 4 Hydrogen",
-      reason: "Routine deterministic edit — routed to Gemini 4 Hydrogen for 83% savings.",
+      reason: "Routine deterministic edit: routed to Gemini 4 Hydrogen for 83% savings.",
     };
   }
   return {
     target: "mid",
     chosenModel: lower.includes("pricing") || lower.includes("ui") ? "GPT-6.2 Sol" : "Gemini 4 Neon",
-    reason: "Standard feature implementation — balanced quality & token efficiency (50% savings).",
+    reason: "Standard feature implementation: balanced quality & token efficiency (50% savings).",
   };
 }
 
@@ -222,11 +222,11 @@ const POLICIES = [
 const FAQS = [
   {
     q: "What is Orthese Router?",
-    a: "Orthese Router is automatic real-model selection built directly into the Orthese Composer Panel and Base Harness. Choose Orthese Router (Auto) once, and every prompt is routed to the best real model—Gemini 4 Hydrogen, Gemini 4 Neon, GPT-6.2 Sol, Claude Opus 5.5, or GPT-6.2 Astra—using your existing non-expiring Orthese Tokens.",
+    a: "Orthese Router is automatic real-model selection built directly into the Orthese Composer Panel and Base Harness. Choose Orthese Router (Auto) once, and every prompt is routed to the best real model (Gemini 4 Hydrogen, Gemini 4 Neon, GPT-6.2 Sol, Claude Opus 5.5, or GPT-6.2 Astra) using your existing non-expiring Orthese Tokens.",
   },
   {
     q: "Can I still pick a specific real model manually?",
-    a: "Yes. Orthese Router is completely optional. You can switch between Orthese Router (Auto), Claude Opus 5.5, Claude Fable 5.2, GPT-6.2 Astra, Gemini 4 Neon, Meta Muse, Grok 4.7, DeepSeek V4.1, or your local Ollama / CLIProxyAPI sidecar at any time—per prompt or per Piece.",
+    a: "Yes. Orthese Router is completely optional. You can switch between Orthese Router (Auto), Claude Opus 5.5, Claude Fable 5.2, GPT-6.2 Astra, Gemini 4 Neon, Meta Muse, Grok 4.7, DeepSeek V4.1, or your local Ollama / CLIProxyAPI sidecar at any time, per prompt or per Piece.",
   },
   {
     q: "What happens if an efficient model struggles on a task?",
@@ -321,16 +321,16 @@ export function RouterPageClient() {
 
             <p className="mt-4 max-w-2xl text-[14.5px] leading-relaxed text-[#a3a3a3] sm:mt-5 sm:text-[16px]">
               Automatic model selection across every Orthese session. Orthese Router preserves
-              frontier quality on complex work and cuts token spend by up to 63%—choose it once in
+              frontier quality on complex work and cuts token spend by up to 63%. Choose it once in
               the Composer Panel.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-4 sm:mt-7">
               <Link
-                href="/#workspace-demo"
-                className="btn-pill-white inline-flex h-9 items-center rounded-full px-5 text-[13px] font-medium"
+                href="/dashboard"
+                className="bg-button-primary inline-flex h-9 items-center justify-center rounded-[10px] px-4 text-[13.5px] font-medium"
               >
-                Try in Composer
+                Open in Dashboard
               </Link>
               <a
                 href="#cost-comparison"
@@ -562,7 +562,7 @@ export function RouterPageClient() {
             {
               num: "02",
               title: "Routes each prompt to a real model.",
-              body: "Draws from Gemini 4 Hydrogen, Gemini 4 Neon, GPT-6.2 Sol, Claude Opus 5.5, and GPT-6.2 Astra—metered cleanly in Orthese Tokens.",
+              body: "Draws from Gemini 4 Hydrogen, Gemini 4 Neon, GPT-6.2 Sol, Claude Opus 5.5, and GPT-6.2 Astra, metered cleanly in Orthese Tokens.",
             },
             {
               num: "03",
@@ -734,12 +734,12 @@ export function RouterPageClient() {
             {
               icon: Zap,
               title: "Hybrid CLIProxyAPI handoff",
-              body: "On Desktop, spill eligible calls into your local CLI OAuth quotas (Claude Code, Codex, Gemini CLI) at €0—or stay on Cloudflare Edge tokens.",
+              body: "On Desktop, spill eligible calls into your local CLI OAuth quotas (Claude Code, Codex, Gemini CLI) at €0, or stay on Cloudflare Edge tokens.",
             },
             {
               icon: Layers,
               title: "Frontier models on day one",
-              body: "New Anthropic, OpenAI, and Google releases land directly in the real-model pool—no waiting for opaque abstract tiers to catch up.",
+              body: "New Anthropic, OpenAI, and Google releases land directly in the real-model pool, with no waiting for opaque abstract tiers to catch up.",
             },
             {
               icon: ShieldCheck,
@@ -775,7 +775,7 @@ export function RouterPageClient() {
             <p className="mt-3 text-[14.5px] leading-relaxed text-[#a3a3a3]">
               Declare model boundaries directly in{" "}
               <code className="font-mono text-[12.5px] text-[#fafafa]">piece.json</code> or
-              workspace config—no separate control plane required.
+              workspace config, with no separate control plane required.
             </p>
           </div>
 
@@ -873,15 +873,15 @@ export function RouterPageClient() {
         </h2>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
-            href="/#workspace-demo"
-            className="btn-pill-white inline-flex h-9 items-center gap-1.5 rounded-full px-5 text-[13.5px] font-medium"
+            href="/dashboard"
+            className="bg-button-primary inline-flex h-9 items-center justify-center gap-1.5 rounded-[10px] px-4 text-[13.5px] font-medium"
           >
-            <span>Open Composer</span>
+            <span>Launch Dashboard</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
           <Link
             href="/marketplace"
-            className="btn-pill-dark inline-flex h-9 items-center gap-1.5 rounded-full px-5 text-[13.5px] font-medium"
+            className="bg-button-secondary inline-flex h-9 items-center justify-center gap-1.5 rounded-[10px] px-4 text-[13.5px] font-medium"
           >
             <Check className="h-3.5 w-3.5" />
             <span>Browse Pieces</span>

@@ -307,12 +307,12 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
           <div className="grid gap-8 lg:grid-cols-[220px_1fr] lg:gap-10">
             {/* Sticky 220px Filter Rail (collapsible on <lg mobile) */}
             <aside className="space-y-4 lg:sticky lg:top-28 lg:self-start lg:space-y-6">
-              <div className="flex items-center justify-between px-0 lg:px-2">
+              <div className="flex items-center justify-between gap-2 px-0 lg:px-2">
                 <button
                   type="button"
                   data-testid="mobile-filters-toggle"
                   onClick={() => setMobileFiltersOpen((v) => !v)}
-                  className="inline-flex h-9 w-full items-center justify-between gap-2 rounded-xl border border-white/[0.09] bg-[#171717] px-3.5 text-[12.5px] font-medium text-[#fafafa] lg:pointer-events-none lg:h-auto lg:w-auto lg:border-0 lg:bg-transparent lg:p-0 lg:text-[12px] cursor-pointer"
+                  className="inline-flex h-9 min-w-0 flex-1 items-center justify-between gap-2 rounded-xl border border-white/[0.09] bg-[#171717] px-3.5 text-[12.5px] font-medium text-[#fafafa] lg:pointer-events-none lg:h-auto lg:flex-none lg:border-0 lg:bg-transparent lg:p-0 lg:text-[12px] cursor-pointer"
                 >
                   <span className="inline-flex items-center gap-2">
                     <span>Filters</span>
@@ -330,10 +330,10 @@ export function MarketplaceClient({ initialTab = "all" }: { initialTab?: TabFilt
                   <button
                     type="button"
                     onClick={resetFilters}
-                    className="inline-flex items-center gap-1 text-[11px] text-[#a3a3a3] hover:text-[#fafafa] cursor-pointer"
+                    className="inline-flex h-9 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-xl border border-white/[0.08] bg-[#171717] px-3 text-[11.5px] text-[#a3a3a3] hover:text-[#fafafa] lg:h-auto lg:border-0 lg:bg-transparent lg:px-0 lg:text-[11px] cursor-pointer"
                   >
                     <RotateCcw className="h-3 w-3" />
-                    Reset ({activeFilterCount})
+                    <span>Reset ({activeFilterCount})</span>
                   </button>
                 )}
               </div>

@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <div className="bg-[#121212]">
       {/* FOCUSED HERO: ARCHITECTURAL STAGE + EDITORIAL HEADLINE + COMPOSER PANEL */}
-      <section className="relative flex min-h-[100svh] flex-col justify-center overflow-x-clip px-4 pb-12 pt-20 sm:px-6 sm:pb-20 sm:pt-32">
+      <section className="relative flex min-h-[92svh] flex-col justify-center overflow-x-clip px-4 pb-16 pt-20 sm:min-h-[calc(100svh-56px)] sm:px-6 sm:pb-24 sm:pt-28">
         {/* Subtle BoardUI neutral top-center studio sheen + masked architectural grid */}
         <div
           aria-hidden="true"
@@ -38,20 +38,20 @@ export default function HomePage() {
           <HeroComposerPanel />
         </div>
 
-        {/* Whisper-quiet bottom scroll hairline on desktop */}
+        {/* Whisper-quiet bottom scroll hairline on desktop -> jumps to #architecture */}
         <a
           href="#architecture"
           aria-label="Scroll to architecture"
-          className="hidden sm:flex absolute bottom-6 left-1/2 -translate-x-1/2 flex-col items-center gap-1.5 opacity-40 hover:opacity-80 transition-opacity"
+          className="hidden sm:flex absolute bottom-5 left-1/2 -translate-x-1/2 flex-col items-center gap-1.5 opacity-40 hover:opacity-80 transition-opacity"
         >
           <span className="h-7 w-px bg-gradient-to-b from-white/50 to-transparent" />
         </a>
       </section>
 
-      {/* INTERACTIVE FEATURE CHAPTERS */}
+      {/* WORKS-WITH STRIP + ASYMMETRIC BENTO + ZIG-ZAG SHOWCASES + WASM VS DESKTOP */}
       <FeatureChapters />
 
-      {/* COMPACT MARKETPLACE + PRICING + CLOSING CTA */}
+      {/* MARKETPLACE MARQUEE + PRICING + CLOSING CTA */}
       <MarketplaceAndPricing />
     </div>
   );

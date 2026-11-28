@@ -106,12 +106,12 @@ export function ApprovalCard({
         ) : status === "approved" ? (
           <div className="flex items-center gap-1.5 font-mono text-[11px] text-zinc-200">
             <Check className="h-3.5 w-3.5 text-white" />
-            <span>Approved — emitted orthese/git-diff (2 files, +48 −12)</span>
+            <span>Approved: emitted orthese/git-diff (2 files, +48 −12)</span>
           </div>
         ) : (
           <div className="flex items-center gap-1.5 font-mono text-[11px] text-zinc-400">
             <X className="h-3.5 w-3.5 text-zinc-400" />
-            <span>Denied — sandbox remained read-only</span>
+            <span>Denied: sandbox remained read-only</span>
           </div>
         )}
       </div>

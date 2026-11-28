@@ -153,7 +153,7 @@ export function ManifestSecurityPanel({ manifest }: ManifestSecurityPanelProps) 
                       content={RUNTIME_TOOLTIPS.wasm.description}
                     >
                       <span className="text-[12px] text-[#8a8a8a] underline decoration-white/15 decoration-dotted underline-offset-4 cursor-help">
-                        None — runs natively in WASM
+                        None (runs natively in WASM)
                       </span>
                     </InfoTooltip>
                   )}
@@ -196,14 +196,14 @@ export function ManifestSecurityPanel({ manifest }: ManifestSecurityPanelProps) 
               </div>
             </div>
 
-            <div className="grid grid-cols-3 divide-x divide-white/[0.06] rounded-lg border border-white/[0.07] bg-[#121212] font-mono text-[11px] tabular-nums">
-              <div className="p-2.5">
+            <div className="grid grid-cols-2 divide-y divide-white/[0.06] rounded-lg border border-white/[0.07] bg-[#121212] font-mono text-[11px] tabular-nums sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+              <div className="col-span-2 p-2.5 sm:col-span-1">
                 <span className="block text-[10px] text-[#737373]">MODEL</span>
                 <span className="block truncate text-[#fafafa]">
                   {manifest.defaultModel ?? "claude-sonnet-5.5"}
                 </span>
               </div>
-              <div className="p-2.5">
+              <div className="border-r border-white/[0.06] p-2.5 sm:border-r-0">
                 <span className="block text-[10px] text-[#737373]">GRID</span>
                 <span className="text-[#fafafa]">
                   {manifest.layout.defaultSize.w}×{manifest.layout.defaultSize.h}

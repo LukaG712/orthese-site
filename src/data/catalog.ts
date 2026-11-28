@@ -35,7 +35,7 @@ export const CREDIT_PACKS: CreditPack[] = [
     tagline: "Entry pay-as-you-go pack. Never expires, zero subscription.",
     bullets: [
       "1,000 model-weighted Orthese Credits",
-      "All-in price — no surprise checkout fees",
+      "All-in price, with no surprise checkout fees",
       "Credits never expire across every Piece",
       "Transparent per-action spend breakdown",
     ],
@@ -67,7 +67,7 @@ export const CREDIT_PACKS: CreditPack[] = [
     bullets: [
       "5,500 model-weighted Orthese Credits",
       "Reasoning-tier frontier models on demand",
-      "Zero monthly lock-in — top up only when needed",
+      "Zero monthly lock-in; top up only when needed",
       "Invoice & VAT handled automatically by Polar",
     ],
     ctaLabel: "Buy Studio · €50",

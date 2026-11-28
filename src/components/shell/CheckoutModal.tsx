@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { useStorefront } from "./StorefrontContext";
 
 export function CheckoutModal() {
-  const { checkoutTarget, closeCheckout } = useStorefront();
+  const { checkoutTarget, closeCheckout, adjustCredits } = useStorefront();
   const [selectedRail, setSelectedRail] = useState<"apple-pay" | "google-pay" | "card" | "bancontact">("apple-pay");
   const [processing, setProcessing] = useState(false);
 
@@ -32,6 +32,9 @@ export function CheckoutModal() {
     setProcessing(true);
     setTimeout(() => {
       setProcessing(false);
+      if (checkoutTarget.credits) {
+        adjustCredits(checkoutTarget.credits);
+      }
       toast.success(`${checkoutTarget.title} confirmed (Preview Mode)`, {
         description: checkoutTarget.credits
           ? `Added ${checkoutTarget.credits.toLocaleString()} Orthese Credits via Polar (${selectedRail}).`
@@ -53,10 +56,10 @@ export function CheckoutModal() {
         <Dialog.Popup className="fixed left-1/2 top-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl border border-white/[0.12] bg-[#111111] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(255,255,255,0.18)] focus:outline-none">
           {checkoutTarget && (
             <>
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="rounded border border-white/[0.1] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-zinc-300">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span className="shrink-0 whitespace-nowrap rounded border border-white/[0.1] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-zinc-300">
                       POLAR EMBEDDED
                     </span>
                     <span className="font-mono text-[10px] text-zinc-500">
@@ -70,21 +73,21 @@ export function CheckoutModal() {
                     {checkoutTarget.subtitle}
                   </Dialog.Description>
                 </div>
-                <Dialog.Close className="rounded-md border border-white/[0.08] p-1.5 text-zinc-400 hover:bg-white/[0.05] hover:text-white cursor-pointer">
+                <Dialog.Close className="shrink-0 rounded-md border border-white/[0.08] p-1.5 text-zinc-400 hover:bg-white/[0.05] hover:text-white cursor-pointer">
                   <X className="h-4 w-4" />
                 </Dialog.Close>
               </div>
 
-              <div className="mt-5 flex items-baseline justify-between rounded-lg border border-white/[0.08] bg-[#0a0a0a] px-4 py-3.5">
-                <div>
+              <div className="mt-5 flex items-center justify-between gap-4 rounded-lg border border-white/[0.08] bg-[#0a0a0a] px-4 py-3.5">
+                <div className="min-w-0">
                   <span className="block font-mono text-[10px] uppercase tracking-wider text-zinc-500">
                     All-in one-time total
                   </span>
-                  <span className="text-xs text-zinc-400">
+                  <span className="block text-xs text-zinc-400">
                     No recurring charges · Processing fees absorbed
                   </span>
                 </div>
-                <div className="font-mono text-2xl font-semibold text-white">
+                <div className="shrink-0 whitespace-nowrap font-mono text-2xl font-semibold tabular-nums text-white">
                   €<NumberFlow value={checkoutTarget.priceEur} />
                 </div>
               </div>
@@ -126,7 +129,7 @@ export function CheckoutModal() {
                 type="button"
                 disabled={processing}
                 onClick={handleConfirm}
-                className="mt-5 flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-white text-xs font-semibold text-black hover:bg-zinc-200 disabled:opacity-60 transition-colors cursor-pointer"
+                className="bg-button-primary mt-5 flex h-10 w-full items-center justify-center gap-2 rounded-[10px] text-[13px] font-medium disabled:opacity-60 cursor-pointer"
               >
                 <Lock className="h-3.5 w-3.5" />
                 {processing

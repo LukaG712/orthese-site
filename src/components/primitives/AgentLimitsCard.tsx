@@ -172,7 +172,7 @@ export function AgentLimitsCard({
                     </span>
                     <span className="flex items-center gap-3 shrink-0 font-mono text-[11.5px] tabular-nums">
                       <span>{formatTokens(seg.tokens)}</span>
-                      <span className="w-11 text-right">—</span>
+                      <span className="w-11 text-right">-</span>
                     </span>
                   </div>
                 ))}

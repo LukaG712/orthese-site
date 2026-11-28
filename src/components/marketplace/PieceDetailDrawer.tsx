@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { MarketplaceItem } from "@/types/piece-sdk";
 import { Dialog } from "@base-ui/react/dialog";
 import { AnimatePresence, motion } from "motion/react";
@@ -25,7 +26,13 @@ interface PieceDetailDrawerProps {
 }
 
 export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
+  const router = useRouter();
   const { openCheckout } = useStorefront();
+
+  const getDashboardHref = (activeItem: MarketplaceItem) =>
+    activeItem.kind === "starter-pack"
+      ? `/dashboard?pack=${encodeURIComponent(activeItem.id)}`
+      : `/dashboard?piece=${encodeURIComponent(activeItem.id)}`;
 
   const handlePrimaryAction = (activeItem: MarketplaceItem) => {
     if (activeItem.pricing === "paid") {
@@ -38,12 +45,9 @@ export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
       });
       return;
     }
-    toast.success(`Added ${activeItem.name} to Orthese Canvas`, {
-      description:
-        activeItem.runtime === "wasm+desktop"
-          ? "Ready immediately in browser (WASM) and Desktop."
-          : "Queued for your native Orthese Desktop workspace.",
-    });
+    onClose();
+    toast.success(`Opening ${activeItem.name} in Orthese Dashboard`);
+    router.push(getDashboardHref(activeItem));
   };
 
   return (
@@ -146,7 +150,7 @@ export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
                     <div className="flex flex-wrap items-center gap-2">
                       {item.runtime === "wasm+desktop" && (
                         <Link
-                          href="/#workspace-demo"
+                          href={getDashboardHref(item)}
                           onClick={onClose}
                           className="btn-secondary inline-flex h-9 items-center gap-1.5 rounded-lg px-3.5 text-[13px] font-medium"
                         >
@@ -157,7 +161,7 @@ export function PieceDetailDrawer({ item, onClose }: PieceDetailDrawerProps) {
                       <button
                         type="button"
                         onClick={() => handlePrimaryAction(item)}
-                        className="btn-primary inline-flex h-9 items-center gap-1.5 rounded-lg px-4 text-[13px] font-medium cursor-pointer"
+                        className="bg-button-primary inline-flex h-9 items-center gap-1.5 rounded-[10px] px-4 text-[13.5px] font-medium cursor-pointer"
                       >
                         {item.pricing === "paid" ? (
                           <>

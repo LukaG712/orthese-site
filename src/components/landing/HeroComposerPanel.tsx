@@ -245,7 +245,7 @@ function buildRunResult(
 }
 
 export function HeroComposerPanel() {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "#shared-context";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "/dashboard";
 
   const [prompt, setPrompt] = useState("");
   const [tokens, setTokens] = useState<PromptToken[]>([]);
@@ -517,11 +517,14 @@ export function HeroComposerPanel() {
                 {openMenu === "add" && (
                   <div
                     data-testid="composer-add-menu"
-                    className="absolute left-2 right-2 top-full mt-2 sm:left-0 sm:right-auto sm:top-10 sm:mt-0 sm:w-64 z-30 rounded-xl border border-white/[0.12] bg-[#1f1f1f]/98 backdrop-blur-xl p-1.5 shadow-2xl"
+                    className="absolute left-2 right-2 top-full mt-2 sm:left-0 sm:right-auto sm:top-10 sm:mt-0 sm:w-64 z-30 rounded-xl border border-white/[0.12] bg-[#161618] p-1.5 shadow-2xl"
                   >
                     <div className="flex items-center justify-between px-2.5 py-1 text-[11px] font-medium text-[#737373]">
                       <span>Attach context</span>
-                      <span className="text-[10px] text-[#737373]">Right-click tiles</span>
+                      <span className="text-[10px] text-[#737373]">
+                        <span className="sm:hidden">Hold tiles</span>
+                        <span className="hidden sm:inline">Right-click tiles</span>
+                      </span>
                     </div>
 
                     <button
@@ -760,9 +763,9 @@ export function HeroComposerPanel() {
             </div>
           ) : lastResult ? (
             <div className="space-y-1.5">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Sparkles className="h-3.5 w-3.5 text-[#818cf8]" />
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1.5">
+                  <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#818cf8]" />
                   <span className="font-mono text-[11.5px] text-[#fafafa]">
                     {lastResult.piece}
                   </span>
@@ -777,7 +780,7 @@ export function HeroComposerPanel() {
                   type="button"
                   onClick={() => setLastResult(null)}
                   aria-label="Dismiss output"
-                  className="text-[#737373] hover:text-[#fafafa] cursor-pointer"
+                  className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[#737373] hover:bg-white/[0.06] hover:text-[#fafafa] cursor-pointer"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
@@ -794,7 +797,7 @@ export function HeroComposerPanel() {
       <div className="relative z-20 mt-6 flex flex-col items-center justify-center gap-2.5 sm:mt-7 sm:flex-row sm:flex-wrap sm:gap-3">
         <Link
           href={appUrl}
-          className="btn-pill-white inline-flex h-10 w-full max-w-[240px] items-center justify-center rounded-full px-5 text-[13.5px] font-medium sm:h-9 sm:w-auto sm:max-w-none sm:text-[13px]"
+          className="bg-button-primary inline-flex h-10 w-full max-w-[240px] items-center justify-center rounded-[10px] px-4 text-[13.5px] font-medium sm:h-9 sm:w-auto sm:max-w-none"
         >
           Launch in Browser
         </Link>

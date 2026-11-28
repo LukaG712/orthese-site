@@ -31,12 +31,16 @@ interface StorefrontContextValue {
   closeCheckout: () => void;
   user: UserAccount | null;
   authReady: boolean;
+  credits: number;
+  adjustCredits: (delta: number) => void;
   signIn: (account: UserAccount) => void;
   signInWithSocial: (provider: Exclude<AuthProviderKind, "email">) => UserAccount;
   signOut: () => void;
 }
 
 const AUTH_STORAGE_KEY = "orthese.auth.user.v1";
+const GUEST_CREDITS_KEY = "orthese.guest.credits.v1";
+const DEFAULT_GUEST_CREDITS = 200;
 
 const SOCIAL_DEMO_PROFILES: Record<
   Exclude<AuthProviderKind, "email">,
@@ -74,6 +78,7 @@ export function StorefrontProvider({ children }: { children: React.ReactNode }) 
   const [commandOpen, setCommandOpen] = useState(false);
   const [checkoutTarget, setCheckoutTarget] = useState<CheckoutTarget | null>(null);
   const [user, setUser] = useState<UserAccount | null>(null);
+  const [guestCredits, setGuestCredits] = useState<number>(DEFAULT_GUEST_CREDITS);
   const [authReady, setAuthReady] = useState(false);
 
   useEffect(() => {
@@ -83,6 +88,13 @@ export function StorefrontProvider({ children }: { children: React.ReactNode }) 
         const parsed = JSON.parse(raw) as UserAccount;
         if (parsed && typeof parsed.email === "string" && typeof parsed.name === "string") {
           setUser(parsed);
+        }
+      }
+      const rawGuest = window.localStorage.getItem(GUEST_CREDITS_KEY);
+      if (rawGuest) {
+        const num = Number(rawGuest);
+        if (Number.isFinite(num) && num >= 0) {
+          setGuestCredits(num);
         }
       }
     } catch {
@@ -99,6 +111,28 @@ export function StorefrontProvider({ children }: { children: React.ReactNode }) 
     } catch {
       // Ignore storage quota errors
     }
+  }, []);
+
+  const adjustCredits = useCallback((delta: number) => {
+    setUser((prev) => {
+      if (!prev) return prev;
+      const next = { ...prev, credits: Math.max(0, prev.credits + delta) };
+      try {
+        window.localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(next));
+      } catch {
+        // Ignore storage errors
+      }
+      return next;
+    });
+    setGuestCredits((prev) => {
+      const next = Math.max(0, prev + delta);
+      try {
+        window.localStorage.setItem(GUEST_CREDITS_KEY, String(next));
+      } catch {
+        // Ignore storage errors
+      }
+      return next;
+    });
   }, []);
 
   const signInWithSocial = useCallback(
@@ -143,6 +177,8 @@ export function StorefrontProvider({ children }: { children: React.ReactNode }) 
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  const credits = user ? user.credits : guestCredits;
+
   return (
     <StorefrontContext.Provider
       value={{
@@ -153,6 +189,8 @@ export function StorefrontProvider({ children }: { children: React.ReactNode }) 
         closeCheckout,
         user,
         authReady,
+        credits,
+        adjustCredits,
         signIn,
         signInWithSocial,
         signOut,

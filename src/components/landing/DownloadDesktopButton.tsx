@@ -227,7 +227,7 @@ export function DownloadDesktopButton() {
     }
 
     toast.info(`Orthese Desktop · ${option.fullLabel}`, {
-      description: `${option.filename} — native GPUI installer queued (preview build).`,
+      description: `${option.filename}: native GPUI installer queued (preview build).`,
     });
   }
 
@@ -249,24 +249,24 @@ export function DownloadDesktopButton() {
       className="relative inline-flex w-full max-w-[240px] sm:w-auto sm:max-w-none"
       data-testid="download-desktop-split"
     >
-      {/* Split pill button: OS-aware direct download + platform dropdown toggle */}
+      {/* BoardUI secondary split button: OS-aware direct download + platform dropdown toggle */}
       <div
         className={cn(
-          "inline-flex h-10 w-full items-stretch rounded-full border bg-[#1f1f1f]/95 text-[#fafafa] shadow-[inset_0_1px_0_rgba(255,255,255,0.09),0_4px_18px_rgba(0,0,0,0.45)] transition-colors sm:h-9 sm:w-auto",
-          open ? "border-white/[0.24]" : "border-white/[0.13] hover:border-white/[0.2]"
+          "inline-flex h-10 w-full items-stretch rounded-[10px] border bg-[#262626] text-[#fafafa] shadow-[0_1px_2px_rgba(0,0,0,0.22)] transition-colors sm:h-9 sm:w-auto",
+          open ? "border-[#737373]" : "border-[#404040] hover:border-[#737373]"
         )}
       >
         <button
           type="button"
           data-testid="download-desktop-primary"
           onClick={handlePrimaryClick}
-          className="inline-flex flex-1 items-center justify-center gap-2 rounded-l-full pl-4 pr-3.5 text-[13.5px] font-medium text-[#e5e5e5] hover:bg-white/[0.06] hover:text-white transition-colors sm:flex-none sm:text-[13px] cursor-pointer whitespace-nowrap"
+          className="inline-flex flex-1 items-center justify-center gap-2 rounded-l-[9px] pl-3.5 pr-3 text-[13.5px] font-medium text-[#fafafa] hover:bg-white/[0.06] transition-colors sm:flex-none sm:text-[13px] cursor-pointer whitespace-nowrap"
         >
           <Download className="h-3.5 w-3.5 text-[#a3a3a3]" />
           <span>{detected.buttonLabel}</span>
         </button>
 
-        <span aria-hidden="true" className="w-px bg-white/[0.12]" />
+        <span aria-hidden="true" className="w-px bg-[#404040]" />
 
         <button
           type="button"
@@ -275,7 +275,7 @@ export function DownloadDesktopButton() {
           aria-haspopup="menu"
           aria-expanded={open}
           aria-label="Choose desktop platform"
-          className="inline-flex w-9 items-center justify-center rounded-r-full text-[#a3a3a3] hover:bg-white/[0.06] hover:text-white transition-colors cursor-pointer"
+          className="inline-flex w-9 items-center justify-center rounded-r-[9px] text-[#a3a3a3] hover:bg-white/[0.06] hover:text-[#fafafa] transition-colors cursor-pointer"
         >
           <ChevronDown
             className={cn(

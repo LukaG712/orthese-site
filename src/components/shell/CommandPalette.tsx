@@ -59,7 +59,7 @@ export function CommandPalette() {
   const listRef = useRef<HTMLDivElement | null>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "/#workspace-demo";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "/dashboard";
 
   const closePalette = () => {
     setCommandOpen(false);
@@ -116,11 +116,20 @@ export function CommandPalette() {
         onSelect: () => go("/marketplace"),
       },
       {
+        id: "nav-quickstart",
+        section: "Navigate",
+        title: "Quickstart Guide (Non-Tech)",
+        description: "Start in 60 seconds with Starter Packs, no code or API keys",
+        keywords: "quickstart guide beginner non tech easy no code starter packs",
+        icon: <BookOpen className="h-3.5 w-3.5 text-sky-400" />,
+        onSelect: () => go("/docs/quickstart"),
+      },
+      {
         id: "nav-docs",
         section: "Navigate",
-        title: "Documentation",
-        description: "Quickstart, Piece SDK (piece.json), SKILL.md & MCP Hub",
-        keywords: "docs documentation quickstart piece sdk manifest skill md mcp",
+        title: "Tech & Pro Documentation",
+        description: "Piece SDK (piece.json), Monorepo Tree, SKILL.md & MCP Hub",
+        keywords: "docs documentation pro tech piece sdk manifest skill md mcp",
         shortcut: ["G", "D"],
         icon: <BookOpen className="h-3.5 w-3.5 text-emerald-400" />,
         onSelect: () => go("/docs"),
@@ -168,7 +177,7 @@ export function CommandPalette() {
             id: "acc-signup",
             section: "Account",
             title: "Create an account",
-            description: "Start free with €2 starter credits — no card required",
+            description: "Start free with €2 starter credits, no card required",
             keywords: "sign up signup register create account free",
             icon: <UserPlus className="h-3.5 w-3.5 text-indigo-300" />,
             onSelect: () => go("/auth?mode=signup"),
@@ -261,6 +270,19 @@ export function CommandPalette() {
     activeEl?.scrollIntoView({ block: "nearest" });
   }, [activeIndex, commandOpen]);
 
+  // Global Escape dismissal even if focus moves outside the search input
+  useEffect(() => {
+    if (!commandOpen) return;
+    function onWindowKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closePalette();
+      }
+    }
+    window.addEventListener("keydown", onWindowKeyDown);
+    return () => window.removeEventListener("keydown", onWindowKeyDown);
+  }, [commandOpen, closePalette]);
+
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Escape") {
       e.preventDefault();
@@ -335,8 +357,8 @@ export function CommandPalette() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Type a command or search Pieces, Skills, accounts…"
-                className="h-12 w-full bg-transparent text-[14px] text-[#fafafa] placeholder:text-[#737373] focus:outline-none"
+                placeholder="Search Pieces, Docs, commands…"
+                className="h-12 w-full min-w-0 bg-transparent text-[14px] text-[#fafafa] placeholder:text-[#737373] focus:outline-none"
               />
               {query ? (
                 <button
@@ -346,7 +368,7 @@ export function CommandPalette() {
                     inputRef.current?.focus();
                   }}
                   aria-label="Clear search"
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[#737373] hover:bg-white/[0.08] hover:text-[#fafafa] transition-colors cursor-pointer"
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[#737373] hover:bg-white/[0.08] hover:text-[#fafafa] transition-colors cursor-pointer"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
@@ -354,9 +376,11 @@ export function CommandPalette() {
                 <button
                   type="button"
                   onClick={closePalette}
-                  className="shrink-0 rounded-md border border-white/[0.1] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-[#a3a3a3] hover:border-white/20 hover:text-[#fafafa] transition-colors cursor-pointer"
+                  aria-label="Close command palette"
+                  className="inline-flex h-7 shrink-0 items-center justify-center rounded-md border border-white/[0.1] bg-white/[0.04] px-2 font-mono text-[10px] text-[#a3a3a3] hover:border-white/20 hover:text-[#fafafa] transition-colors cursor-pointer"
                 >
-                  Esc
+                  <X className="h-3.5 w-3.5 sm:hidden" />
+                  <span className="hidden sm:inline">Esc</span>
                 </button>
               )}
             </div>

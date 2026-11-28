@@ -10,7 +10,7 @@ export function EcosystemAndPillars() {
             A new species of <OrbitGradientText>AI workstation.</OrbitGradientText>
           </span>{" "}
           Built on one Rust + GPUI core so your prompt box, website builder, and coding agent
-          share context—with zero monthly subscription.
+          share context, with zero monthly subscription.
         </p>
 
         {/* 3-Column Unboxed Isometric Wireframe Pillars */}
