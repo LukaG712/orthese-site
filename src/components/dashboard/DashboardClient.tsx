@@ -3,12 +3,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import NumberFlow from "@number-flow/react";
+import { motion } from "motion/react";
 import {
   ArrowLeft,
   ArrowRight,
   Check,
   ChevronDown,
-  Columns2,
   Cpu,
   Layers,
   Maximize2,
@@ -33,9 +33,14 @@ import {
   DASHBOARD_MODELS,
   INITIAL_BUS_EVENTS,
   INITIAL_WORKSPACES,
+  PIECE_SIZE_OPTIONS,
+  PIECE_SIZE_ORDER,
   createStarterWorkspaceFromPack,
+  getPieceSizeSpec,
+  normalizeCanvasPane,
   type BusEvent,
-  type PaneSpan,
+  type CanvasPane,
+  type PieceSize,
   type RoutingEngine,
   type WorkspaceTab,
 } from "./dashboardTypes";
@@ -44,20 +49,14 @@ import { PiecePickerDrawer } from "./PiecePickerDrawer";
 
 const WORKSPACE_STORAGE_KEY = "orthese.dashboard.workspaces.v1";
 
-const SPAN_STEPS: PaneSpan[] = [4, 6, 8, 12];
-
-function spanToGridClass(span: PaneSpan): string {
-  if (span === 4) return "lg:col-span-4";
-  if (span === 6) return "lg:col-span-6";
-  if (span === 8) return "lg:col-span-8";
-  return "lg:col-span-12";
-}
-
-function spanLabel(span: PaneSpan): string {
-  if (span === 4) return "1/3";
-  if (span === 6) return "1/2";
-  if (span === 8) return "2/3";
-  return "Full";
+interface ResizeDragState {
+  instanceId: string;
+  startX: number;
+  startY: number;
+  startWidth: number;
+  gridWidth: number;
+  startSize: PieceSize;
+  currentSize: PieceSize;
 }
 
 export function DashboardClient() {
@@ -71,6 +70,8 @@ export function DashboardClient() {
   const [selectedModelId, setSelectedModelId] = useState<string>(DASHBOARD_MODELS[0].id);
   const [busEvents, setBusEvents] = useState<BusEvent[]>(INITIAL_BUS_EVENTS);
   const [maximizedPaneId, setMaximizedPaneId] = useState<string | null>(null);
+  const [openSizeMenuId, setOpenSizeMenuId] = useState<string | null>(null);
+  const [resizeDrag, setResizeDrag] = useState<ResizeDragState | null>(null);
 
   const [pickerOpen, setPickerOpen] = useState(false);
   const [routerMenuOpen, setRouterMenuOpen] = useState(false);
@@ -80,8 +81,9 @@ export function DashboardClient() {
   const routerMenuRef = useRef<HTMLDivElement | null>(null);
   const hubMenuRef = useRef<HTMLDivElement | null>(null);
   const newWsMenuRef = useRef<HTMLDivElement | null>(null);
+  const canvasGridRef = useRef<HTMLDivElement | null>(null);
 
-  // Hydrate persisted workspaces + apply optional ?piece=<id> or ?pack=<id> query param
+  // Hydrate persisted workspaces + migrate legacy spans + apply ?piece= / ?pack=
   useEffect(() => {
     let loaded = INITIAL_WORKSPACES;
     let initialActiveId = INITIAL_WORKSPACES[0].id;
@@ -90,11 +92,20 @@ export function DashboardClient() {
       const raw = window.localStorage.getItem(WORKSPACE_STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw) as {
-          workspaces?: WorkspaceTab[];
+          workspaces?: (Omit<WorkspaceTab, "panes"> & {
+            panes?: (Partial<CanvasPane> & { span?: number })[];
+          })[];
           activeId?: string;
         };
         if (Array.isArray(parsed.workspaces) && parsed.workspaces.length > 0) {
-          loaded = parsed.workspaces;
+          loaded = parsed.workspaces.map((ws) => ({
+            ...ws,
+            panes: Array.isArray(ws.panes)
+              ? ws.panes
+                  .map((p) => normalizeCanvasPane(p))
+                  .filter((p): p is CanvasPane => p !== null)
+              : [],
+          }));
           if (parsed.activeId && loaded.some((w) => w.id === parsed.activeId)) {
             initialActiveId = parsed.activeId;
           } else {
@@ -128,10 +139,10 @@ export function DashboardClient() {
         const targetWs = loaded.find((w) => w.id === initialActiveId) ?? loaded[0];
         const alreadyOnCanvas = targetWs.panes.some((p) => p.pieceId === item.id);
         if (!alreadyOnCanvas) {
-          const newPane = {
+          const newPane: CanvasPane = {
             instanceId: `pane-url-${Date.now().toString(36)}`,
             pieceId: item.id,
-            span: 6 as PaneSpan,
+            size: "md",
           };
           loaded = loaded.map((w) =>
             w.id === targetWs.id ? { ...w, panes: [...w.panes, newPane] } : w
@@ -158,7 +169,7 @@ export function DashboardClient() {
     }
   }, [workspaces, activeWorkspaceId, hydrated]);
 
-  // Dismiss open top-bar popovers on outside click / Escape
+  // Dismiss open popovers on outside click / Escape
   useEffect(() => {
     function onPointerDown(e: MouseEvent) {
       const target = e.target as Node;
@@ -171,12 +182,19 @@ export function DashboardClient() {
       if (newWsMenuRef.current && !newWsMenuRef.current.contains(target)) {
         setNewWsMenuOpen(false);
       }
+      if (
+        openSizeMenuId &&
+        !(target instanceof Element && target.closest("[data-size-menu-root]"))
+      ) {
+        setOpenSizeMenuId(null);
+      }
     }
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
         setRouterMenuOpen(false);
         setHubMenuOpen(false);
         setNewWsMenuOpen(false);
+        setOpenSizeMenuId(null);
       }
     }
     document.addEventListener("mousedown", onPointerDown);
@@ -185,7 +203,65 @@ export function DashboardClient() {
       document.removeEventListener("mousedown", onPointerDown);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, []);
+  }, [openSizeMenuId]);
+
+  // Global pointer tracking for bottom-right corner drag-to-resize (snaps cleanly to S / M / L / XL)
+  useEffect(() => {
+    if (!resizeDrag) return;
+
+    function onPointerMove(e: PointerEvent) {
+      if (!resizeDrag) return;
+      const dx = e.clientX - resizeDrag.startX;
+      const dy = e.clientY - resizeDrag.startY;
+      const isStacked = window.innerWidth < 1024;
+
+      let nextSize: PieceSize;
+      if (isStacked) {
+        // On mobile/tablet stacked columns, map vertical drag delta smoothly across the 4 sizes
+        const startIdx = PIECE_SIZE_ORDER.indexOf(resizeDrag.startSize);
+        const stepShift = Math.round(dy / 70);
+        const clamped = Math.max(0, Math.min(PIECE_SIZE_ORDER.length - 1, startIdx + stepShift));
+        nextSize = PIECE_SIZE_ORDER[clamped];
+      } else {
+        // On desktop 12-col grid, snap dragged width ratio to 1/4 (S), 1/2 (M), 3/4 (L), Full (XL)
+        const targetWidth = Math.max(180, resizeDrag.startWidth + dx);
+        const ratio = targetWidth / Math.max(resizeDrag.gridWidth, 320);
+        if (ratio < 0.375) nextSize = "sm";
+        else if (ratio < 0.625) nextSize = "md";
+        else if (ratio < 0.875) nextSize = "lg";
+        else nextSize = "xl";
+      }
+
+      if (nextSize !== resizeDrag.currentSize) {
+        setResizeDrag((prev) => (prev ? { ...prev, currentSize: nextSize } : null));
+        setWorkspaces((prev) =>
+          prev.map((ws) =>
+            ws.id === activeWorkspaceId
+              ? {
+                  ...ws,
+                  panes: ws.panes.map((p) =>
+                    p.instanceId === resizeDrag.instanceId ? { ...p, size: nextSize } : p
+                  ),
+                }
+              : ws
+          )
+        );
+      }
+    }
+
+    function onPointerUp() {
+      setResizeDrag(null);
+    }
+
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointercancel", onPointerUp);
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+    };
+  }, [resizeDrag, activeWorkspaceId]);
 
   const activeWorkspace =
     workspaces.find((w) => w.id === activeWorkspaceId) ?? workspaces[0];
@@ -213,10 +289,10 @@ export function DashboardClient() {
   }
 
   function handleAddPiece(item: MarketplaceItem) {
-    const newPane = {
+    const newPane: CanvasPane = {
       instanceId: `pane-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 5)}`,
       pieceId: item.id,
-      span: (item.id === "orthese.website-builder" ? 8 : 4) as PaneSpan,
+      size: item.id === "orthese.website-builder" ? "lg" : "md",
     };
     updateActiveWorkspace((ws) => ({ ...ws, panes: [...ws.panes, newPane] }));
     toast.success(`Snapped ${item.name} onto ${activeWorkspace.name}`);
@@ -224,22 +300,42 @@ export function DashboardClient() {
 
   function handleRemovePane(instanceId: string) {
     if (maximizedPaneId === instanceId) setMaximizedPaneId(null);
+    if (openSizeMenuId === instanceId) setOpenSizeMenuId(null);
     updateActiveWorkspace((ws) => ({
       ...ws,
       panes: ws.panes.filter((p) => p.instanceId !== instanceId),
     }));
   }
 
-  function handleCycleSpan(instanceId: string) {
+  function handleSetPaneSize(instanceId: string, nextSize: PieceSize) {
+    setOpenSizeMenuId(null);
     updateActiveWorkspace((ws) => ({
       ...ws,
-      panes: ws.panes.map((p) => {
-        if (p.instanceId !== instanceId) return p;
-        const idx = SPAN_STEPS.indexOf(p.span);
-        const nextSpan = SPAN_STEPS[(idx + 1) % SPAN_STEPS.length];
-        return { ...p, span: nextSpan };
-      }),
+      panes: ws.panes.map((p) =>
+        p.instanceId === instanceId ? { ...p, size: nextSize } : p
+      ),
     }));
+  }
+
+  function handleStartResizeDrag(
+    e: React.PointerEvent<HTMLButtonElement>,
+    pane: CanvasPane
+  ) {
+    e.preventDefault();
+    e.stopPropagation();
+    const section = e.currentTarget.closest("section");
+    const startWidth = section?.getBoundingClientRect().width ?? 360;
+    const gridWidth = canvasGridRef.current?.getBoundingClientRect().width ?? 1200;
+    setOpenSizeMenuId(null);
+    setResizeDrag({
+      instanceId: pane.instanceId,
+      startX: e.clientX,
+      startY: e.clientY,
+      startWidth,
+      gridWidth,
+      startSize: pane.size,
+      currentSize: pane.size,
+    });
   }
 
   function handleMovePane(instanceId: string, direction: -1 | 1) {
@@ -805,49 +901,81 @@ export function DashboardClient() {
           </div>
         ) : (
           <div
+            ref={canvasGridRef}
             data-testid="dashboard-canvas-grid"
-            className="grid grid-cols-1 gap-4 lg:grid-cols-12"
+            className="grid grid-cols-12 items-start gap-4"
           >
             {visiblePanes.map((pane, idx) => {
               const item = getMarketplaceItem(pane.pieceId);
               if (!item) return null;
               const isMaximized = maximizedPaneId === pane.instanceId;
+              const effectiveSize: PieceSize = isMaximized ? "xl" : pane.size;
+              const sizeSpec = getPieceSizeSpec(effectiveSize);
+              const isCompact = effectiveSize === "sm";
+              const isDraggingThis = resizeDrag?.instanceId === pane.instanceId;
+              const sizeMenuOpen = openSizeMenuId === pane.instanceId;
 
               return (
-                <section
+                <motion.section
                   key={pane.instanceId}
+                  layout
+                  transition={{ layout: { duration: 0.22, ease: [0.22, 1, 0.36, 1] } }}
                   data-testid={`canvas-pane-${pane.pieceId}`}
+                  data-pane-size={effectiveSize}
                   className={cn(
-                    "flex min-h-[450px] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#161618] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]",
-                    isMaximized ? "lg:col-span-12 min-h-[72svh]" : spanToGridClass(pane.span)
+                    "group/pane relative flex flex-col rounded-2xl border bg-[#161618] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors",
+                    isDraggingThis
+                      ? "border-[#2b7fff]/70 ring-1 ring-[#2b7fff]/35"
+                      : "border-white/[0.08]",
+                    isMaximized
+                      ? "col-span-12 min-h-[72svh]"
+                      : cn(sizeSpec.gridClass, sizeSpec.heightClass)
                   )}
                 >
                   {/* Pane Chrome Header */}
-                  <div className="flex items-center justify-between gap-2 border-b border-white/[0.07] bg-[#19191c] px-3.5 py-2.5">
+                  <div
+                    className={cn(
+                      "flex items-center justify-between gap-2 rounded-t-2xl border-b border-white/[0.07] bg-[#19191c]",
+                      isCompact ? "px-2.5 py-2" : "px-3.5 py-2.5"
+                    )}
+                  >
                     <div className="flex min-w-0 items-center gap-2">
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-[#121212]">
-                        <AssetIcon name={item.icon} className="h-3.5 w-3.5 text-[#d4d4d4]" />
+                      <span
+                        className={cn(
+                          "flex shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-[#121212]",
+                          isCompact ? "h-5.5 w-5.5" : "h-6 w-6"
+                        )}
+                      >
+                        <AssetIcon
+                          name={item.icon}
+                          className={cn("text-[#d4d4d4]", isCompact ? "h-3 w-3" : "h-3.5 w-3.5")}
+                        />
                       </span>
-                      <h2 className="truncate text-[13px] font-medium text-[#fafafa]">
+                      <h2
+                        className={cn(
+                          "truncate font-medium text-[#fafafa]",
+                          isCompact ? "text-[12px]" : "text-[13px]"
+                        )}
+                      >
                         {item.name}
                       </h2>
-                      {(isMaximized || pane.span >= 6) && (
-                        <span className="hidden shrink-0 whitespace-nowrap rounded-md border border-white/[0.07] bg-[#121212] px-1.5 py-0.5 font-mono text-[9.5px] text-[#737373] sm:inline">
+                      {(isMaximized || effectiveSize === "lg" || effectiveSize === "xl") && (
+                        <span className="hidden shrink-0 whitespace-nowrap rounded-md border border-white/[0.07] bg-[#121212] px-1.5 py-0.5 font-mono text-[9.5px] text-[#737373] xl:inline">
                           {item.manifest?.context.emits[0] ?? "piece"}
                         </span>
                       )}
                     </div>
 
-                    {/* Pane Controls: Reorder, Resize Span, Maximize, Close */}
+                    {/* Pane Controls: Reorder, 4-Size Picker (S/M/L/XL), Maximize, Close */}
                     <div className="flex shrink-0 items-center gap-1">
-                      {!isMaximized && activeWorkspace.panes.length > 1 && (
+                      {!isMaximized && activeWorkspace.panes.length > 1 && !isCompact && (
                         <>
                           <button
                             type="button"
                             disabled={idx === 0}
                             onClick={() => handleMovePane(pane.instanceId, -1)}
                             aria-label={`Move ${item.name} earlier`}
-                            className="inline-flex h-6 w-6 items-center justify-center rounded-md text-[#737373] transition-colors hover:bg-white/[0.07] hover:text-[#fafafa] disabled:opacity-25 cursor-pointer"
+                            className="hidden h-6 w-6 items-center justify-center rounded-md text-[#737373] transition-colors hover:bg-white/[0.07] hover:text-[#fafafa] disabled:opacity-25 sm:inline-flex cursor-pointer"
                           >
                             <ArrowLeft className="h-3 w-3" />
                           </button>
@@ -856,24 +984,124 @@ export function DashboardClient() {
                             disabled={idx === activeWorkspace.panes.length - 1}
                             onClick={() => handleMovePane(pane.instanceId, 1)}
                             aria-label={`Move ${item.name} later`}
-                            className="inline-flex h-6 w-6 items-center justify-center rounded-md text-[#737373] transition-colors hover:bg-white/[0.07] hover:text-[#fafafa] disabled:opacity-25 cursor-pointer"
+                            className="hidden h-6 w-6 items-center justify-center rounded-md text-[#737373] transition-colors hover:bg-white/[0.07] hover:text-[#fafafa] disabled:opacity-25 sm:inline-flex cursor-pointer"
                           >
                             <ArrowRight className="h-3 w-3" />
                           </button>
                         </>
                       )}
 
+                      {/* 4-Size Selector: inline S/M/L/XL pills on M/L/XL desktop panes, compact popover on S & mobile */}
                       {!isMaximized && (
-                        <button
-                          type="button"
-                          onClick={() => handleCycleSpan(pane.instanceId)}
-                          aria-label={`Resize ${item.name} width`}
-                          title="Cycle pane width (1/3, 1/2, 2/3, Full)"
-                          className="hidden h-6 items-center gap-1 rounded-md border border-white/[0.08] bg-[#121212] px-1.5 font-mono text-[10px] text-[#a3a3a3] transition-colors hover:border-white/[0.18] hover:text-[#fafafa] lg:inline-flex cursor-pointer"
-                        >
-                          <Columns2 className="h-3 w-3" />
-                          <span>{spanLabel(pane.span)}</span>
-                        </button>
+                        <>
+                          {!isCompact && (
+                            <div
+                              role="group"
+                              aria-label={`Resize ${item.name}`}
+                              data-testid={`size-strip-${pane.pieceId}`}
+                              className="hidden items-center rounded-lg border border-white/[0.08] bg-[#121212] p-0.5 sm:inline-flex"
+                            >
+                              {PIECE_SIZE_OPTIONS.map((opt) => {
+                                const active = pane.size === opt.id;
+                                return (
+                                  <button
+                                    key={opt.id}
+                                    type="button"
+                                    data-testid={`size-opt-${pane.pieceId}-${opt.id}`}
+                                    aria-label={`Set ${item.name} size to ${opt.name} (${opt.shortLabel})`}
+                                    aria-pressed={active}
+                                    title={`${opt.name} · ${opt.fraction} width`}
+                                    onClick={() => handleSetPaneSize(pane.instanceId, opt.id)}
+                                    className={cn(
+                                      "h-5 min-w-[22px] rounded-md px-1.5 font-mono text-[10px] font-medium transition-colors cursor-pointer",
+                                      active
+                                        ? "bg-[#2b7fff] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22)]"
+                                        : "text-[#737373] hover:text-[#fafafa]"
+                                    )}
+                                  >
+                                    {opt.shortLabel}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          )}
+
+                          {/* Compact Size Popover Trigger (always shown on S panes and mobile viewports) */}
+                          <div
+                            data-size-menu-root
+                            className={cn("relative", !isCompact && "sm:hidden")}
+                          >
+                            <button
+                              type="button"
+                              data-testid={`size-menu-btn-${pane.pieceId}`}
+                              aria-haspopup="menu"
+                              aria-expanded={sizeMenuOpen}
+                              aria-label={`Resize ${item.name} (currently ${sizeSpec.name})`}
+                              onClick={() =>
+                                setOpenSizeMenuId((curr) =>
+                                  curr === pane.instanceId ? null : pane.instanceId
+                                )
+                              }
+                              className="inline-flex h-6 items-center gap-0.5 rounded-md border border-white/[0.1] bg-[#121212] px-1.5 font-mono text-[10px] font-medium text-[#d4d4d4] transition-colors hover:border-white/[0.22] hover:text-[#fafafa] cursor-pointer"
+                            >
+                              <span>{sizeSpec.shortLabel}</span>
+                              <ChevronDown className="h-2.5 w-2.5 text-[#737373]" />
+                            </button>
+
+                            {sizeMenuOpen && (
+                              <div
+                                role="menu"
+                                data-testid={`size-menu-${pane.pieceId}`}
+                                className="absolute right-0 top-full z-40 mt-1.5 w-52 rounded-xl border border-white/[0.12] bg-[#161618] p-1.5 shadow-[0_20px_54px_rgba(0,0,0,0.92)]"
+                              >
+                                <div className="px-2 py-1 font-mono text-[9.5px] uppercase tracking-[0.12em] text-[#737373]">
+                                  Piece Size (4 Presets)
+                                </div>
+                                {PIECE_SIZE_OPTIONS.map((opt) => {
+                                  const active = pane.size === opt.id;
+                                  return (
+                                    <button
+                                      key={opt.id}
+                                      type="button"
+                                      role="menuitemradio"
+                                      aria-checked={active}
+                                      data-testid={`size-menu-opt-${pane.pieceId}-${opt.id}`}
+                                      onClick={() => handleSetPaneSize(pane.instanceId, opt.id)}
+                                      className={cn(
+                                        "flex w-full items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-left transition-colors cursor-pointer",
+                                        active
+                                          ? "bg-white/[0.09] text-[#fafafa]"
+                                          : "text-[#a3a3a3] hover:bg-white/[0.05] hover:text-[#fafafa]"
+                                      )}
+                                    >
+                                      <div className="flex items-center gap-2">
+                                        <span
+                                          className={cn(
+                                            "inline-flex h-5 w-6 items-center justify-center rounded font-mono text-[10px] font-semibold",
+                                            active
+                                              ? "bg-[#2b7fff] text-white"
+                                              : "border border-white/[0.08] bg-[#121212] text-[#a3a3a3]"
+                                          )}
+                                        >
+                                          {opt.shortLabel}
+                                        </span>
+                                        <div>
+                                          <div className="text-[12px] font-medium leading-tight">
+                                            {opt.name}
+                                          </div>
+                                          <div className="font-mono text-[9.5px] text-[#737373]">
+                                            {opt.fraction} width
+                                          </div>
+                                        </div>
+                                      </div>
+                                      {active && <Check className="h-3.5 w-3.5 text-[#3392ff]" />}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        </>
                       )}
 
                       <button
@@ -904,10 +1132,16 @@ export function DashboardClient() {
                     </div>
                   </div>
 
-                  {/* Interactive Piece Content */}
-                  <div className="flex-1 p-4">
+                  {/* Interactive Size-Adaptive Piece Content */}
+                  <div
+                    className={cn(
+                      "flex-1 overflow-hidden rounded-b-2xl",
+                      isCompact ? "p-3" : "p-4"
+                    )}
+                  >
                     <PiecePaneBody
                       item={item}
+                      size={effectiveSize}
                       activeModel={activeModel}
                       routingEngine={routingEngine}
                       latestSpec={latestSpec}
@@ -915,12 +1149,60 @@ export function DashboardClient() {
                       onSpendCredits={handleSpendCredits}
                     />
                   </div>
-                </section>
+
+                  {/* Live Drag-Resize Size Badge */}
+                  {isDraggingThis && (
+                    <div
+                      aria-live="polite"
+                      className="pointer-events-none absolute bottom-3 left-1/2 z-40 -translate-x-1/2 rounded-lg border border-[#3392ff]/40 bg-[#121212]/95 px-2.5 py-1 font-mono text-[11px] font-medium text-[#fafafa] shadow-lg backdrop-blur-md"
+                    >
+                      {sizeSpec.shortLabel} · {sizeSpec.name} ({sizeSpec.fraction})
+                    </div>
+                  )}
+
+                  {/* Bottom-Right Corner Drag-to-Resize Handle */}
+                  {!isMaximized && (
+                    <button
+                      type="button"
+                      data-testid={`resize-handle-${pane.pieceId}`}
+                      aria-label={`Drag to resize ${item.name}`}
+                      title="Drag to resize between S, M, L, XL"
+                      onPointerDown={(e) => handleStartResizeDrag(e, pane)}
+                      className={cn(
+                        "absolute bottom-1 right-1 z-20 flex h-5 w-5 items-end justify-end rounded-br-xl p-1 text-[#525252] transition-colors hover:text-[#fafafa] cursor-nwse-resize touch-none",
+                        isDraggingThis && "text-[#3392ff]"
+                      )}
+                    >
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M9 3.5L3.5 9M9 7L7 9"
+                          stroke="currentColor"
+                          strokeWidth="1.35"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </button>
+                  )}
+                </motion.section>
               );
             })}
           </div>
         )}
       </main>
+
+      {/* Transparent Drag Shield so sandboxed iframes never swallow pointermove while resizing */}
+      {resizeDrag && (
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 z-50 cursor-nwse-resize select-none"
+        />
+      )}
 
       {/* MARKETPLACE PIECE PICKER DRAWER */}
       <PiecePickerDrawer
