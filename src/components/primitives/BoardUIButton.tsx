@@ -31,7 +31,7 @@ const BASE_CLASS = [
   "inline-flex items-center justify-center gap-1.5 whitespace-nowrap overflow-hidden",
   "font-sans font-medium select-none cursor-pointer",
   "button-press-motion",
-  "outline-none focus-visible:ring-2 focus-visible:ring-[#3392ff]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]",
+  "outline-none focus-visible:ring-2 focus-visible:ring-[#818cf8]/75 focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]",
   "disabled:cursor-not-allowed disabled:opacity-60 aria-disabled:cursor-not-allowed",
 ].join(" ");
 

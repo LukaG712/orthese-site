@@ -52,7 +52,7 @@ export function InfoTooltip({
           <span
             tabIndex={0}
             className={cn(
-              "inline-flex items-center outline-none focus-visible:ring-1 focus-visible:ring-[#3392ff]/70 rounded",
+              "inline-flex items-center outline-none focus-visible:ring-1 focus-visible:ring-[#818cf8]/75 rounded",
               triggerClassName
             )}
           />

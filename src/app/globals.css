@@ -3,35 +3,39 @@
 /* BoardUI Dark Mode semantic token layer (MIT color architecture) */
 :root,
 .dark {
+  /* 60-30-10 Orthese Dark Mode Palette:
+   * 60% Dominant Canvas:  #121212
+   * 30% Secondary Surface: #161618 / #171717 / #262626 + neutral hairlines & typography
+   * 10% Prismatic Accent:  #818cf8 -> #38bdf8 -> #e879f9 (Orthese Orbit Gradient)
+   */
   --color-neutral-925: #121212;
-  --color-accent-400: #3392ff;
-  --color-accent-500: #2b7fff;
-  --color-accent-600: #155dfc;
-  --color-accent-700: #1447e6;
+  --color-accent-indigo: #818cf8;
+  --color-accent-sky: #38bdf8;
+  --color-accent-orchid: #e879f9;
 
   --button-transition-ms: 150ms;
-  --shadow-button-xs: 0 1px 2px 0 rgb(0 0 0 / 0.22);
+  --shadow-button-xs: 0 1px 2px 0 rgb(0 0 0 / 0.28);
 
-  /* Official BoardUI Button vertical gradients */
-  --gradient-button-primary-default: linear-gradient(180deg, var(--color-accent-500) 0%, var(--color-accent-600) 100%);
-  --gradient-button-primary-hover: linear-gradient(180deg, var(--color-accent-400) 0%, var(--color-accent-500) 100%);
-  --gradient-button-primary-active: linear-gradient(180deg, var(--color-accent-600) 0%, var(--color-accent-700) 100%);
-  --gradient-button-primary-disabled: linear-gradient(180deg, #404040 0%, #262626 100%);
+  /* Orthese Prismatic Gradient for Primary BoardUI Buttons (10% accent) */
+  --gradient-button-primary-default: linear-gradient(125deg, #8b96ff 0%, #56c8fa 52%, #ec8cfa 100%);
+  --gradient-button-primary-hover: linear-gradient(125deg, #a3acff 0%, #7ad6fc 52%, #f4a8ff 100%);
+  --gradient-button-primary-active: linear-gradient(125deg, #7480f0 0%, #3ab4ec 52%, #d870e8 100%);
+  --gradient-button-primary-disabled: linear-gradient(180deg, #333333 0%, #262626 100%);
 
   --gradient-button-danger-default: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
   --gradient-button-danger-hover: linear-gradient(180deg, #f87171 0%, #ef4444 100%);
   --gradient-button-danger-active: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%);
   --gradient-button-danger-disabled: linear-gradient(180deg, #7f1d1d 0%, #450a0a 100%);
 
-  --canvas: #121212;            /* BoardUI background/full (neutral-925) */
-  --surface: #171717;           /* BoardUI background/secondary (neutral-900) */
-  --surface-elevated: #262626;  /* BoardUI background/primary (neutral-800) */
-  --border-subtle: #262626;     /* BoardUI separator/border (neutral-800) */
+  --canvas: #121212;            /* 60% Dominant canvas */
+  --surface: #171717;           /* 30% Secondary surface */
+  --surface-elevated: #262626;  /* 30% Elevated controls */
+  --border-subtle: #262626;     /* Separator border */
   --border-hairline: #333333;   /* Control border */
-  --border-strong: #404040;     /* BoardUI border/button/default (neutral-700) */
-  --ink-primary: #fafafa;       /* BoardUI text/primary (neutral-50) */
-  --ink-secondary: #a3a3a3;     /* BoardUI text/secondary (neutral-400) */
-  --ink-tertiary: #737373;      /* BoardUI text/tertiary (neutral-500) */
+  --border-strong: #404040;     /* Secondary button border */
+  --ink-primary: #fafafa;       /* Primary neutral text */
+  --ink-secondary: #a3a3a3;     /* Secondary neutral text */
+  --ink-tertiary: #737373;      /* Tertiary neutral text */
 }
 
 @layer base {
@@ -107,7 +111,7 @@
     0 18px 48px -18px rgba(0, 0, 0, 0.55);
 }
 
-/* Official BoardUI Button motion + gradient surfaces (https://www.boardui.com/components/button) */
+/* Official BoardUI Button motion + Orthese Prismatic Gradient Primary surface */
 .button-press-motion {
   transition:
     background-color var(--button-transition-ms) ease,
@@ -134,11 +138,13 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  color: #ffffff;
+  color: #0b0c0f;
+  font-weight: 600;
   background-image: var(--gradient-button-primary-default);
   box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
-    var(--shadow-button-xs);
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.45),
+    0 1px 2px 0 rgb(0 0 0 / 0.32),
+    0 8px 22px -10px rgba(129, 140, 248, 0.48);
   transition:
     border-color var(--button-transition-ms) ease,
     box-shadow var(--button-transition-ms) ease,
@@ -158,6 +164,15 @@
   background-image: var(--gradient-button-primary-hover);
   opacity: 0;
   transition: opacity var(--button-transition-ms) ease;
+}
+
+.bg-button-primary:hover:not(:disabled):not([aria-disabled="true"]),
+.btn-pill-white:hover:not(:disabled):not([aria-disabled="true"]),
+.btn-primary:hover:not(:disabled):not([aria-disabled="true"]) {
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.55),
+    0 2px 4px 0 rgb(0 0 0 / 0.35),
+    0 10px 26px -8px rgba(56, 189, 248, 0.52);
 }
 
 .bg-button-primary:hover:not(:disabled):not([aria-disabled="true"])::before,
@@ -184,7 +199,7 @@
 .btn-pill-white:disabled,
 .btn-primary:disabled {
   background-image: var(--gradient-button-primary-disabled);
-  color: #a3a3a3;
+  color: #8a8a8a;
   box-shadow: none;
 }
 

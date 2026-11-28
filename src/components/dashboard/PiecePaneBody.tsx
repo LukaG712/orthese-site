@@ -108,14 +108,14 @@ function buildPreviewHtml(specTitle: string, specBody: string, compact: boolean)
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: linear-gradient(180deg, #2b7fff 0%, #155dfc 100%);
-      color: #ffffff;
+      background: linear-gradient(125deg, #8b96ff 0%, #56c8fa 52%, #ec8cfa 100%);
+      color: #0b0c0f;
       border-radius: 8px;
       padding: ${compact ? "4px 10px" : "7px 14px"};
       font-size: ${compact ? "10px" : "12px"};
       font-weight: 600;
       width: fit-content;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 1px 2px rgba(0,0,0,0.25);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 1px 2px rgba(0,0,0,0.28);
     }
   </style>
 </head>
@@ -400,7 +400,7 @@ export function PiecePaneBody({
         ? "min-h-[385px]"
         : isWide
           ? "min-h-[325px]"
-          : "min-h-[245px]";
+          : "min-h-[285px]";
 
     return (
       <div className={cn("flex h-full flex-col", isCompact ? "gap-2" : "gap-3")}>

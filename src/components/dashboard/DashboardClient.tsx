@@ -925,7 +925,7 @@ export function DashboardClient() {
                   className={cn(
                     "group/pane relative flex flex-col rounded-2xl border bg-[#161618] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors",
                     isDraggingThis
-                      ? "border-[#2b7fff]/70 ring-1 ring-[#2b7fff]/35"
+                      ? "border-[#818cf8]/70 ring-1 ring-[#38bdf8]/35"
                       : "border-white/[0.08]",
                     isMaximized
                       ? "col-span-12 min-h-[72svh]"
@@ -1015,7 +1015,7 @@ export function DashboardClient() {
                                     className={cn(
                                       "h-5 min-w-[22px] rounded-md px-1.5 font-mono text-[10px] font-medium transition-colors cursor-pointer",
                                       active
-                                        ? "bg-[#2b7fff] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22)]"
+                                        ? "bg-[#2a2a2e] text-[#fafafa] ring-1 ring-white/[0.16]"
                                         : "text-[#737373] hover:text-[#fafafa]"
                                     )}
                                   >
@@ -1079,7 +1079,7 @@ export function DashboardClient() {
                                           className={cn(
                                             "inline-flex h-5 w-6 items-center justify-center rounded font-mono text-[10px] font-semibold",
                                             active
-                                              ? "bg-[#2b7fff] text-white"
+                                              ? "bg-button-primary text-[#0b0c0f]"
                                               : "border border-white/[0.08] bg-[#121212] text-[#a3a3a3]"
                                           )}
                                         >
@@ -1094,7 +1094,7 @@ export function DashboardClient() {
                                           </div>
                                         </div>
                                       </div>
-                                      {active && <Check className="h-3.5 w-3.5 text-[#3392ff]" />}
+                                      {active && <Check className="h-3.5 w-3.5 text-[#818cf8]" />}
                                     </button>
                                   );
                                 })}
@@ -1154,7 +1154,7 @@ export function DashboardClient() {
                   {isDraggingThis && (
                     <div
                       aria-live="polite"
-                      className="pointer-events-none absolute bottom-3 left-1/2 z-40 -translate-x-1/2 rounded-lg border border-[#3392ff]/40 bg-[#121212]/95 px-2.5 py-1 font-mono text-[11px] font-medium text-[#fafafa] shadow-lg backdrop-blur-md"
+                      className="pointer-events-none absolute bottom-3 left-1/2 z-40 -translate-x-1/2 rounded-lg border border-[#818cf8]/50 bg-[#121212]/95 px-2.5 py-1 font-mono text-[11px] font-medium text-[#fafafa] shadow-lg backdrop-blur-md"
                     >
                       {sizeSpec.shortLabel} · {sizeSpec.name} ({sizeSpec.fraction})
                     </div>
@@ -1170,7 +1170,7 @@ export function DashboardClient() {
                       onPointerDown={(e) => handleStartResizeDrag(e, pane)}
                       className={cn(
                         "absolute bottom-1 right-1 z-20 flex h-5 w-5 items-end justify-end rounded-br-xl p-1 text-[#525252] transition-colors hover:text-[#fafafa] cursor-nwse-resize touch-none",
-                        isDraggingThis && "text-[#3392ff]"
+                        isDraggingThis && "text-[#818cf8]"
                       )}
                     >
                       <svg
